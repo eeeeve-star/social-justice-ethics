@@ -1,0 +1,690 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>나의 정의관 진단</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700;900&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+  :root{
+    --bg:#FFF6DC;
+    --hero-top:#FBE3A0;
+    --surface:#FFFFFF;
+    --surface-2:#FFF8E6;
+    --ink:#2E2614;
+    --ink-soft:#5E5236;
+    --ink-faint:#8A7B57;
+    --line:#F1E2B8;
+    --line-strong:#E3CB86;
+    --accent:#B7791F;
+    --accent-ink:#8A5A12;
+    --accent-strong:#8F5A12;
+    --on-accent:#FFFFFF;
+    --accent-soft:#FDF0CF;
+
+    --rawls:#8B6FD6; --rawls-ink:#5A3FAE; --rawls-soft:#EFEAFB;
+    --nozick:#E5609A; --nozick-ink:#B4336D; --nozick-soft:#FCE9F1;
+
+    --shadow:0 1px 2px rgba(60,45,10,0.05), 0 12px 28px -16px rgba(60,45,10,0.28);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#1C170D; --hero-top:#3B2D0F; --surface:#2A2316; --surface-2:#332A19;
+      --ink:#F6EEDB; --ink-soft:#D5C7A5; --ink-faint:#A69670;
+      --line:#463A20; --line-strong:#5E4C26;
+      --accent:#E8B04A; --accent-ink:#F3CD7E; --accent-strong:#E8B04A; --on-accent:#1C170D; --accent-soft:#3A2F17;
+      --rawls:#AD97EE; --rawls-ink:#D3C7FA; --rawls-soft:#2E2742;
+      --nozick:#F28DBA; --nozick-ink:#FAC2DB; --nozick-soft:#3D2230;
+      --shadow:0 1px 2px rgba(0,0,0,0.3), 0 12px 28px -14px rgba(0,0,0,0.6);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#1C170D; --hero-top:#3B2D0F; --surface:#2A2316; --surface-2:#332A19;
+    --ink:#F6EEDB; --ink-soft:#D5C7A5; --ink-faint:#A69670;
+    --line:#463A20; --line-strong:#5E4C26;
+    --accent:#E8B04A; --accent-ink:#F3CD7E; --accent-strong:#E8B04A; --on-accent:#1C170D; --accent-soft:#3A2F17;
+    --rawls:#AD97EE; --rawls-ink:#D3C7FA; --rawls-soft:#2E2742;
+    --nozick:#F28DBA; --nozick-ink:#FAC2DB; --nozick-soft:#3D2230;
+    --shadow:0 1px 2px rgba(0,0,0,0.3), 0 12px 28px -14px rgba(0,0,0,0.6);
+  }
+
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    min-height:100vh;
+    background:linear-gradient(180deg, var(--hero-top) 0, var(--bg) 420px) no-repeat, var(--bg);
+    color:var(--ink);
+    font-family:"Noto Sans KR","Malgun Gothic",sans-serif;
+    font-size:17px; line-height:1.7; word-break:keep-all; overflow-wrap:break-word;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.serif{ font-family:"Gowun Batang","Malgun Gothic",serif; letter-spacing:-0.01em; }
+  button{ font-family:inherit; }
+  img{ display:block; max-width:100%; }
+
+  .topbar{ max-width:560px; margin:0 auto; padding:14px 16px 0; display:flex; justify-content:flex-end; }
+  .theme-btn{
+    border:1px solid var(--line-strong); background:var(--surface); color:var(--ink-soft);
+    border-radius:999px; padding:6px 14px; font-size:14px; font-weight:700; cursor:pointer;
+  }
+  .theme-btn:hover{ color:var(--ink); }
+
+  .app{ max-width:560px; margin:0 auto; padding:12px 16px 56px; }
+  .screen{ display:none; }
+  .screen.active{ display:block; animation:fadeUp .35s ease; }
+  @keyframes fadeUp{ from{ opacity:0; transform:translateY(10px); } to{ opacity:1; transform:translateY(0); } }
+
+  .panel{
+    background:var(--surface); border:1px solid var(--line); border-radius:22px;
+    padding:28px 22px; box-shadow:var(--shadow);
+  }
+
+  /* ---------- 시작 ---------- */
+  .start-duo{ display:flex; justify-content:center; align-items:center; gap:10px; margin:4px 0 18px; }
+  .start-duo img{ width:84px; height:84px; border-radius:50%; background:#fff; }
+  .start-duo .r{ border:3px solid var(--rawls); }
+  .start-duo .n{ border:3px solid var(--nozick); }
+  .start-duo .vs{ font-family:"Gowun Batang",serif; font-weight:700; font-size:20px; color:var(--accent-ink); }
+  .kicker{ text-align:center; font-size:14px; font-weight:700; color:var(--accent-ink); letter-spacing:0.04em; margin-bottom:6px; }
+  .start h1{ text-align:center; font-size:clamp(27px,7vw,34px); line-height:1.3; margin:0 0 6px; }
+  .start h1 .r{ color:var(--rawls-ink); }
+  .start h1 .n{ color:var(--nozick-ink); }
+  .start .lead{ text-align:center; color:var(--ink-soft); font-size:17px; margin:0 0 22px; }
+  .f-label{ display:block; font-size:16px; font-weight:700; margin:0 0 6px; }
+  .f-label small{ font-weight:500; color:var(--ink-faint); font-size:14px; }
+  .text-in{
+    width:100%; padding:13px 15px; border-radius:14px; border:2px solid var(--line-strong);
+    background:var(--surface-2); color:var(--ink); font-size:17px; font-family:inherit; outline:none; margin-bottom:18px;
+  }
+  .text-in:focus{ border-color:var(--accent); }
+
+  .btn{
+    display:block; width:100%; padding:15px 16px; border-radius:16px; border:none; cursor:pointer;
+    font-size:17px; font-weight:700; line-height:1.4;
+  }
+  .btn-primary{ background:var(--accent-strong); color:var(--on-accent); box-shadow:0 8px 18px -8px rgba(143,90,18,0.6); }
+  .btn-primary:hover{ filter:brightness(1.06); }
+  .btn-ghost{ background:var(--surface); color:var(--accent-ink); border:2px solid var(--line-strong); }
+  .btn:active{ transform:scale(0.985); }
+  .btn:disabled{ opacity:.6; cursor:default; }
+
+  /* ---------- 질문 ---------- */
+  .progress-row{ display:flex; align-items:center; gap:12px; margin-bottom:18px; }
+  .progress-bar{ flex:1; height:10px; background:var(--accent-soft); border-radius:999px; overflow:hidden; }
+  .progress-fill{ height:100%; width:0; background:linear-gradient(90deg, var(--rawls), var(--accent), var(--nozick)); border-radius:999px; transition:width .3s ease; }
+  .progress-text{ font-size:15px; font-weight:700; color:var(--ink-faint); white-space:nowrap; }
+  .q-badge{
+    display:inline-block; font-size:14px; font-weight:700; color:var(--on-accent); background:var(--accent-strong);
+    padding:3px 12px; border-radius:999px; margin-bottom:10px;
+  }
+  .q-scene{ font-size:17px; color:var(--ink-soft); margin:0 0 6px; }
+  .q-text{ font-family:"Gowun Batang",serif; font-size:21px; font-weight:700; line-height:1.5; margin:0 0 18px; }
+  .option{
+    display:flex; gap:12px; align-items:flex-start; width:100%; text-align:left;
+    padding:15px 16px; margin-bottom:10px; border-radius:16px;
+    border:2px solid var(--line); background:var(--surface-2); color:var(--ink);
+    font-size:17px; line-height:1.6; cursor:pointer; transition:border-color .15s, background .15s;
+  }
+  .option:hover{ border-color:var(--accent); }
+  .option:active{ transform:scale(0.985); }
+  .option .ltr{
+    flex:0 0 auto; width:28px; height:28px; border-radius:50%; margin-top:1px;
+    display:inline-flex; align-items:center; justify-content:center;
+    background:var(--accent-soft); color:var(--accent-ink); font-weight:900; font-size:15px;
+  }
+  .back-btn{
+    margin-top:6px; background:none; border:none; color:var(--ink-faint); font-size:15px; font-weight:700;
+    cursor:pointer; padding:6px 2px;
+  }
+  .back-btn:hover{ color:var(--ink); }
+
+  /* ---------- 결과 카드 (이미지 저장 대상) ---------- */
+  .result-card{
+    background:var(--surface); border:1px solid var(--line-strong); border-radius:22px;
+    padding:28px 22px 22px; box-shadow:var(--shadow);
+    animation:fadeUp .4s ease;
+  }
+  .rc-top{ text-align:center; font-size:14px; font-weight:700; letter-spacing:0.08em; color:var(--accent-ink); }
+  .rc-rule{ height:3px; border-radius:2px; margin:10px 0 22px; background:linear-gradient(90deg, var(--rawls), var(--accent), var(--nozick)); }
+  .rc-portraits{ display:flex; justify-content:center; margin-bottom:14px; }
+  .rc-portraits img{ width:108px; height:108px; border-radius:50%; background:#fff; border:4px solid var(--tc); }
+  .rc-portraits.both img{ width:92px; height:92px; }
+  .rc-portraits.both img + img{ margin-left:-14px; }
+  .rc-portraits .r{ border-color:var(--rawls); }
+  .rc-portraits .n{ border-color:var(--nozick); }
+  .rc-nick{ text-align:center; font-size:16px; color:var(--ink-soft); font-weight:500; margin:0 0 2px; }
+  .rc-name{ text-align:center; font-family:"Gowun Batang",serif; font-size:36px; font-weight:700; line-height:1.25; color:var(--tc-ink); margin:0 0 4px; }
+  .rc-alias{ text-align:center; font-size:17px; font-weight:700; color:var(--ink); margin:0 0 22px; }
+
+  .rc-bar-labels{ display:flex; justify-content:space-between; font-size:15px; font-weight:700; margin-bottom:6px; }
+  .rc-bar-labels .r{ color:var(--rawls-ink); }
+  .rc-bar-labels .n{ color:var(--nozick-ink); }
+  .rc-bar{ display:flex; height:16px; border-radius:999px; overflow:hidden; background:var(--line); margin-bottom:24px; }
+  .rc-bar .r{ background:var(--rawls); }
+  .rc-bar .n{ background:var(--nozick); }
+
+  .rc-sec{ border-radius:16px; padding:16px 18px; margin-bottom:14px; }
+  .rc-sec-title{ font-size:15px; font-weight:900; letter-spacing:0.02em; margin-bottom:8px; }
+  .rc-mine{ background:var(--accent-soft); }
+  .rc-mine .rc-sec-title{ color:var(--accent-ink); }
+  .rc-mine ul{ margin:0; padding-left:20px; font-size:16.5px; line-height:1.7; }
+  .rc-mine li + li{ margin-top:4px; }
+
+  .rc-claims{ border:1.5px solid var(--cc); background:var(--surface); }
+  .rc-claims .rc-sec-title{ color:var(--cc-ink); display:flex; align-items:center; gap:8px; }
+  .rc-claims .rc-sec-title img{ width:30px; height:30px; border-radius:50%; background:#fff; border:2px solid var(--cc); }
+  .rc-claims ol{ margin:0; padding-left:22px; font-size:16.5px; line-height:1.7; }
+  .rc-claims li + li{ margin-top:6px; }
+  .rc-claims b{ color:var(--cc-ink); }
+  .rc-src{ text-align:right; font-size:14px; color:var(--ink-faint); margin-top:8px; }
+  .theme-r{ --cc:var(--rawls); --cc-ink:var(--rawls-ink); }
+  .theme-n{ --cc:var(--nozick); --cc-ink:var(--nozick-ink); }
+
+  .rc-other{ background:var(--oc-soft); border-left:5px solid var(--oc); border-radius:6px 16px 16px 6px; }
+  .rc-other .rc-sec-title{ color:var(--oc-ink); }
+  .rc-other p{ margin:0; font-family:"Gowun Batang",serif; font-weight:700; font-size:17px; line-height:1.7; }
+
+  .rc-foot{
+    display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;
+    border-top:1px solid var(--line); margin-top:18px; padding-top:12px;
+    font-size:14px; color:var(--ink-faint); font-weight:700;
+  }
+  .rc-foot .sig{ color:var(--accent-ink); }
+
+  .result-actions{ display:flex; flex-direction:column; gap:10px; margin-top:18px; }
+  .save-hint{ text-align:center; font-size:15px; color:var(--ink-faint); margin:4px 0 0; }
+
+  .page-sig{ text-align:center; font-size:15px; color:var(--ink-faint); margin:18px 0 0; }
+
+  @media (max-width:400px){
+    .panel{ padding:24px 18px; }
+    .result-card{ padding:24px 16px 18px; }
+    .rc-name{ font-size:32px; }
+    .q-text{ font-size:20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <button class="theme-btn" id="themeBtn" type="button" aria-label="화면 테마 바꾸기">🌙 다크</button>
+</div>
+
+<main class="app">
+
+  <!-- 시작 화면 -->
+  <section class="screen active start" id="screen-start">
+    <div class="panel">
+      <div class="start-duo">
+        <img class="r" src="img/rawls.png" alt="롤스 초상">
+        <span class="vs">vs</span>
+        <img class="n" src="img/nozick.png" alt="노직 초상">
+      </div>
+      <div class="kicker">나의 정의관 진단</div>
+      <h1>나는 <span class="r">롤스형</span>? <span class="n">노직형</span>?</h1>
+      <p class="lead">학교와 일상에서 만나는 열 가지 상황에 답하면, 나의 분배 정의관이 어느 사상가와 가까운지 나옵니다.</p>
+      <label class="f-label" for="nickInput">닉네임 <small>(선택)</small></label>
+      <input class="text-in" type="text" id="nickInput" maxlength="12" placeholder="예: 정의로운 고양이" autocomplete="off">
+      <button class="btn btn-primary" id="startBtn" type="button">진단 시작하기</button>
+    </div>
+  </section>
+
+  <!-- 질문 화면 -->
+  <section class="screen" id="screen-quiz">
+    <div class="panel">
+      <div class="progress-row">
+        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+        <div class="progress-text" id="progressText">1 / 10</div>
+      </div>
+      <span class="q-badge" id="qBadge">상황 1</span>
+      <p class="q-scene" id="qScene"></p>
+      <h2 class="q-text" id="qText"></h2>
+      <div id="optionsWrap"></div>
+      <button class="back-btn" id="backBtn" type="button">← 이전 질문으로</button>
+    </div>
+  </section>
+
+  <!-- 결과 화면 -->
+  <section class="screen" id="screen-result">
+    <article class="result-card" id="resultCard">
+      <div class="rc-top">나의 정의관 진단 결과</div>
+      <div class="rc-rule"></div>
+
+      <div class="rc-portraits" id="rcPortraits"></div>
+      <p class="rc-nick" id="rcNick"></p>
+      <h2 class="rc-name" id="rcName"></h2>
+      <p class="rc-alias" id="rcAlias"></p>
+
+      <div class="rc-bar-labels">
+        <span class="r" id="rcPctR">롤스 50%</span>
+        <span class="n" id="rcPctN">노직 50%</span>
+      </div>
+      <div class="rc-bar" aria-hidden="true">
+        <div class="r" id="rcBarR" style="width:50%"></div>
+        <div class="n" id="rcBarN" style="width:50%"></div>
+      </div>
+
+      <div class="rc-sec rc-mine">
+        <div class="rc-sec-title">내 선택에 담긴 생각</div>
+        <ul id="rcMine"></ul>
+      </div>
+
+      <div id="rcClaims"></div>
+
+      <div class="rc-sec rc-other" id="rcOther">
+        <div class="rc-sec-title" id="rcOtherTitle"></div>
+        <p id="rcOtherText"></p>
+      </div>
+
+      <div class="rc-foot">
+        <span>나의 정의관 진단 · 롤스와 노직</span>
+        <span class="sig">현대사회와 윤리 수강 2학년♥무늬T</span>
+      </div>
+    </article>
+
+    <div class="result-actions" id="resultActions">
+      <button class="btn btn-primary" id="saveImageBtn" type="button">📸 이미지로 저장</button>
+      <button class="btn btn-ghost" id="restartBtn" type="button">다시 하기</button>
+    </div>
+  </section>
+
+  <p class="page-sig" id="pageSig">현대사회와 윤리 수강 2학년♥무늬T</p>
+</main>
+
+<script>
+(function(){
+  /* ---------- 테마 ---------- */
+  var root = document.documentElement;
+  function store(k, v){
+    try{
+      if(v === undefined){ return localStorage.getItem(k); }
+      localStorage.setItem(k, v);
+    }catch(e){ return null; }
+    return null;
+  }
+  var themeBtn = document.getElementById("themeBtn");
+  function isDark(){
+    var t = root.getAttribute("data-theme");
+    if(t === "dark"){ return true; }
+    if(t === "light"){ return false; }
+    return !!(window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches);
+  }
+  function syncThemeBtn(){ themeBtn.textContent = isDark() ? "☀️ 라이트" : "🌙 다크"; }
+  var savedTheme = store("jt-theme");
+  if(savedTheme === "light" || savedTheme === "dark"){ root.setAttribute("data-theme", savedTheme); }
+  syncThemeBtn();
+  themeBtn.addEventListener("click", function(){
+    var next = isDark() ? "light" : "dark";
+    root.setAttribute("data-theme", next);
+    store("jt-theme", next);
+    syncThemeBtn();
+  });
+
+  /* ---------- 생각 태그 ---------- */
+  var TAGS = {
+    least:{ side:"r", text:"가장 어려운 처지에 있는 사람에게 돌아갈 몫을 먼저 살폈습니다. (최소 수혜자 배려)" },
+    proc: { side:"r", text:"누가 어떤 처지가 될지 모르는 상태에서 모두가 받아들일 규칙을 정하는 공정한 절차를 중시했습니다." },
+    opp:  { side:"r", text:"형편과 상관없이 누구에게나 기회와 자리가 열려 있어야 한다고 보았습니다. (기회균등)" },
+    luck: { side:"r", text:"내 재능과 환경에도 운이 작용한다고 보고, 그 결과를 함께 나누려 했습니다." },
+    own:  { side:"n", text:"정당한 노력으로 얻은 것은 온전히 그 사람의 것이라는 소유 권리를 중시했습니다." },
+    trans:{ side:"n", text:"주고받는 일은 강제가 아니라 스스로 원해서 할 때 정당하다고 보았습니다. (자발적 양도)" },
+    min:  { side:"n", text:"학교나 국가가 나서는 범위는 소유를 지켜 주는 정도로 최소한이어야 한다고 보았습니다." },
+    mid:  { side:"m", text:"한쪽으로 치우치기보다 모두가 동의할 수 있는 방법을 함께 찾으려 했습니다." }
+  };
+
+  /* ---------- 질문 ---------- */
+  var questions = [
+    {
+      scene:"축제 날 우리 동아리가 직접 만든 쿠키를 팔아 수익이 남았습니다. 많이 만든 부원도 있고 적게 만든 부원도 있습니다.",
+      q:"수익은 어떻게 나누는 것이 정의롭습니까?",
+      opts:[
+        { t:"각자 직접 만들어 판 만큼 가져가는 것이 정당합니다.", r:0, n:2, tag:"own" },
+        { t:"많이 만든 부원이 더 받되, 가장 적게 받는 부원의 몫도 함께 늘어나는 방식으로 나눕니다.", r:2, n:0, tag:"least" },
+        { t:"부원 회의를 열어 모두가 동의하는 방식을 정하고 그대로 나눕니다.", r:1, n:1, tag:"mid" }
+      ]
+    },
+    {
+      scene:"우리 반 학급 문고에 새 책을 들이기로 했습니다.",
+      q:"책 구입비는 어떻게 마련하는 것이 좋겠습니까?",
+      opts:[
+        { t:"책을 읽고 싶은 사람만 원하는 만큼 자발적으로 냅니다.", r:0, n:2, tag:"trans" },
+        { t:"모두 함께 내되, 형편이 어려운 친구는 덜 내거나 내지 않도록 합니다.", r:2, n:0, tag:"least" }
+      ]
+    },
+    {
+      scene:"방학 동안 아르바이트를 해서 받은 돈에서 세금이 빠져나갔습니다.",
+      q:"이 세금에 대해 어떻게 생각합니까?",
+      opts:[
+        { t:"내가 정당하게 일해서 번 돈입니다. 세금은 치안과 국방처럼 꼭 필요한 곳에만 최소한으로 걷어야 합니다.", r:0, n:2, tag:"min" },
+        { t:"그 세금이 사회에서 가장 어려운 처지에 있는 사람들을 돕는 제도에 쓰인다면 정당합니다.", r:2, n:0, tag:"least" }
+      ]
+    },
+    {
+      scene:"졸업한 선배가 자기 돈으로 장학금을 내놓으며 \"성적이 가장 우수한 학생에게 주십시오.\"라고 부탁했습니다.",
+      q:"학교는 어떻게 해야 합니까?",
+      opts:[
+        { t:"선배가 자기 돈을 자유롭게 내놓은 것이므로, 선배의 뜻대로 주어야 합니다.", r:0, n:2, tag:"trans" },
+        { t:"선배에게 가정 형편이 어려운 학생도 받을 수 있도록 기준을 넓혀 달라고 제안합니다.", r:2, n:0, tag:"least" },
+        { t:"선배의 뜻대로 주되, 형편이 어려운 학생을 위한 장학금은 학교 예산으로 따로 마련합니다.", r:1, n:1, tag:"mid" }
+      ]
+    },
+    {
+      scene:"연말 이웃 돕기 성금을 모으는데, \"한 사람당 얼마씩 반드시 내자.\"라는 의견이 나왔습니다.",
+      q:"기부를 의무로 정해도 됩니까?",
+      opts:[
+        { t:"기부는 스스로 원할 때 의미가 있습니다. 강제로 걷어서는 안 됩니다.", r:0, n:2, tag:"trans" },
+        { t:"어려운 이웃을 돕는 일이라면 모두가 일정한 몫을 함께 부담하도록 정할 수 있습니다.", r:2, n:0, tag:"least" },
+        { t:"의무로 정하지는 않되, 참여 방법을 널리 알리고 함께하자고 권합니다.", r:1, n:1, tag:"mid" }
+      ]
+    },
+    {
+      scene:"학교에서 해외 문화 탐방 프로그램을 운영합니다. 그런데 참가비가 꽤 비쌉니다.",
+      q:"참가자는 어떻게 정하는 것이 공정합니까?",
+      opts:[
+        { t:"참가비는 각자 부담합니다. 자기 돈으로 가겠다는 사람을 막을 이유는 없습니다.", r:0, n:2, tag:"own" },
+        { t:"형편과 상관없이 누구나 지원할 수 있도록 참가비를 지원하고, 선발 기준을 모두에게 공개합니다.", r:2, n:0, tag:"opp" }
+      ]
+    },
+    {
+      scene:"새 학기에 청소 구역을 정하는 규칙을 만듭니다. 구역마다 힘든 정도가 다릅니다.",
+      q:"어떤 방식으로 규칙을 정하겠습니까?",
+      opts:[
+        { t:"누가 어느 구역을 맡을지 모르는 상태에서 규칙을 정합니다. 그러면 가장 힘든 구역을 맡게 되어도 받아들일 수 있는 규칙이 나옵니다.", r:2, n:0, tag:"proc" },
+        { t:"구역은 일단 정하되, 친구끼리 서로 합의하면 자유롭게 바꾸는 것도 허용합니다.", r:0, n:2, tag:"trans" }
+      ]
+    },
+    {
+      scene:"내가 정성껏 만든 요약 노트를 원하는 친구들에게 팔아 용돈을 벌었습니다.",
+      q:"이 돈에 대해 어떻게 생각합니까?",
+      opts:[
+        { t:"내 노력으로 만들었고 친구들이 원해서 산 것이므로, 번 돈은 온전히 내 것입니다.", r:0, n:2, tag:"own" },
+        { t:"노트를 잘 만들 수 있었던 데에는 내 재능과 환경이라는 운도 작용했습니다. 노트를 살 형편이 안 되는 친구도 볼 수 있게 하겠습니다.", r:2, n:0, tag:"luck" }
+      ]
+    },
+    {
+      scene:"학생회 선거에서 '학생회가 어디까지 나서야 하는가'가 쟁점이 되었습니다.",
+      q:"학생회의 역할은 어디까지라고 생각합니까?",
+      opts:[
+        { t:"학생들의 물건을 분실과 도난으로부터 지키고 규칙을 지키게 하는 정도면 충분합니다. 그 이상은 간섭입니다.", r:0, n:2, tag:"min" },
+        { t:"어려운 처지의 학생을 지원하고, 누구나 학교 활동에 참여할 기회를 넓히는 일까지 해야 합니다.", r:2, n:0, tag:"opp" }
+      ]
+    },
+    {
+      scene:"체육 대회에서 우리 반이 우승해 간식 상품을 받았습니다. 다른 반에서 \"함께 나누어 먹자.\"라고 합니다.",
+      q:"어떻게 하는 것이 정의롭습니까?",
+      opts:[
+        { t:"우리 반이 정당하게 얻은 상품입니다. 나눌지 말지는 우리 반이 스스로 정할 일입니다.", r:0, n:2, tag:"own" },
+        { t:"다음 대회부터는 모든 반이 기본 간식을 받고, 우승 반이 조금 더 받는 규칙으로 바꾸자고 제안합니다.", r:2, n:0, tag:"least" }
+      ]
+    }
+  ];
+
+  /* ---------- 결과 정보 (교과서 내용 기반) ---------- */
+  var CLAIMS = {
+    r:{
+      who:"롤스", img:"img/rawls.png", theme:"theme-r",
+      items:[
+        "정의의 본질은 <b>공정성</b>입니다. 공정한 절차를 통해 합의된 것이라면 정의롭습니다.",
+        "<b>원초적 입장</b>에서 <b>무지의 베일</b>을 쓴 사람들은 자신이 사회적 약자가 되는 상황을 피하려 하며, 정의의 원칙에 합의합니다.",
+        "사회적·경제적 불평등은 <b>최소 수혜자에게 최대의 이익</b>이 보장되고, 사회적 지위가 모든 사람에게 개방될 때 정당화됩니다. 단, <b>평등한 자유의 원칙</b>(제1원칙)이 우선합니다."
+      ],
+      src:"— 롤스, 『정의론』"
+    },
+    n:{
+      who:"노직", img:"img/nozick.png", theme:"theme-n",
+      items:[
+        "정의란 <b>개인의 소유를 보장</b>해 주는 것입니다.",
+        "정당한 노동으로 <b>취득</b>하고 자유롭게 <b>양도</b>받은 소유물에 대해 개인은 절대적인 권리를 가집니다. 그 과정에 부정의가 있다면 <b>교정</b>해야 합니다.",
+        "국가는 개인의 소유를 절도·사기로부터 보호하고 국방을 담당하는 <b>최소 국가</b>여야 합니다."
+      ],
+      src:"— 노직"
+    }
+  };
+
+  var RESULTS = {
+    r:{
+      name:"롤스형", alias:"공정한 출발선을 설계하는 사람",
+      tc:"var(--rawls)", tcInk:"var(--rawls-ink)",
+      claims:[ { key:"r", idx:[0,1,2] } ],
+      otherSide:"n",
+      otherTitle:"노직이라면 이렇게 말할 것입니다",
+      otherText:"정당하게 취득하고 자유롭게 양도받은 것이라면 그 소유는 온전히 그 사람의 것입니다. 국가가 강제로 거두어 나누는 것은 정당하지 않습니다."
+    },
+    n:{
+      name:"노직형", alias:"정당한 내 몫을 지키는 사람",
+      tc:"var(--nozick)", tcInk:"var(--nozick-ink)",
+      claims:[ { key:"n", idx:[0,1,2] } ],
+      otherSide:"r",
+      otherTitle:"롤스라면 이렇게 말할 것입니다",
+      otherText:"재능과 출신, 사회적 상황에는 운이 작용합니다. 불평등은 최소 수혜자에게 최대의 이익이 돌아갈 때에만 정당합니다."
+    },
+    b:{
+      name:"균형형", alias:"두 저울을 함께 드는 사람",
+      tc:"var(--accent)", tcInk:"var(--accent-ink)",
+      claims:[ { key:"r", idx:[0,2] }, { key:"n", idx:[1,2] } ],
+      otherSide:"b",
+      otherTitle:"두 사상가가 함께 묻는다면",
+      otherText:"롤스는 \"그 규칙을 무지의 베일 뒤에서도 받아들이겠습니까?\"라고, 노직은 \"그 몫은 정당하게 취득하고 양도받은 것입니까?\"라고 물을 것입니다."
+    }
+  };
+
+  /* ---------- 상태 ---------- */
+  var current = 0;
+  var picks = [];   // 각 질문에서 고른 선택지 번호
+  var nick = "";
+
+  var screens = {
+    start: document.getElementById("screen-start"),
+    quiz: document.getElementById("screen-quiz"),
+    result: document.getElementById("screen-result")
+  };
+  var nickInput = document.getElementById("nickInput");
+
+  function showScreen(name){
+    Object.keys(screens).forEach(function(k){ screens[k].classList.remove("active"); });
+    screens[name].classList.add("active");
+    document.getElementById("pageSig").style.display = (name === "result") ? "none" : "";
+    window.scrollTo(0, 0);
+  }
+
+  function escapeHtml(str){
+    return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+  }
+
+  document.getElementById("startBtn").addEventListener("click", function(){
+    nick = nickInput.value.trim();
+    current = 0;
+    picks = [];
+    showScreen("quiz");
+    renderQuestion();
+  });
+  nickInput.addEventListener("keydown", function(e){
+    if(e.key === "Enter"){ document.getElementById("startBtn").click(); }
+  });
+
+  var LETTERS = ["가","나","다"];
+
+  function renderQuestion(){
+    var q = questions[current];
+    document.getElementById("progressText").textContent = (current + 1) + " / " + questions.length;
+    document.getElementById("progressFill").style.width = (current / questions.length * 100) + "%";
+    document.getElementById("qBadge").textContent = "상황 " + (current + 1);
+    document.getElementById("qScene").textContent = q.scene;
+    document.getElementById("qText").textContent = q.q;
+    document.getElementById("backBtn").style.visibility = current === 0 ? "hidden" : "visible";
+
+    var wrap = document.getElementById("optionsWrap");
+    wrap.innerHTML = "";
+    q.opts.forEach(function(opt, i){
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "option";
+      btn.innerHTML = '<span class="ltr">' + LETTERS[i] + '</span><span>' + escapeHtml(opt.t) + '</span>';
+      btn.addEventListener("click", function(){
+        picks[current] = i;
+        current++;
+        if(current < questions.length){ renderQuestion(); }
+        else{ showResult(); }
+      });
+      wrap.appendChild(btn);
+    });
+  }
+
+  document.getElementById("backBtn").addEventListener("click", function(){
+    if(current > 0){
+      current--;
+      picks.length = current;
+      renderQuestion();
+    }
+  });
+
+  function tally(){
+    var r = 0, n = 0, tagCount = {}, tagFirst = {};
+    picks.forEach(function(pi, qi){
+      var o = questions[qi].opts[pi];
+      r += o.r; n += o.n;
+      tagCount[o.tag] = (tagCount[o.tag] || 0) + 1;
+      if(tagFirst[o.tag] === undefined){ tagFirst[o.tag] = qi; }
+    });
+    return { r:r, n:n, tagCount:tagCount, tagFirst:tagFirst };
+  }
+
+  function pickSummary(t, typeKey){
+    var keys = Object.keys(t.tagCount);
+    // 결과 유형 쪽 생각을 우선, 그다음 많이 고른 순, 같으면 먼저 나온 순
+    function sideRank(k){
+      var s = TAGS[k].side;
+      if(typeKey === "b"){ return 0; }
+      if(s === typeKey){ return 0; }
+      if(s === "m"){ return 1; }
+      return 2;
+    }
+    keys.sort(function(a, b){
+      return sideRank(a) - sideRank(b) || t.tagCount[b] - t.tagCount[a] || t.tagFirst[a] - t.tagFirst[b];
+    });
+    if(typeKey === "b"){
+      // 균형형: 롤스 쪽, 노직 쪽 생각을 하나 이상씩 담는다
+      var rk = keys.filter(function(k){ return TAGS[k].side === "r"; });
+      var nk = keys.filter(function(k){ return TAGS[k].side === "n"; });
+      var mk = keys.filter(function(k){ return TAGS[k].side === "m"; });
+      var out = [];
+      if(rk[0]){ out.push(rk[0]); }
+      if(nk[0]){ out.push(nk[0]); }
+      if(mk[0]){ out.push(mk[0]); }
+      keys.forEach(function(k){ if(out.length < 3 && out.indexOf(k) === -1){ out.push(k); } });
+      return out.slice(0, 3);
+    }
+    return keys.slice(0, 3);
+  }
+
+  function claimBlock(key, idxs){
+    var c = CLAIMS[key];
+    var lis = idxs.map(function(i){ return "<li>" + c.items[i] + "</li>"; }).join("");
+    return '<div class="rc-sec rc-claims ' + c.theme + '">' +
+      '<div class="rc-sec-title"><img src="' + c.img + '" alt="">' + c.who + '의 핵심 주장</div>' +
+      '<ol>' + lis + '</ol>' +
+      '<div class="rc-src">' + c.src + '</div></div>';
+  }
+
+  function showResult(){
+    document.getElementById("progressFill").style.width = "100%";
+    var t = tally();
+    var total = t.r + t.n;
+    var pr = total ? Math.round(t.r / total * 100) : 50;
+    var pn = 100 - pr;
+    var typeKey = Math.abs(pr - 50) < 10 ? "b" : (pr > 50 ? "r" : "n");
+    var R = RESULTS[typeKey];
+    var card = document.getElementById("resultCard");
+    card.style.setProperty("--tc", R.tc);
+    card.style.setProperty("--tc-ink", R.tcInk);
+
+    var portraits = document.getElementById("rcPortraits");
+    if(typeKey === "b"){
+      portraits.className = "rc-portraits both";
+      portraits.innerHTML = '<img class="r" src="img/rawls.png" alt="롤스 초상"><img class="n" src="img/nozick.png" alt="노직 초상">';
+    }else{
+      portraits.className = "rc-portraits";
+      portraits.innerHTML = '<img class="' + typeKey + '" src="' + CLAIMS[typeKey].img + '" alt="' + CLAIMS[typeKey].who + ' 초상">';
+    }
+
+    document.getElementById("rcNick").textContent = nick ? (nick + " 님의 정의관은") : "나의 정의관은";
+    document.getElementById("rcName").textContent = R.name;
+    document.getElementById("rcAlias").textContent = R.alias;
+
+    document.getElementById("rcPctR").textContent = "롤스 " + pr + "%";
+    document.getElementById("rcPctN").textContent = "노직 " + pn + "%";
+    document.getElementById("rcBarR").style.width = pr + "%";
+    document.getElementById("rcBarN").style.width = pn + "%";
+
+    document.getElementById("rcMine").innerHTML = pickSummary(t, typeKey).map(function(k){
+      return "<li>" + escapeHtml(TAGS[k].text) + "</li>";
+    }).join("");
+
+    document.getElementById("rcClaims").innerHTML = R.claims.map(function(c){ return claimBlock(c.key, c.idx); }).join("");
+
+    var other = document.getElementById("rcOther");
+    var oc = R.otherSide === "r" ? "rawls" : (R.otherSide === "n" ? "nozick" : null);
+    other.style.setProperty("--oc", oc ? "var(--" + oc + ")" : "var(--accent)");
+    other.style.setProperty("--oc-ink", oc ? "var(--" + oc + "-ink)" : "var(--accent-ink)");
+    other.style.setProperty("--oc-soft", oc ? "var(--" + oc + "-soft)" : "var(--accent-soft)");
+    document.getElementById("rcOtherTitle").textContent = R.otherTitle;
+    document.getElementById("rcOtherText").textContent = R.otherText;
+
+    showScreen("result");
+  }
+
+  document.getElementById("restartBtn").addEventListener("click", function(){
+    current = 0;
+    picks = [];
+    nickInput.value = nick;
+    showScreen("start");
+  });
+
+  /* ---------- 이미지로 저장 ---------- */
+  document.getElementById("saveImageBtn").addEventListener("click", function(){
+    if(typeof html2canvas === "undefined"){
+      alert("이미지 저장 기능을 불러오지 못했습니다. 화면 캡처(스크린샷)로 저장해 봅시다.");
+      return;
+    }
+    var btn = this;
+    var actions = document.getElementById("resultActions");
+    var target = document.getElementById("resultCard");
+    var originalText = btn.textContent;
+
+    btn.disabled = true;
+    btn.textContent = "저장 중...";
+    actions.style.display = "none";
+    var originalAnimation = target.style.animation;
+    target.style.animation = "none";
+    var screenEl = screens.result;
+    var originalScreenAnimation = screenEl.style.animation;
+    screenEl.style.animation = "none";
+
+    function restore(){
+      actions.style.display = "";
+      target.style.animation = originalAnimation;
+      screenEl.style.animation = originalScreenAnimation;
+      btn.disabled = false;
+      btn.textContent = originalText;
+    }
+
+    var bg = getComputedStyle(target).backgroundColor || "#ffffff";
+    html2canvas(target, { backgroundColor: bg, scale: Math.max(2, window.devicePixelRatio || 1), useCORS: true, logging: false }).then(function(canvas){
+      restore();
+      var link = document.createElement("a");
+      link.download = (nick || "나의") + "_정의관진단.png";
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+    }).catch(function(){
+      restore();
+      alert("이미지 저장에 실패했습니다. 화면 캡처(스크린샷)로 저장해 봅시다.");
+    });
+  });
+})();
+</script>
+</body>
+</html>

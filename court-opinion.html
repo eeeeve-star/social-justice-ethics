@@ -1,0 +1,838 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>가상 헌법재판소 의견서</title>
+<meta name="description" content="현대사회와 윤리 교정적 정의 — 사형 제도 유지와 폐지에 대한 가상 헌법재판소 결정문 작성 활동">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+  :root{
+    --bg:#F4F1E8;
+    --top-a:#E3DCC8; --top-b:#F4F1E8;
+    --surface:#FFFDF7;
+    --surface-2:#EFEADB;
+    --ink:#22283A;
+    --ink-soft:#4F566A;
+    --ink-faint:#7D8294;
+    --line:#DCD4BF;
+    --line-strong:#C3B898;
+    --accent:#2C3E66;
+    --accent-ink:#1F2E50;
+    --accent-soft:#E4E7EF;
+    --on-accent:#FFFFFF;
+    --keep:#94641C; --keep-soft:#F6ECD9;
+    --abol:#2F6F66; --abol-soft:#DFEFEC;
+    --kant:#3A6EA5; --rous:#F2795B; --becc:#20A4C4;
+    --warn:#A2412F;
+    --shadow:0 1px 2px rgba(34,40,58,.05), 0 12px 28px -18px rgba(34,40,58,.35);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#131824;
+      --top-a:#1E2638; --top-b:#131824;
+      --surface:#1B2232; --surface-2:#232C3F;
+      --ink:#ECE8DD; --ink-soft:#B7B6B0; --ink-faint:#8C8D92;
+      --line:#2E384D; --line-strong:#404C66;
+      --accent:#A9BCE6; --accent-ink:#CCD8F2; --accent-soft:#26304A; --on-accent:#131824;
+      --keep:#E2B266; --keep-soft:#3A2F1C;
+      --abol:#7CC7BA; --abol-soft:#1D3532;
+      --kant:#7EA9DA; --rous:#F79A82; --becc:#5CCBE5;
+      --warn:#E8907E;
+      --shadow:0 1px 2px rgba(0,0,0,.3), 0 12px 28px -16px rgba(0,0,0,.65);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#131824;
+    --top-a:#1E2638; --top-b:#131824;
+    --surface:#1B2232; --surface-2:#232C3F;
+    --ink:#ECE8DD; --ink-soft:#B7B6B0; --ink-faint:#8C8D92;
+    --line:#2E384D; --line-strong:#404C66;
+    --accent:#A9BCE6; --accent-ink:#CCD8F2; --accent-soft:#26304A; --on-accent:#131824;
+    --keep:#E2B266; --keep-soft:#3A2F1C;
+    --abol:#7CC7BA; --abol-soft:#1D3532;
+    --kant:#7EA9DA; --rous:#F79A82; --becc:#5CCBE5;
+    --warn:#E8907E;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 12px 28px -16px rgba(0,0,0,.65);
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    background-image:linear-gradient(180deg,var(--top-a) 0,var(--top-b) 340px);
+    background-repeat:no-repeat;
+    color:var(--ink);
+    font-family:"Noto Sans KR","Malgun Gothic",sans-serif;
+    font-size:16.5px; line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden; word-break:keep-all; overflow-wrap:anywhere;
+    min-height:100vh;
+  }
+  h1,h2,h3,.serif{ font-family:"Gowun Batang","Malgun Gothic",serif; letter-spacing:-0.01em; }
+  button, input, textarea{ font-family:inherit; }
+  img{ display:block; max-width:100%; }
+
+  .topbar{ max-width:600px; margin:0 auto; padding:14px 16px 0; display:flex; align-items:center; gap:10px; }
+  .topbar .crest{ font-family:"Gowun Batang",serif; font-size:14px; color:var(--ink-soft); letter-spacing:.12em; flex:1; }
+  .theme-btn{
+    width:40px; height:40px; border-radius:50%; flex:0 0 auto;
+    border:1px solid var(--line-strong); background:var(--surface); color:var(--ink);
+    cursor:pointer; font-size:17px; display:inline-flex; align-items:center; justify-content:center;
+  }
+  .theme-btn:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+
+  .app{ max-width:600px; margin:0 auto; padding:10px 16px 64px; }
+  .screen{ display:none; }
+  .screen.active{ display:block; animation:fadeUp .35s ease; }
+  @keyframes fadeUp{ from{ opacity:0; transform:translateY(8px);} to{ opacity:1; transform:none;} }
+  body.capturing *, body.capturing{ animation:none !important; transition:none !important; }
+
+  .card{
+    background:var(--surface); border:1px solid var(--line); border-radius:18px;
+    padding:24px 20px; box-shadow:var(--shadow);
+  }
+  .card + .card{ margin-top:14px; }
+
+  /* ---------- start ---------- */
+  .hero{ text-align:center; padding:26px 4px 20px; }
+  .hero .emblem{
+    width:74px; height:74px; margin:0 auto 14px; border-radius:50%;
+    border:1.5px solid var(--accent); color:var(--accent);
+    display:flex; align-items:center; justify-content:center;
+    font-family:"Gowun Batang",serif; font-size:30px; font-weight:700;
+    background:var(--surface);
+  }
+  .hero .kicker{ font-size:14px; letter-spacing:.18em; color:var(--ink-soft); margin:0 0 6px; }
+  .hero h1{ font-size:30px; line-height:1.35; margin:0 0 10px; color:var(--accent-ink); }
+  .hero .lead{ font-family:"Gowun Batang",serif; font-size:20px; margin:0; color:var(--ink); }
+
+  .case-label{ font-size:14px; font-weight:700; color:var(--accent); letter-spacing:.08em; margin:0 0 8px; }
+  .case-title{ font-family:"Gowun Batang",serif; font-size:20px; font-weight:700; margin:0 0 12px; line-height:1.45; }
+  .case p{ margin:0 0 10px; }
+  .law{
+    margin:14px 0 0; padding:14px 16px; border-left:3px solid var(--accent);
+    background:var(--accent-soft); border-radius:0 10px 10px 0; font-size:16px; line-height:1.7;
+  }
+  .law b{ display:block; font-size:14.5px; color:var(--accent-ink); margin-bottom:4px; }
+
+  .field label{ display:block; font-weight:700; margin-bottom:8px; }
+  .field input, .field textarea{
+    width:100%; font-size:17px; padding:13px 14px; border-radius:12px;
+    border:1.5px solid var(--line-strong); background:var(--bg); color:var(--ink);
+  }
+  .field textarea{ min-height:96px; resize:vertical; line-height:1.6; }
+  .field input:focus, .field textarea:focus{ outline:none; border-color:var(--accent); }
+  .hint{ font-size:14.5px; color:var(--ink-faint); margin:8px 0 0; }
+  .err{ font-size:15px; color:var(--warn); margin:8px 0 0; min-height:0; }
+
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:6px;
+    min-height:50px; padding:12px 20px; border-radius:12px; font-size:17px; font-weight:700;
+    cursor:pointer; border:1.5px solid var(--accent);
+  }
+  .btn.primary{ background:var(--accent); color:var(--on-accent); }
+  .btn.ghost{ background:transparent; color:var(--accent); }
+  .btn:disabled{ opacity:.4; cursor:not-allowed; }
+  .btn:focus-visible{ outline:2px solid var(--accent); outline-offset:3px; }
+  .btn-row{ display:flex; gap:10px; margin-top:18px; }
+  .btn-row .btn{ flex:1; }
+  .btn-row .btn.ghost{ flex:0 0 auto; }
+
+  /* ---------- steps ---------- */
+  .progress{ display:flex; gap:6px; margin:6px 0 14px; }
+  .progress span{ flex:1; height:5px; border-radius:3px; background:var(--line); }
+  .progress span.on{ background:var(--accent); }
+  .step-kicker{ font-size:14.5px; font-weight:700; color:var(--accent); letter-spacing:.06em; margin:0 0 4px; }
+  .step-title{ font-size:24px; line-height:1.4; margin:0 0 8px; }
+  .step-desc{ margin:0 0 16px; color:var(--ink-soft); }
+
+  .side-grid{ display:grid; gap:12px; }
+  .side{
+    text-align:left; width:100%; cursor:pointer; padding:18px 18px;
+    border-radius:14px; border:1.5px solid var(--line-strong); background:var(--surface); color:var(--ink);
+    font-size:16.5px; line-height:1.6;
+  }
+  .side .s-tag{ display:inline-block; font-size:14px; font-weight:700; padding:2px 10px; border-radius:999px; margin-bottom:8px; }
+  .side .s-name{ display:block; font-family:"Gowun Batang",serif; font-size:21px; font-weight:700; margin-bottom:4px; }
+  .side .s-sub{ display:block; color:var(--ink-soft); font-size:15.5px; }
+  .side.keep .s-tag{ background:var(--keep-soft); color:var(--keep); }
+  .side.abol .s-tag{ background:var(--abol-soft); color:var(--abol); }
+  .side.keep[aria-pressed="true"]{ border-color:var(--keep); background:var(--keep-soft); box-shadow:inset 0 0 0 1px var(--keep); }
+  .side.abol[aria-pressed="true"]{ border-color:var(--abol); background:var(--abol-soft); box-shadow:inset 0 0 0 1px var(--abol); }
+  .side:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+
+  .pick-list{ display:grid; gap:10px; }
+  .pick{
+    display:flex; gap:12px; align-items:flex-start; cursor:pointer;
+    padding:14px 14px; border-radius:12px; border:1.5px solid var(--line); background:var(--surface);
+    font-size:16.5px; line-height:1.6;
+  }
+  .pick input{ width:20px; height:20px; margin:3px 0 0; flex:0 0 auto; accent-color:var(--accent); }
+  .pick.checked{ border-color:var(--accent); background:var(--accent-soft); }
+  .pick.dim{ opacity:.45; }
+  .count{ font-size:15px; color:var(--ink-soft); margin:12px 0 0; }
+  .count b{ color:var(--accent); }
+
+  .note{
+    margin-top:16px; padding:14px 16px; border-radius:12px; background:var(--surface-2);
+    font-size:15.5px; line-height:1.7; color:var(--ink-soft);
+  }
+  .note b{ color:var(--ink); }
+
+  .sub-h{ font-family:"Gowun Batang",serif; font-size:19px; font-weight:700; margin:0 0 10px; }
+
+  .thinkers{ display:grid; gap:12px; }
+  .thinker{
+    display:flex; gap:14px; align-items:center; text-align:left; width:100%; cursor:pointer;
+    padding:14px; border-radius:14px; border:1.5px solid var(--line-strong); background:var(--surface); color:var(--ink);
+    font-size:16px; line-height:1.6;
+  }
+  .thinker .face{
+    width:64px; height:64px; border-radius:50%; overflow:hidden; flex:0 0 auto;
+    border:3px solid var(--tc); background:var(--surface-2);
+    display:flex; align-items:center; justify-content:center; font-family:"Gowun Batang",serif; font-weight:700; color:var(--tc);
+  }
+  .thinker .face img{ width:100%; height:100%; object-fit:cover; }
+  .thinker .t-name{ display:block; font-family:"Gowun Batang",serif; font-size:19px; font-weight:700; color:var(--tc); }
+  .thinker .t-line{ display:block; font-size:15.5px; color:var(--ink-soft); }
+  .thinker[aria-pressed="true"]{ border-color:var(--tc); box-shadow:inset 0 0 0 1px var(--tc); background:var(--surface-2); }
+  .thinker:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+
+  /* ---------- result document (paper stays light in both themes) ---------- */
+  .result-intro{ text-align:center; margin:8px 0 14px; }
+  .result-intro h2{ font-size:22px; margin:0 0 4px; }
+  .result-intro p{ margin:0; color:var(--ink-soft); font-size:15.5px; }
+
+  .doc{
+    --p-ink:#1E2433; --p-soft:#4A5164; --p-faint:#7A7F8E; --p-line:#CFC6AE; --p-navy:#2C3E66; --p-red:#B23A2E;
+    background:#FFFDF6; color:var(--p-ink);
+    border:1px solid #CFC6AE; border-radius:4px;
+    padding:12px; box-shadow:var(--shadow);
+  }
+  .doc-inner{ border:1px solid var(--p-line); padding:24px 18px 20px; }
+  .doc-head{ text-align:center; padding-bottom:16px; border-bottom:1.5px solid var(--p-navy); }
+  .doc-head .d-kicker{ font-size:13.5px; letter-spacing:.32em; color:var(--p-faint); margin:0 0 4px; }
+  .doc-head .d-title{ font-family:"Gowun Batang",serif; font-size:26px; font-weight:700; color:var(--p-navy); margin:0; letter-spacing:.06em; }
+  .doc-meta{ margin:16px 0 4px; font-size:15.5px; }
+  .doc-meta div{ display:flex; gap:10px; padding:5px 0; border-bottom:1px dotted var(--p-line); }
+  .doc-meta dt, .doc-meta .k{ flex:0 0 64px; color:var(--p-faint); font-weight:500; }
+  .doc-meta .v{ flex:1; font-weight:700; }
+
+  .d-sec{ margin-top:20px; }
+  .d-h{ font-family:"Gowun Batang",serif; font-size:19px; font-weight:700; color:var(--p-navy); margin:0 0 8px; letter-spacing:.04em; }
+  .d-h.center{ text-align:center; letter-spacing:.3em; }
+  .ruling{
+    font-family:"Gowun Batang",serif; font-size:19px; font-weight:700; text-align:center; line-height:1.6;
+    padding:14px 10px; border-top:1px solid var(--p-line); border-bottom:1px solid var(--p-line); margin:0;
+  }
+  .d-sub{ font-size:16px; font-weight:700; color:var(--p-ink); margin:14px 0 6px; }
+  .d-p{ margin:0 0 8px; font-size:16px; line-height:1.75; }
+  .d-list{ margin:0; padding:0; list-style:none; counter-reset:r; }
+  .d-list li{ position:relative; padding-left:28px; margin-bottom:8px; font-size:16px; line-height:1.75; counter-increment:r; }
+  .d-list li::before{ content:counter(r) "."; position:absolute; left:4px; top:0; font-weight:700; color:var(--p-navy); }
+  .d-law{ font-size:15px; line-height:1.75; color:var(--p-soft); padding:10px 12px; background:#F4F1E8; border-left:2px solid var(--p-navy); margin:0; }
+  .d-thinker{ display:flex; gap:12px; align-items:flex-start; padding:12px; border:1px solid var(--p-line); border-left:4px solid var(--tc); background:#FFFFFF; }
+  .d-thinker .face{ width:56px; height:56px; border-radius:50%; overflow:hidden; flex:0 0 auto; border:2px solid var(--tc); background:#EFEADB; }
+  .d-thinker .face img{ width:100%; height:100%; object-fit:cover; }
+  .d-thinker .nm{ font-family:"Gowun Batang",serif; font-weight:700; font-size:17px; color:var(--tc); margin:0 0 2px; }
+  .d-thinker .ln{ font-size:15px; line-height:1.65; color:var(--p-soft); margin:0 0 6px; }
+  .d-quote{ font-family:"Gowun Batang",serif; font-weight:700; font-size:16px; line-height:1.7; margin:0 0 4px; color:var(--p-ink); }
+  .d-src{ font-size:13.5px; color:var(--p-faint); margin:0 0 6px; }
+  .d-counter{ font-size:16px; line-height:1.75; margin:0 0 12px; }
+  .d-counter .lb{ display:block; font-size:14px; font-weight:700; letter-spacing:.04em; margin:0 0 2px; }
+  .lb.c{ color:#8A6A2E; }
+  .lb.r{ color:var(--p-navy); }
+  .d-prec{ font-size:15px; line-height:1.75; color:var(--p-soft); padding:10px 12px; border:1px dashed var(--p-line); }
+  .d-prec b{ color:var(--p-ink); }
+
+  .doc-foot{ margin-top:26px; text-align:center; }
+  .doc-foot .date{ font-size:16px; margin:0 0 14px; }
+  .sign-row{ display:flex; align-items:center; justify-content:center; gap:14px; }
+  .sign-row .who{ font-family:"Gowun Batang",serif; font-size:18px; font-weight:700; }
+  .seal{
+    width:70px; height:70px; border-radius:50%; flex:0 0 auto; padding:3px;
+    border:2.5px solid var(--p-red); background:#FFFDF6;
+  }
+  .seal-in{
+    width:100%; height:100%; border-radius:50%; border:1px solid var(--p-red);
+    color:var(--p-red); text-align:center; font-family:"Gowun Batang",serif; font-weight:700;
+    padding-top:10px;
+  }
+  .seal-in .s1{ display:block; font-size:14px; line-height:18px; }
+  .seal-in .s2{ display:block; font-size:11.5px; line-height:17px; white-space:nowrap; }
+  .credit{ margin-top:20px; padding-top:12px; border-top:1px solid var(--p-line); text-align:center; font-size:14px; color:var(--p-faint); letter-spacing:.02em; }
+
+  .actions{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:18px; }
+  .actions .btn{ width:100%; }
+
+  @media (min-width:560px){
+    .hero h1{ font-size:34px; }
+    .doc-inner{ padding:32px 30px 24px; }
+    .doc-head .d-title{ font-size:30px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="crest">가상 헌법재판소</span>
+  <button class="theme-btn" id="themeBtn" type="button" aria-label="밝은 화면과 어두운 화면 전환">☾</button>
+</div>
+
+<main class="app">
+
+  <!-- 시작 -->
+  <section class="screen active" id="s-start">
+    <div class="hero">
+      <div class="emblem" aria-hidden="true">憲</div>
+      <p class="kicker">가상 헌법재판소 의견서</p>
+      <h1>사형 제도,<br>유지인가 폐지인가</h1>
+      <p class="lead">여러분은 헌법재판관입니다.</p>
+    </div>
+
+    <div class="card case">
+      <p class="case-label">사건 개요</p>
+      <p class="case-title">사형 제도 위헌 확인 사건(가상)</p>
+      <p>사형이란 국가가 범죄자의 생명을 박탈하여 사회에서 영원히 격리하는 형벌입니다. 처벌의 본질과 적합성을 두고 사형 제도에 대한 찬성과 반대의 입장이 크게 대립하고 있습니다.</p>
+      <p>2010년 2월, 헌법재판소는 사형 제도가 헌법에 어긋나는지를 판단하였습니다. 이 활동에서는 그 사건을 바탕으로, 여러분이 재판관이 되어 사형 제도가 헌법에 위반되는지에 대한 의견서를 작성합니다.</p>
+      <p>우리나라는 1997년 12월 30일을 마지막으로 사형을 집행하지 않아 ‘실질적 사형 폐지 국가’로 분류됩니다.</p>
+      <div class="law">
+        <b>판단 기준 — 헌법 제37조 2항</b>
+        국민의 모든 자유와 권리는 국가 안전 보장·질서 유지 또는 공공복리를 위하여 필요한 경우에 한하여 법률로써 제한할 수 있으며, 제한하는 경우에도 자유와 권리의 본질적인 내용을 침해할 수 없다.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="field">
+        <label for="nameInput">재판관 이름</label>
+        <input id="nameInput" type="text" maxlength="10" autocomplete="off" placeholder="이름 또는 닉네임을 입력합니다">
+        <p class="err" id="nameErr" role="alert"></p>
+      </div>
+      <div class="btn-row">
+        <button class="btn primary" id="startBtn" type="button">심리 시작</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 1단계 -->
+  <section class="screen" id="s-side">
+    <div class="progress" aria-hidden="true"><span class="on"></span><span></span><span></span></div>
+    <div class="card">
+      <p class="step-kicker">1단계 · 의견 선택</p>
+      <h2 class="step-title">사형 제도에 대한 재판관의 의견을 정합니다.</h2>
+      <p class="step-desc">사형 제도가 헌법에 위반되는지, 위반되지 아니하는지 판단하여 하나를 선택합니다.</p>
+      <div class="side-grid">
+        <button class="side keep" type="button" data-side="keep" aria-pressed="false">
+          <span class="s-tag">합헌</span>
+          <span class="s-name">사형 제도 유지</span>
+          <span class="s-sub">사형 제도는 헌법에 위반되지 아니한다.</span>
+        </button>
+        <button class="side abol" type="button" data-side="abol" aria-pressed="false">
+          <span class="s-tag">위헌</span>
+          <span class="s-name">사형 제도 폐지</span>
+          <span class="s-sub">사형 제도는 헌법에 위반된다.</span>
+        </button>
+      </div>
+      <div class="btn-row">
+        <button class="btn ghost" type="button" data-go="s-start">이전</button>
+        <button class="btn primary" id="sideNext" type="button" disabled>다음</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2단계 -->
+  <section class="screen" id="s-reasons">
+    <div class="progress" aria-hidden="true"><span class="on"></span><span class="on"></span><span></span></div>
+    <div class="card">
+      <p class="step-kicker">2단계 · 근거 고르기</p>
+      <h2 class="step-title" id="reasonTitle">판단의 근거를 고릅니다.</h2>
+      <p class="step-desc">교과서에 제시된 논거 가운데 가장 설득력 있다고 생각하는 것을 2개 또는 3개 고릅니다.</p>
+      <div class="pick-list" id="reasonList"></div>
+      <p class="count" id="reasonCount"></p>
+      <div class="note" id="preventNote"></div>
+      <div class="btn-row">
+        <button class="btn ghost" type="button" data-go="s-side">이전</button>
+        <button class="btn primary" id="reasonNext" type="button" disabled>다음</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3단계 -->
+  <section class="screen" id="s-thinker">
+    <div class="progress" aria-hidden="true"><span class="on"></span><span class="on"></span><span class="on"></span></div>
+    <div class="card">
+      <p class="step-kicker">3단계 · 사상가와 반론</p>
+      <h2 class="step-title">의견을 뒷받침할 사상가를 선택합니다.</h2>
+      <p class="step-desc">재판관의 의견과 같은 입장에 선 사상가 한 명을 선택합니다.</p>
+      <div class="thinkers" id="thinkerList"></div>
+    </div>
+    <div class="card">
+      <p class="sub-h">예상 반론</p>
+      <p class="step-desc">반대편에서 제기할 수 있는 논거 하나를 골라 예상 반론으로 넣습니다.</p>
+      <div class="pick-list" id="counterList"></div>
+    </div>
+    <div class="card">
+      <div class="field">
+        <label for="rebutInput">예상 반론에 대한 재반론 <span style="font-weight:400;color:var(--ink-faint)">(선택)</span></label>
+        <textarea id="rebutInput" maxlength="150" placeholder="반론에 대한 재판관의 생각을 한두 문장으로 씁니다. 비워 두면 결정문에서 생략됩니다."></textarea>
+        <p class="hint"><span id="rebutLen">0</span> / 150자</p>
+      </div>
+      <div class="btn-row">
+        <button class="btn ghost" type="button" data-go="s-reasons">이전</button>
+        <button class="btn primary" id="writeBtn" type="button" disabled>결정문 작성</button>
+      </div>
+      <p class="err" id="thinkErr"></p>
+    </div>
+  </section>
+
+  <!-- 결과 -->
+  <section class="screen" id="s-result">
+    <div class="result-intro">
+      <h2>의견서가 완성되었습니다.</h2>
+      <p>아래 결정문을 확인한 뒤 이미지로 저장합니다.</p>
+    </div>
+
+    <article class="doc" id="docSheet">
+      <div class="doc-inner">
+        <header class="doc-head">
+          <p class="d-kicker">憲法裁判所</p>
+          <p class="d-title">헌법재판소 가상 결정문</p>
+        </header>
+        <div class="doc-meta">
+          <div><span class="k">사건</span><span class="v">사형 제도 위헌 확인 사건(가상)</span></div>
+          <div><span class="k">재판관</span><span class="v" id="dName"></span></div>
+          <div><span class="k">의견</span><span class="v" id="dSide"></span></div>
+        </div>
+
+        <section class="d-sec">
+          <p class="d-h center">주 문</p>
+          <p class="ruling" id="dRuling"></p>
+        </section>
+
+        <section class="d-sec">
+          <p class="d-h center">이 유</p>
+
+          <p class="d-sub">1. 판단 기준</p>
+          <p class="d-law">헌법 제37조 2항: 국민의 모든 자유와 권리는 국가 안전 보장·질서 유지 또는 공공복리를 위하여 필요한 경우에 한하여 법률로써 제한할 수 있으며, 제한하는 경우에도 자유와 권리의 본질적인 내용을 침해할 수 없다.</p>
+
+          <p class="d-sub">2. 판단의 근거</p>
+          <p class="d-p" id="dLead"></p>
+          <ol class="d-list" id="dReasons"></ol>
+
+          <p class="d-sub">3. 사상적 근거</p>
+          <div class="d-thinker" id="dThinker"></div>
+
+          <p class="d-sub">4. 예상 반론에 대한 판단</p>
+          <p class="d-counter" id="dCounter"></p>
+          <p class="d-counter" id="dRebut"></p>
+
+          <p class="d-sub">5. 참고 결정</p>
+          <p class="d-prec" id="dPrec"></p>
+        </section>
+
+        <footer class="doc-foot">
+          <p class="date" id="dDate"></p>
+          <div class="sign-row">
+            <span class="who" id="dSign"></span>
+            <span class="seal" aria-hidden="true"><span class="seal-in" style="display:block"><span class="s1">재판관</span><span class="s2" id="dSeal"></span></span></span>
+          </div>
+          <p class="credit">현대사회와 윤리 수강 2학년♥무늬T</p>
+        </footer>
+      </div>
+    </article>
+
+    <div class="actions" id="docActions">
+      <button class="btn primary" id="saveBtn" type="button">이미지로 저장</button>
+      <button class="btn ghost" id="restartBtn" type="button">처음부터</button>
+    </div>
+  </section>
+
+</main>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ---------- data (교과서 문장) ---------- */
+  var ARGS = {
+    keep: [
+      { t:'흉악 범죄 억제 효과가 큼', s:'사형 제도는 흉악 범죄 억제 효과가 크다.' },
+      { t:'국민의 생명과 안전을 지키는 방어 수단임', s:'사형 제도는 국민의 생명과 안전을 지키는 방어 수단이다.' },
+      { t:'흉악한 살인자의 생명 박탈은 비례성의 원리에 따른 사회 정의 실현임', s:'흉악한 살인자의 생명 박탈은 비례성의 원리에 따른 사회 정의 실현이다.' },
+      { t:'가해자의 생명을 피해자의 생명보다 중시하는 것은 평등의 논리에 어긋남', s:'가해자의 생명을 피해자의 생명보다 중시하는 것은 평등의 논리에 어긋난다.' },
+      { t:'합리적 수사와 제도 보완으로 오판 가능성 축소할 수 있음', s:'합리적 수사와 제도 보완으로 오판 가능성을 축소할 수 있다.' },
+      { t:'종신형은 유지하기 위한 세금이 많이 들고, 비인도적인 측면이 있음', s:'종신형은 유지하기 위한 세금이 많이 들고, 비인도적인 측면이 있다.' },
+      { t:'흉악 범죄인의 사형은 국민의 일반적 법 감정에 부응하므로 사형 제도 폐지는 시기상조임', s:'흉악 범죄인의 사형은 국민의 일반적 법 감정에 부응하므로 사형 제도 폐지는 시기상조이다.' }
+    ],
+    abol: [
+      { t:'흉악 범죄를 예방하는 효과가 없음', s:'사형 제도는 흉악 범죄를 예방하는 효과가 없다.' },
+      { t:'국가가 피해자를 대신해 행하는 일시적인 복수심 충족일 뿐 근본적인 해결이 아님', s:'사형은 국가가 피해자를 대신해 행하는 일시적인 복수심 충족일 뿐 근본적인 해결이 아니다.' },
+      { t:'형벌의 목적인 교화와 개선에 부합하지 않음', s:'사형은 형벌의 목적인 교화와 개선에 부합하지 않는다.' },
+      { t:'오판에 의한 사형의 경우 원상 복귀가 불가능함', s:'오판에 의한 사형의 경우 원상 복귀가 불가능하다.' },
+      { t:'인간의 존엄과 생명권을 침해하는 비인도적 형벌임', s:'사형은 인간의 존엄과 생명권을 침해하는 비인도적 형벌이다.' },
+      { t:'짧은 순간의 사형 집행은 흉악한 범죄인에게 오히려 온정적인 처사임', s:'짧은 순간의 사형 집행은 흉악한 범죄인에게 오히려 온정적인 처사이다.' },
+      { t:'정치적 반대 세력을 제거하는 수단으로 악용될 가능성이 있음', s:'사형 제도는 정치적 반대 세력을 제거하는 수단으로 악용될 가능성이 있다.' },
+      { t:'사회도 범죄의 책임이 있으므로 개인에게만 책임을 전가하는 것은 부당함', s:'사회도 범죄의 책임이 있으므로 개인에게만 책임을 전가하는 것은 부당하다.' }
+    ]
+  };
+
+  var THINKERS = {
+    kant: {
+      name:'칸트', side:'keep', color:'#3A6EA5', img:'img/kant.png',
+      line:'동등성의 원리에 따라 살인자에 대한 사형은 정당하며, 사형 이외의 형벌은 정의에 부합하지 않는다.',
+      quote:'“시민 사회가 모든 구성원의 동의로써 해체될 때조차도 감옥에 있는 마지막 살인자는 반드시 처형되어야 한다.”',
+      src:'칸트, 『윤리 형이상학』'
+    },
+    rous: {
+      name:'루소', side:'keep', color:'#F2795B', img:'img/rousseau.png',
+      line:'사회 계약의 관점에서 계약자인 시민의 생명과 안전을 확보하기 위한 사형은 정당하다.',
+      quote:'국가의 보존은 살인자의 보존과 양립할 수 없다.',
+      src:'교과서 「루소의 입장」'
+    },
+    becc: {
+      name:'베카리아', side:'abol', color:'#20A4C4', img:'img/beccaria.png',
+      line:'사회 계약은 계약자의 생명 보존이 목적이기 때문에 자신의 생명을 빼앗을 권능을 타인에게 양도할 자는 없다.',
+      quote:'“국가라 할지라도 국민의 한 생명을 빼앗을 권리는 없다.”',
+      src:'베카리아',
+      quote2:'“인간의 정신에 가장 큰 영향을 미치는 것은 고통의 강렬함이 아니라 고통이 지속되는 정도다.”',
+      src2:'베카리아, 『범죄와 형벌』'
+    }
+  };
+
+  var SIDE = {
+    keep: {
+      label:'사형 제도 유지(합헌)',
+      ruling:'사형 제도는 헌법에 위반되지 아니한다.',
+      title:'사형 제도 유지(합헌)의 근거를 고릅니다.',
+      lead:'이 재판관은 다음과 같은 이유로 사형 제도가 헌법에 위반되지 아니한다고 판단한다.',
+      note:'<b>일반 예방주의</b> — 사형을 통한 경고로 일반인이 죄를 짓지 않도록 예방할 수 있다고 본다.',
+      prec:'<b>2010년 헌법재판소 다수 의견(재판관 5명)</b><br>“사형 제도로 달성되는 범죄 예방을 통한 무고한 국민의 생명 보호 등 중대한 공익 보호, 그리고 정의 실현 및 사회 방위라는 공익은 극악한 범죄를 저지른 자의 생명권이라는 사익보다 결코 작다고 볼 수 없다.”',
+      thinkers:['kant','rous']
+    },
+    abol: {
+      label:'사형 제도 폐지(위헌)',
+      ruling:'사형 제도는 헌법에 위반된다.',
+      title:'사형 제도 폐지(위헌)의 근거를 고릅니다.',
+      lead:'이 재판관은 다음과 같은 이유로 사형 제도가 헌법에 위반된다고 판단한다.',
+      note:'<b>특수 예방주의</b> — 범죄자의 반사회성을 교화하여 범죄를 예방할 기회가 없게 되므로 사형 제도에 반대한다.',
+      prec:'<b>2010년 헌법재판소 소수 의견(재판관 4명)</b><br>“사형 제도를 통해 범죄 예방의 목적이 달성되는지 불확실하다. 무기 징역이나 종신형으로도 범죄자를 격리시켜 재범을 예방할 수 있다.”',
+      thinkers:['becc']
+    }
+  };
+
+  var state = { name:'', side:null, reasons:[], thinker:null, counter:null, rebut:'' };
+
+  /* ---------- helpers ---------- */
+  function $(id){ return document.getElementById(id); }
+  function el(tag, cls, text){
+    var e = document.createElement(tag);
+    if(cls) e.className = cls;
+    if(text != null) e.textContent = text;
+    return e;
+  }
+  function showScreen(id){
+    var list = document.querySelectorAll('.screen');
+    for(var i=0;i<list.length;i++) list[i].classList.remove('active');
+    $(id).classList.add('active');
+    window.scrollTo(0,0);
+  }
+  function other(side){ return side === 'keep' ? 'abol' : 'keep'; }
+
+  /* ---------- theme ---------- */
+  var store = {
+    get:function(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } },
+    set:function(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+  };
+  var root = document.documentElement;
+  var savedTheme = store.get('court_theme');
+  if(savedTheme === 'light' || savedTheme === 'dark') root.setAttribute('data-theme', savedTheme);
+  function isDark(){
+    var t = root.getAttribute('data-theme');
+    if(t) return t === 'dark';
+    return !!(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  }
+  var themeBtn = $('themeBtn');
+  function paintTheme(){ themeBtn.textContent = isDark() ? '☀' : '☾'; }
+  paintTheme();
+  themeBtn.addEventListener('click', function(){
+    var next = isDark() ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    store.set('court_theme', next);
+    paintTheme();
+  });
+
+  /* ---------- back buttons ---------- */
+  var backs = document.querySelectorAll('[data-go]');
+  for(var b=0;b<backs.length;b++){
+    backs[b].addEventListener('click', function(){ showScreen(this.getAttribute('data-go')); });
+  }
+
+  /* ---------- start ---------- */
+  var nameInput = $('nameInput');
+  function start(){
+    var v = nameInput.value.trim();
+    if(!v){
+      $('nameErr').textContent = '재판관 이름을 입력해야 심리를 시작할 수 있습니다.';
+      nameInput.focus();
+      return;
+    }
+    $('nameErr').textContent = '';
+    state.name = v;
+    showScreen('s-side');
+  }
+  $('startBtn').addEventListener('click', start);
+  nameInput.addEventListener('keydown', function(e){ if(e.key === 'Enter') start(); });
+
+  /* ---------- step 1 ---------- */
+  var sideBtns = document.querySelectorAll('.side');
+  for(var s=0;s<sideBtns.length;s++){
+    sideBtns[s].addEventListener('click', function(){
+      var v = this.getAttribute('data-side');
+      if(state.side !== v){
+        state.side = v; state.reasons = []; state.thinker = null; state.counter = null;
+      }
+      for(var j=0;j<sideBtns.length;j++) sideBtns[j].setAttribute('aria-pressed', sideBtns[j] === this ? 'true' : 'false');
+      $('sideNext').disabled = false;
+    });
+  }
+  $('sideNext').addEventListener('click', function(){
+    if(!state.side) return;
+    buildReasons();
+    showScreen('s-reasons');
+  });
+
+  /* ---------- step 2 ---------- */
+  function buildReasons(){
+    var conf = SIDE[state.side];
+    $('reasonTitle').textContent = conf.title;
+    $('preventNote').innerHTML = '생각 더하기 · ' + conf.note;
+    var list = $('reasonList');
+    list.innerHTML = '';
+    ARGS[state.side].forEach(function(a, i){
+      var lab = el('label','pick');
+      var cb = document.createElement('input');
+      cb.type = 'checkbox'; cb.value = i;
+      cb.checked = state.reasons.indexOf(i) > -1;
+      cb.addEventListener('change', function(){
+        var idx = state.reasons.indexOf(i);
+        if(cb.checked && idx < 0){
+          if(state.reasons.length >= 3){ cb.checked = false; return; }
+          state.reasons.push(i);
+        } else if(!cb.checked && idx > -1){
+          state.reasons.splice(idx,1);
+        }
+        refreshReasons();
+      });
+      lab.appendChild(cb);
+      lab.appendChild(el('span', null, a.t));
+      list.appendChild(lab);
+    });
+    refreshReasons();
+  }
+  function refreshReasons(){
+    var n = state.reasons.length;
+    var labs = $('reasonList').querySelectorAll('.pick');
+    for(var i=0;i<labs.length;i++){
+      var cb = labs[i].querySelector('input');
+      labs[i].classList.toggle('checked', cb.checked);
+      var block = !cb.checked && n >= 3;
+      cb.disabled = block;
+      labs[i].classList.toggle('dim', block);
+    }
+    $('reasonCount').innerHTML = '선택한 근거 <b>' + n + '</b>개 · 2개 이상 3개 이하로 고릅니다.';
+    $('reasonNext').disabled = n < 2;
+  }
+  $('reasonNext').addEventListener('click', function(){
+    if(state.reasons.length < 2) return;
+    buildThinkers();
+    showScreen('s-thinker');
+  });
+
+  /* ---------- step 3 ---------- */
+  function faceNode(t, cls){
+    var f = el('span', cls || 'face');
+    var img = new Image();
+    img.alt = t.name + ' 초상';
+    img.onerror = function(){ f.textContent = t.name.charAt(0); };
+    img.src = t.img;
+    f.appendChild(img);
+    return f;
+  }
+  function buildThinkers(){
+    var conf = SIDE[state.side];
+    if(conf.thinkers.length === 1) state.thinker = conf.thinkers[0];
+    var box = $('thinkerList');
+    box.innerHTML = '';
+    conf.thinkers.forEach(function(key){
+      var t = THINKERS[key];
+      var btn = el('button','thinker');
+      btn.type = 'button';
+      btn.style.setProperty('--tc', t.color);
+      btn.setAttribute('aria-pressed', state.thinker === key ? 'true' : 'false');
+      btn.appendChild(faceNode(t));
+      var txt = el('span');
+      txt.appendChild(el('span','t-name', t.name));
+      txt.appendChild(el('span','t-line', t.line));
+      btn.appendChild(txt);
+      btn.addEventListener('click', function(){
+        state.thinker = key;
+        var all = box.querySelectorAll('.thinker');
+        for(var i=0;i<all.length;i++) all[i].setAttribute('aria-pressed', all[i] === btn ? 'true' : 'false');
+        refreshWrite();
+      });
+      box.appendChild(btn);
+    });
+
+    var cl = $('counterList');
+    cl.innerHTML = '';
+    ARGS[other(state.side)].forEach(function(a, i){
+      var lab = el('label','pick');
+      var rd = document.createElement('input');
+      rd.type = 'radio'; rd.name = 'counter'; rd.value = i;
+      rd.checked = state.counter === i;
+      rd.addEventListener('change', function(){
+        state.counter = i;
+        var all = cl.querySelectorAll('.pick');
+        for(var k=0;k<all.length;k++) all[k].classList.toggle('checked', all[k].querySelector('input').checked);
+        refreshWrite();
+      });
+      lab.appendChild(rd);
+      lab.appendChild(el('span', null, a.t));
+      if(rd.checked) lab.classList.add('checked');
+      cl.appendChild(lab);
+    });
+    refreshWrite();
+  }
+  function refreshWrite(){
+    var ok = !!state.thinker && state.counter !== null;
+    $('writeBtn').disabled = !ok;
+    $('thinkErr').textContent = ok ? '' : '사상가와 예상 반론을 모두 선택해야 결정문을 작성할 수 있습니다.';
+  }
+  var rebutInput = $('rebutInput');
+  rebutInput.addEventListener('input', function(){ $('rebutLen').textContent = rebutInput.value.length; });
+  $('writeBtn').addEventListener('click', function(){
+    if(!state.thinker || state.counter === null) return;
+    state.rebut = rebutInput.value.trim();
+    buildDoc();
+    showScreen('s-result');
+  });
+
+  /* ---------- result ---------- */
+  function buildDoc(){
+    var conf = SIDE[state.side];
+    var t = THINKERS[state.thinker];
+    $('dName').textContent = state.name;
+    $('dSide').textContent = conf.label;
+    $('dRuling').textContent = conf.ruling;
+    $('dLead').textContent = conf.lead;
+
+    var ol = $('dReasons');
+    ol.innerHTML = '';
+    state.reasons.slice().sort(function(a,b){ return a-b; }).forEach(function(i){
+      ol.appendChild(el('li', null, ARGS[state.side][i].s));
+    });
+
+    var th = $('dThinker');
+    th.innerHTML = '';
+    th.style.setProperty('--tc', t.color);
+    th.appendChild(faceNode(t));
+    var body = el('div');
+    body.appendChild(el('p','nm', t.name));
+    body.appendChild(el('p','ln', t.line));
+    body.appendChild(el('p','d-quote', t.quote));
+    body.appendChild(el('p','d-src', '— ' + t.src));
+    if(t.quote2){
+      body.appendChild(el('p','d-quote', t.quote2));
+      body.appendChild(el('p','d-src', '— ' + t.src2));
+    }
+    th.appendChild(body);
+
+    var c = $('dCounter');
+    c.innerHTML = '';
+    c.appendChild(el('span','lb c','예상 반론'));
+    c.appendChild(document.createTextNode(ARGS[other(state.side)][state.counter].s));
+    var r = $('dRebut');
+    r.innerHTML = '';
+    if(state.rebut){
+      r.style.display = '';
+      r.appendChild(el('span','lb r','재반론'));
+      r.appendChild(document.createTextNode(state.rebut));
+    } else {
+      r.style.display = 'none';
+    }
+
+    $('dPrec').innerHTML = conf.prec;
+
+    var d = new Date();
+    $('dDate').textContent = d.getFullYear() + '년 ' + (d.getMonth()+1) + '월 ' + d.getDate() + '일';
+    $('dSign').textContent = '재판관 ' + state.name;
+    $('dSeal').textContent = state.name.replace(/\s+/g,'').slice(0,4);
+  }
+
+  $('restartBtn').addEventListener('click', function(){
+    state = { name:'', side:null, reasons:[], thinker:null, counter:null, rebut:'' };
+    nameInput.value = '';
+    rebutInput.value = '';
+    $('rebutLen').textContent = '0';
+    for(var j=0;j<sideBtns.length;j++) sideBtns[j].setAttribute('aria-pressed','false');
+    $('sideNext').disabled = true;
+    showScreen('s-start');
+  });
+
+  /* ---------- save as image (기준작 방식) ---------- */
+  $('saveBtn').addEventListener('click', function(){
+    if(typeof html2canvas === 'undefined'){
+      alert('이미지 저장 기능을 불러오지 못하였습니다. 화면 캡처(스크린샷)로 저장하시기 바랍니다.');
+      return;
+    }
+    var btn = this;
+    var actions = $('docActions');
+    var screen = $('s-result');
+    var target = $('docSheet');
+    var originalText = btn.textContent;
+
+    btn.disabled = true;
+    btn.textContent = '저장 중...';
+    actions.style.display = 'none';
+    document.body.classList.add('capturing');
+    var originalAnimation = screen.style.animation;
+    screen.style.animation = 'none';
+
+    function restore(){
+      actions.style.display = '';
+      document.body.classList.remove('capturing');
+      screen.style.animation = originalAnimation;
+      btn.disabled = false;
+      btn.textContent = originalText;
+    }
+
+    var renderScale = Math.max(2, window.devicePixelRatio || 1);
+    html2canvas(target, {
+      backgroundColor:'#FFFDF6',
+      scale:renderScale,
+      useCORS:true,
+      logging:false,
+      onclone:function(doc){
+        doc.body.classList.add('capturing');
+        var s = doc.getElementById('s-result');
+        if(s) s.style.animation = 'none';
+      }
+    }).then(function(canvas){
+      restore();
+      var link = document.createElement('a');
+      link.download = (state.name || '재판관') + '_가상결정문.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    }).catch(function(){
+      restore();
+      alert('이미지 저장에 실패하였습니다. 화면 캡처(스크린샷)로 저장하시기 바랍니다.');
+    });
+  });
+})();
+</script>
+</body>
+</html>
