@@ -1,0 +1,1030 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>사회 정의와 윤리 - 형성평가</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700;900&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+  :root{
+    --bg:#F2F4F1;
+    --surface:#FFFFFF;
+    --surface-soft:#E9EDE9;
+    --ink:#1C2321;
+    --ink-soft:#5B665F;
+    --border:#DCE3DE;
+    --accent:#1F6F63;
+    --accent-ink:#0E3B34;
+    --accent-soft:#E1EFEB;
+    --good:#2E7D53;
+    --good-soft:#E4F3E9;
+    --bad:#C1443A;
+    --bad-soft:#FBE7E4;
+    --shadow:rgba(28,35,33,0.10);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#141F1B;
+      --surface:#1C2A25;
+      --surface-soft:#233129;
+      --ink:#EAF1EC;
+      --ink-soft:#9FB4AA;
+      --border:#324139;
+      --accent:#63CDB6;
+      --accent-ink:#DFF7F0;
+      --accent-soft:#20342E;
+      --good:#74CE9B;
+      --good-soft:#1E3527;
+      --bad:#E8867B;
+      --bad-soft:#3B2622;
+      --shadow:rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#141F1B;
+    --surface:#1C2A25;
+    --surface-soft:#233129;
+    --ink:#EAF1EC;
+    --ink-soft:#9FB4AA;
+    --border:#324139;
+    --accent:#63CDB6;
+    --accent-ink:#DFF7F0;
+    --accent-soft:#20342E;
+    --good:#74CE9B;
+    --good-soft:#1E3527;
+    --bad:#E8867B;
+    --bad-soft:#3B2622;
+    --shadow:rgba(0,0,0,0.35);
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"Noto Sans KR", "Malgun Gothic", sans-serif;
+    min-height:100dvh;
+    display:flex;
+    justify-content:center;
+    padding:32px 16px 56px;
+  }
+  .app{ width:100%; max-width:520px; }
+
+  .eyebrow{
+    font-family:"Noto Sans KR", "IBM Plex Mono", ui-monospace, monospace;
+    font-size:12.5px;
+    letter-spacing:.02em;
+    color:var(--accent);
+    font-weight:700;
+    margin:0 0 6px;
+  }
+  h1.title{
+    font-family:"Gowun Batang", serif;
+    font-size:clamp(24px,6.5vw,32px);
+    line-height:1.3;
+    margin:0 0 8px;
+    text-wrap:balance;
+  }
+  p.lede{
+    color:var(--ink-soft);
+    margin:0 0 24px;
+    font-size:14.5px;
+    line-height:1.6;
+  }
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:24px;
+    box-shadow:0 10px 28px -18px var(--shadow);
+  }
+  .card + .card{ margin-top:16px; }
+
+  label.field-label{
+    display:block;
+    font-size:13px;
+    font-weight:700;
+    color:var(--ink);
+    margin-bottom:8px;
+  }
+
+  .passage-label-row{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    margin-bottom:10px;
+  }
+  .field-hint{ font-size:12px; color:var(--ink-soft); }
+  .passage-box{
+    max-height:260px;
+    overflow-y:auto;
+    background:var(--bg);
+    border:1.5px solid var(--border);
+    border-radius:12px;
+    padding:16px;
+  }
+  .passage-box.expanded{ max-height:none; }
+  .passage-box p{
+    font-size:14px;
+    line-height:1.75;
+    margin:0 0 12px;
+    color:var(--ink);
+  }
+  .passage-box p:last-child{ margin-bottom:0; }
+  .passage-toggle-btn{
+    background:none;
+    border:1.5px solid var(--border);
+    color:var(--accent-ink);
+    font-size:12.5px;
+    font-weight:700;
+    padding:6px 12px;
+    border-radius:999px;
+    cursor:pointer;
+  }
+  .passage-toggle-btn:hover{ background:var(--accent-soft); border-color:var(--accent); }
+
+  .diff-row{
+    display:flex;
+    gap:8px;
+    margin-top:8px;
+  }
+  .diff-pill{
+    flex:1;
+    text-align:center;
+    padding:11px 8px;
+    border-radius:11px;
+    border:1.5px solid var(--border);
+    background:var(--bg);
+    color:var(--ink-soft);
+    font-size:14.5px;
+    font-weight:700;
+    cursor:pointer;
+    user-select:none;
+  }
+  .diff-pill.active{
+    border-color:var(--accent);
+    background:var(--accent-soft);
+    color:var(--accent-ink);
+  }
+  .diff-pill:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+
+  .field-block{ margin-bottom:20px; }
+  .field-block:last-child{ margin-bottom:0; }
+
+  button{ font-family:inherit; }
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    width:100%;
+    padding:14px 16px;
+    border-radius:12px;
+    font-size:15.5px;
+    font-weight:700;
+    border:1.5px solid transparent;
+    cursor:pointer;
+    min-height:48px;
+  }
+  .btn:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+  .btn-primary{ background:var(--accent); color:var(--surface); }
+  .btn-primary:disabled{ background:var(--surface-soft); color:var(--ink-soft); cursor:not-allowed; }
+  .btn-ghost{ background:transparent; color:var(--ink); border-color:var(--border); }
+  .btn-ghost:hover{ background:var(--surface-soft); }
+  .btn-row{ display:flex; gap:10px; margin-top:18px; }
+  .btn-row > *{ flex:1; }
+  .signature{
+    text-align:center;
+    font-size:12.5px;
+    color:var(--ink-soft);
+    margin:20px 0 0;
+  }
+
+  /* quiz */
+  .progress-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:10px;
+  }
+  .progress-label{
+    font-family:"IBM Plex Mono", monospace;
+    font-variant-numeric:tabular-nums;
+    font-size:13px;
+    font-weight:600;
+    color:var(--ink-soft);
+  }
+  .diff-tag{
+    font-size:11.5px;
+    font-weight:700;
+    color:var(--accent-ink);
+    background:var(--accent-soft);
+    padding:3px 9px;
+    border-radius:999px;
+  }
+  .progress-track{
+    height:6px;
+    border-radius:999px;
+    background:var(--surface-soft);
+    overflow:hidden;
+    margin-bottom:16px;
+  }
+  .progress-fill{
+    height:100%;
+    background:var(--accent);
+    border-radius:999px;
+    transition:width .25s ease;
+  }
+  .quiz-passage-wrap{ margin-bottom:18px; }
+  .question-text{
+    font-size:19px;
+    font-weight:700;
+    line-height:1.5;
+    margin:0 0 20px;
+    text-wrap:balance;
+  }
+  .options{ display:flex; flex-direction:column; gap:10px; margin-bottom:22px; }
+  .option{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    width:100%;
+    text-align:left;
+    padding:13px 14px;
+    border-radius:13px;
+    border:1.5px solid var(--border);
+    background:var(--surface);
+    color:var(--ink);
+    font-size:15px;
+    line-height:1.5;
+    cursor:pointer;
+  }
+  .option:hover{ background:var(--surface-soft); }
+  body.suppress-hover .option:hover{ background:var(--surface); }
+  .option:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+  .option.selected{
+    border-color:var(--accent);
+    background:var(--accent-soft);
+  }
+  .option:disabled{ cursor:default; }
+  .option:disabled:hover{ background:var(--surface); }
+  .option.correct{ border-color:var(--good); background:var(--good-soft); }
+  .option.wrong{ border-color:var(--bad); background:var(--bad-soft); }
+  .option.correct:disabled:hover{ background:var(--good-soft); }
+  .option.wrong:disabled:hover{ background:var(--bad-soft); }
+  .option-mark{
+    flex:0 0 auto;
+    width:22px; height:22px;
+    border-radius:50%;
+    border:1.5px solid var(--border);
+    display:flex; align-items:center; justify-content:center;
+    font-family:"IBM Plex Mono", monospace;
+    font-size:12px; font-weight:600;
+    color:var(--ink-soft);
+  }
+  .option.selected .option-mark{
+    border-color:var(--accent);
+    background:var(--accent);
+    color:var(--surface);
+  }
+  .option.correct .option-mark{
+    border-color:var(--good);
+    background:var(--good);
+    color:var(--surface);
+  }
+  .option.wrong .option-mark{
+    border-color:var(--bad);
+    background:var(--bad);
+    color:var(--surface);
+  }
+  .feedback-box{
+    border-radius:12px;
+    padding:14px 16px;
+    margin:-6px 0 22px;
+    border:1px solid;
+  }
+  .feedback-box.correct{ background:var(--good-soft); border-color:var(--good); }
+  .feedback-box.wrong{ background:var(--bad-soft); border-color:var(--bad); }
+  .feedback-label{ font-weight:700; font-size:14px; margin:0 0 6px; }
+  .feedback-label.correct{ color:var(--good); }
+  .feedback-label.wrong{ color:var(--bad); }
+  .feedback-explain{ font-size:13.5px; line-height:1.6; color:var(--ink); margin:0; }
+  .nav-row{ display:flex; gap:10px; }
+  .nav-row > *{ flex:1; }
+
+  /* result */
+  .score-tile{
+    text-align:center;
+    padding:8px 8px 4px;
+    margin-bottom:8px;
+  }
+  .score-number{
+    font-family:"IBM Plex Mono", monospace;
+    font-variant-numeric:tabular-nums;
+    font-size:44px;
+    font-weight:600;
+    line-height:1;
+    margin:0 0 6px;
+  }
+  .score-number.tier-good{ color:var(--good); }
+  .score-number.tier-mid{ color:var(--ink); }
+  .score-number.tier-bad{ color:var(--bad); }
+  .score-caption{ color:var(--ink-soft); font-size:14px; margin:0; }
+  .perfect-badge{
+    display:inline-block;
+    margin:14px 0 0;
+    padding:6px 16px;
+    border-radius:999px;
+    background:var(--good-soft);
+    color:var(--good);
+    font-weight:700;
+    font-size:14.5px;
+  }
+  .perfect-badge.encourage{
+    background:var(--accent-soft);
+    color:var(--accent-ink);
+  }
+
+  .review-item{
+    padding:16px 16px 16px 18px;
+    border:1px solid var(--border);
+    border-left:4px solid var(--border);
+    border-radius:12px;
+    margin-bottom:12px;
+    background:var(--surface);
+  }
+  .review-item.correct{ border-left-color:var(--good); }
+  .review-item.wrong{ border-left-color:var(--bad); }
+  .review-item:last-child{ margin-bottom:0; }
+  .review-head{
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+    margin-bottom:8px;
+  }
+  .review-index{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:12px;
+    color:var(--ink-soft);
+    flex:0 0 auto;
+  }
+  .review-q{ font-weight:700; font-size:15px; line-height:1.5; }
+  .review-chip{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    font-size:12px;
+    font-weight:700;
+    padding:3px 9px;
+    border-radius:999px;
+    margin:2px 6px 2px 0;
+  }
+  .review-chip.correct{ background:var(--good-soft); color:var(--good); }
+  .review-chip.wrong{ background:var(--bad-soft); color:var(--bad); }
+  .review-answers{ font-size:13.5px; color:var(--ink-soft); margin:6px 0; line-height:1.7; }
+  .review-answers b{ color:var(--ink); font-weight:700; }
+  .review-explain{
+    font-size:13.5px;
+    color:var(--ink-soft);
+    line-height:1.6;
+    margin:8px 0 0;
+    padding-top:8px;
+    border-top:1px dashed var(--border);
+  }
+  .review-explain b{ color:var(--ink); }
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+
+<script>
+(function(){
+  var app = document.getElementById('app');
+
+  var TITLE = '사회 정의와 윤리';
+  var SUBTITLE = '현대사회와 윤리';
+  var UNIT = 'IV. 민주시민과 윤리';
+  var SIGNATURE = '현대사회와 윤리 수강 2학년♥무늬T';
+
+  var PASSAGE_PARAGRAPHS = [
+    "[개인 윤리와 사회 윤리] 개인 윤리는 개인의 도덕성을 함양하여 사회의 윤리 문제를 해결하려 하고, 사회 윤리는 사회의 구조와 제도를 개선하는 데 초점을 둔다. 니부어는 도덕적인 개인일지라도 집단에 소속되면 이기심을 조절하는 힘이 떨어져 비도덕적인 행동을 하기 쉽다고 보았다. 그래서 사회 정의를 실현하려면 양심과 이타성을 강조하는 개인 윤리적 방법과 정치적 강제력을 동원하는 사회 윤리적 방법이 모두 필요하다고 주장하였다. 사회 윤리는 분배적 정의와 교정적 정의로 나눌 수 있다.",
+    "[분배적 정의] 분배적 정의란 사회적 이익이나 부담을 공정하게 분배하여 구성원 각자가 정당한 몫을 누리도록 하는 것이다. 분배 기준에는 절대적 평등(모두에게 같은 혜택, 그러나 개인 간 정당한 차이를 간과), 능력(잠재력 발휘의 기회, 그러나 선천적·환경적 우연성이 작용), 노력(노력하는 자세 장려, 그러나 객관적 평가가 어려움), 업적(객관적 평가가 쉬움, 그러나 사회적 약자를 배려하기 힘듦), 필요(사회적 약자의 인간다운 삶 보장, 그러나 성취동기를 약화할 수 있음)가 있다. 마르크스는 능력에 따라 일하고 필요에 따라 분배할 것을 주장하였다. 샌델은 운을 무시한 채 자신의 능력이나 업적을 과신하는 능력주의를 불공정하다고 비판한다.",
+    "[롤스] 롤스는 정의의 본질을 공정성으로 해석하며 절차의 공정성을 강조하였다. 정의의 원칙을 합의하기 위한 공정한 절차로 원초적 입장을 설정하였는데, 여기서 각 개인은 자신의 재능, 출신, 성별, 사회적 상황을 알지 못하는 무지의 베일을 쓰고 있다. 무지의 베일은 운이라는 선천적·환경적 우연성의 개입을 차단하기 위한 것이다. 제1원칙(평등한 자유의 원칙): 각 개인은 기본적 자유에 있어 평등한 권리를 가져야 한다. 제2원칙: 사회적·경제적 불평등은 ① 최소 수혜자에게 최대의 이익이 보장되고(차등의 원칙), ② 불평등의 계기가 되는 지위가 모든 사람에게 개방될 때(기회균등의 원칙) 정당화된다. 두 원칙이 충돌하면 제1원칙이 우선한다.",
+    "[노직] 노직은 정의란 개인의 소유를 보장해 주는 것이라는 소유 권리론을 주장하였다. 재화의 취득과 양도의 절차가 정당하다면 그 소유물에 대해 개인이 절대적인 권리를 갖는다. 취득의 원칙(정당한 노동을 통해 얻은 소유물), 양도의 원칙(자유롭게 양도한 소유물), 교정의 원칙(취득과 양도 과정의 부정의를 교정)을 제시하였다. 국가는 개인의 소유를 절도·사기로부터 보호하고 국방을 담당하는 역할 정도만 해야 한다는 최소 국가론을 주장하였다.",
+    "[우대 정책과 역차별] 소수자 우대 정책이란 차별로 인한 불이익을 보상해 주기 위해 소수자에게 혜택을 주는 정책으로, 사회통합 전형, 비례 대표 의원 여성 할당제, 장애인 의무 고용제 등이 있다. 실질적 평등을 이룰 수 있다는 주장이 있지만, 다른 집단이 부당하게 불이익을 받는 역차별이 발생할 수 있고, 성과에 따라 분배하는 업적주의에 어긋난다는 비판도 있다.",
+    "[교정적 정의] 교정적 정의란 범죄 행위에 대해 공정하게 처벌하고, 발생한 손해에 대해 합당하게 배상하도록 하여 부정의를 바로잡는 것이다. 응보주의 관점에서는 처벌을 범죄 행위에 상응하는 보복으로 본다. 칸트는 이성적이고 자율적인 인간은 자신의 행위에 책임을 져야 한다고 보았다. 이 관점은 범죄 예방과 교화를 소홀히 한다는 비판을 받는다. 공리주의 관점에서는 처벌을 범죄 예방과 교화를 통해 사회의 이익을 증진하는 수단으로 본다. 벤담은 처벌 그 자체는 악이지만 사회에 필요한 악이라고 보았다. 이 관점은 인간 존엄성을 훼손할 수 있다는 비판을 받는다.",
+    "[사형 제도] 칸트는 동등성의 원리에 따라 살인자에 대한 사형은 정당하며, 형벌은 범죄를 저질렀다는 이유만으로 부과되어야 한다고 보았다. 루소는 사회 계약의 관점에서 시민의 생명과 안전을 확보하기 위한 사형은 정당하며, 살인자는 적으로 간주하여 추방이나 죽음으로 국가로부터 분리해야 한다고 보았다. 베카리아는 사회 계약의 목적이 생명 보존이므로 자신의 생명을 빼앗을 권능을 타인에게 양도할 자는 없다고 보았고, 공리주의 관점에서 형벌은 범죄를 억제하기에 충분한 정도의 강도만 가져야 하며 종신 노역형이 더 효과적이라고 보았다. 회복적 정의는 가해자 처벌보다 피해의 회복에 초점을 둔다."
+  ];
+
+  var QUESTION_BANK = {
+    "쉬움": [
+      {
+        "q": "사회 구조와 제도를 개선하여 윤리 문제를 해결하려는 윤리는?",
+        "options": [
+          "사회 윤리",
+          "개인 윤리",
+          "응보주의",
+          "소유 권리론"
+        ],
+        "explain": "사회 윤리는 사회의 구조와 제도 개선에 초점을 둔다."
+      },
+      {
+        "q": "『도덕적 인간과 비도덕적 사회』를 쓴 사상가는?",
+        "options": [
+          "니부어",
+          "롤스",
+          "노직",
+          "샌델"
+        ],
+        "explain": "니부어는 개인 윤리와 사회 윤리가 모두 필요하다고 주장하였다."
+      },
+      {
+        "q": "사회적 이익이나 부담을 공정하게 분배하는 것은?",
+        "options": [
+          "분배적 정의",
+          "교정적 정의",
+          "회복적 정의",
+          "응보적 정의"
+        ],
+        "explain": "분배적 정의의 의미이다."
+      },
+      {
+        "q": "“능력에 따라 일하고 필요에 따라 분배하라.”라고 주장한 사상가는?",
+        "options": [
+          "마르크스",
+          "롤스",
+          "노직",
+          "베카리아"
+        ],
+        "explain": "마르크스는 필요에 따른 분배를 주장하였다."
+      },
+      {
+        "q": "롤스가 정의의 원칙을 합의하기 위해 설정한 가상적 계약 상황은?",
+        "options": [
+          "원초적 입장",
+          "자연 상태",
+          "최소 국가",
+          "소유 권리론"
+        ],
+        "explain": "롤스는 공정한 절차로서 원초적 입장을 설정하였다."
+      },
+      {
+        "q": "노직이 주장한 국가의 역할은?",
+        "options": [
+          "최소 국가",
+          "복지 국가",
+          "전체주의 국가",
+          "민본주의 국가"
+        ],
+        "explain": "노직은 소유 보호와 국방 정도만 담당하는 최소 국가론을 주장하였다."
+      },
+      {
+        "q": "소수자 우대 정책으로 다수 집단이 부당하게 불이익을 받는 것은?",
+        "options": [
+          "역차별",
+          "차별",
+          "적극적 평등",
+          "업적주의"
+        ],
+        "explain": "역차별의 의미이다."
+      },
+      {
+        "q": "처벌을 범죄 행위에 상응하는 보복으로 보는 관점은?",
+        "options": [
+          "응보주의",
+          "공리주의",
+          "공동체주의",
+          "자유주의"
+        ],
+        "explain": "응보주의는 처벌을 범죄에 상응하는 보복으로 본다."
+      },
+      {
+        "q": "『범죄와 형벌』에서 사형 폐지를 주장한 사상가는?",
+        "options": [
+          "베카리아",
+          "칸트",
+          "루소",
+          "벤담"
+        ],
+        "explain": "베카리아는 처음으로 사형 제도의 폐지를 명시적으로 주장하였다."
+      },
+      {
+        "q": "피해자의 피해 회복에 목표를 둔 정의는?",
+        "options": [
+          "회복적 정의",
+          "응보적 정의",
+          "분배적 정의",
+          "절차적 정의"
+        ],
+        "explain": "회복적 정의는 범죄의 피해를 바로잡는 것에 초점을 맞춘다."
+      }
+    ],
+    "보통": [
+      {
+        "q": "니부어의 주장으로 옳은 것은?",
+        "options": [
+          "도덕적인 개인도 집단에 소속되면 비도덕적으로 행동하기 쉽다",
+          "개인 윤리만으로 집단 간 갈등을 해결할 수 있다",
+          "사회 윤리는 필요 없다",
+          "집단은 개인보다 도덕적이다"
+        ],
+        "explain": "니부어는 개인 윤리와 사회 윤리가 모두 필요하다고 보았다."
+      },
+      {
+        "q": "업적에 따른 분배의 단점으로 옳은 것은?",
+        "options": [
+          "업적이 없는 사회적 약자를 배려하기 힘들다",
+          "평가가 주관적이다",
+          "근로 의욕이 떨어진다",
+          "모든 사람에게 같은 혜택을 준다"
+        ],
+        "explain": "업적은 객관적 평가가 쉽지만 사회적 약자를 배려하기 힘들다."
+      },
+      {
+        "q": "무지의 베일을 설정한 이유로 옳은 것은?",
+        "options": [
+          "운이라는 선천적·환경적 우연성의 개입을 차단하기 위해",
+          "자신의 이익을 최대화하기 위해",
+          "타인의 사정을 잘 알기 위해",
+          "소유권을 보장하기 위해"
+        ],
+        "explain": "무지의 베일은 운의 개입을 차단하기 위한 장치이다."
+      },
+      {
+        "q": "롤스의 차등의 원칙의 내용은?",
+        "options": [
+          "최소 수혜자에게 최대의 이익이 보장되어야 한다",
+          "모든 사람에게 똑같이 분배해야 한다",
+          "노력한 만큼 분배해야 한다",
+          "소유물에 절대적 권리를 갖는다"
+        ],
+        "explain": "차등의 원칙은 불평등이 최소 수혜자에게 최대 이익이 될 때 정당하다고 본다."
+      },
+      {
+        "q": "노직의 정의의 원칙이 아닌 것은?",
+        "options": [
+          "차등의 원칙",
+          "취득의 원칙",
+          "양도의 원칙",
+          "교정의 원칙"
+        ],
+        "explain": "차등의 원칙은 롤스의 원칙이다."
+      },
+      {
+        "q": "샌델이 능력주의를 비판한 이유는?",
+        "options": [
+          "운이라는 요인을 무시한 채 자신의 능력과 업적을 과신하기 때문에",
+          "노력을 너무 적게 평가하기 때문에",
+          "필요에 따라 분배하기 때문에",
+          "절대적 평등을 추구하기 때문에"
+        ],
+        "explain": "샌델은 재능의 우연성을 외면하는 능력주의를 불공정하다고 비판하였다."
+      },
+      {
+        "q": "벤담의 처벌관으로 옳은 것은?",
+        "options": [
+          "처벌은 악이지만 사회에 필요한 악이다",
+          "처벌은 범죄에 상응하는 보복이다",
+          "처벌은 그 자체로 선이다",
+          "처벌은 피해자의 복수이다"
+        ],
+        "explain": "벤담은 처벌이 사회적 이익을 증진하므로 필요한 악이라고 보았다."
+      },
+      {
+        "q": "응보주의 관점에 대한 비판으로 옳은 것은?",
+        "options": [
+          "범죄 예방과 범죄자의 교화를 소홀히 한다",
+          "인간 존엄성을 훼손한다",
+          "사회적 이익만 중시한다",
+          "처벌을 수단으로만 본다"
+        ],
+        "explain": "응보주의는 범죄 예방과 교화를 소홀히 한다는 비판을 받는다."
+      },
+      {
+        "q": "칸트가 살인자에 대한 사형을 정당하다고 본 근거는?",
+        "options": [
+          "동등성의 원리",
+          "공리의 원리",
+          "최소 국가론",
+          "차등의 원칙"
+        ],
+        "explain": "칸트는 동등성의 원리에 따라 사형이 정당하다고 보았다."
+      },
+      {
+        "q": "베카리아가 사형 대신 주장한 형벌은?",
+        "options": [
+          "종신 노역형",
+          "추방형",
+          "벌금형",
+          "보호 처분"
+        ],
+        "explain": "베카리아는 오래 지속되는 종신 노역형이 범죄 예방에 더 효과적이라고 보았다."
+      },
+      {
+        "q": "소수자 우대 정책의 사례가 아닌 것은?",
+        "options": [
+          "성적 순 장학금 지급",
+          "사회통합 전형",
+          "비례 대표 의원 여성 할당제",
+          "장애인 의무 고용제"
+        ],
+        "explain": "성적 순 지급은 업적에 따른 분배이다."
+      }
+    ],
+    "어려움": [
+      {
+        "q": "롤스와 노직의 비교로 옳은 것은?",
+        "options": [
+          "롤스는 복지 확대를 긍정적으로, 노직은 부정적으로 평가할 것이다",
+          "롤스는 최소 국가를, 노직은 복지 국가를 지지한다",
+          "둘 다 결과의 평등을 중시한다",
+          "둘 다 소유물에 대한 절대적 권리를 인정한다"
+        ],
+        "explain": "롤스는 최소 수혜자 배려를, 노직은 소유권 보장과 최소 국가를 강조한다."
+      },
+      {
+        "q": "롤스의 제1원칙과 제2원칙이 충돌할 때에 대한 설명으로 옳은 것은?",
+        "options": [
+          "제1원칙이 우선하므로 복지를 위해서도 개인의 자유를 침해할 수 없다",
+          "제2원칙이 우선한다",
+          "다수결로 정한다",
+          "국가가 임의로 정한다"
+        ],
+        "explain": "제1원칙의 우선성은 롤스가 자유주의 입장을 취함을 보여 준다."
+      },
+      {
+        "q": "루소와 베카리아의 공통점과 차이점으로 옳은 것은?",
+        "options": [
+          "둘 다 사회 계약에서 출발했지만 루소는 사형에 찬성하고 베카리아는 반대했다",
+          "둘 다 사형에 반대했다",
+          "둘 다 응보주의 관점이다",
+          "루소는 반대, 베카리아는 찬성했다"
+        ],
+        "explain": "같은 사회 계약 관점에서 출발했지만 결론은 정반대이다."
+      },
+      {
+        "q": "베카리아의 주장으로 옳지 않은 것은?",
+        "options": [
+          "고통의 강렬함이 지속 정도보다 더 큰 영향을 준다",
+          "자신의 생명을 처분할 권리를 국가에 넘길 수 없다",
+          "형벌은 범죄를 억제하기에 충분한 강도만 가져야 한다",
+          "종신 노역형이 사형보다 효과적이다"
+        ],
+        "explain": "베카리아는 고통의 강렬함이 아니라 지속되는 정도가 더 큰 영향을 준다고 보았다."
+      },
+      {
+        "q": "칸트의 형벌관에 대한 설명으로 옳은 것은?",
+        "options": [
+          "형벌은 다른 선을 촉진하는 수단이 아니라 범죄를 저질렀다는 이유만으로 부과된다",
+          "형벌은 사회의 이익을 늘리기 위한 수단이다",
+          "형벌은 범죄자 교화가 목적이다",
+          "사형은 인간 존엄성을 훼손한다"
+        ],
+        "explain": "칸트는 형벌이 어떤 다른 선을 위한 수단이 되어서는 안 된다고 보았다."
+      },
+      {
+        "q": "공리주의 처벌관이 받는 비판으로 옳은 것은?",
+        "options": [
+          "사회적 이익을 최우선으로 여겨 인간 존엄성을 훼손할 수 있다",
+          "범죄 예방을 소홀히 한다",
+          "교화를 소홀히 한다",
+          "처벌을 보복으로만 본다"
+        ],
+        "explain": "공리주의 처벌관은 인간 존엄성을 훼손할 수 있다는 비판을 받는다."
+      },
+      {
+        "q": "사형 제도 반대 논거로 옳은 것은?",
+        "options": [
+          "오판에 의한 사형은 원상 복귀가 불가능하다",
+          "흉악 범죄 억제 효과가 크다",
+          "비례성의 원리에 따른 정의 실현이다",
+          "국민의 법 감정에 부응한다"
+        ],
+        "explain": "나머지는 찬성 논거이다."
+      },
+      {
+        "q": "분배 기준과 단점의 연결이 옳지 않은 것은?",
+        "options": [
+          "필요 – 객관적인 평가가 쉽다",
+          "능력 – 선천적·환경적 우연성이 작용한다",
+          "노력 – 객관적으로 평가하기 어렵다",
+          "절대적 평등 – 개인 간 정당한 차이를 간과한다"
+        ],
+        "explain": "객관적 평가가 쉬운 것은 업적의 장점이며, 필요의 단점은 성취동기 약화 등이다."
+      },
+      {
+        "q": "아리스토텔레스의 정의 구분에서 이익과 손해의 불균형을 바로잡아 실현하는 정의는?",
+        "options": [
+          "교정적 정의",
+          "분배적 정의",
+          "일반적 정의",
+          "절차적 정의"
+        ],
+        "explain": "교정적 정의는 이익과 손해의 불균형을 바로잡아 실현된다."
+      },
+      {
+        "q": "소수자 우대 정책에 대한 비판으로 옳지 않은 것은?",
+        "options": [
+          "차별로 인한 불만을 해소하여 사회 긴장을 완화한다",
+          "다른 집단에 역차별이 발생할 수 있다",
+          "과거 세대의 고통을 현세대가 보상받는다",
+          "업적주의에 어긋난다"
+        ],
+        "explain": "사회 긴장 완화는 우대 정책의 의의(찬성 근거)이다."
+      },
+      {
+        "q": "사형 제도에 대한 일반 예방주의와 특수 예방주의의 설명으로 옳은 것은?",
+        "options": [
+          "일반 예방주의는 사형의 경고로 범죄를 예방할 수 있다고 보고, 특수 예방주의는 교화 기회가 없어져 반대한다",
+          "둘 다 사형에 찬성한다",
+          "둘 다 사형에 반대한다",
+          "일반 예방주의는 교화를, 특수 예방주의는 경고를 중시한다"
+        ],
+        "explain": "교과서 측주의 예방주의적 관점 설명이다."
+      }
+    ]
+  };
+
+  var state = {
+    screen: 'setup', // setup | quiz | result
+    difficulty: '보통',
+    questionCount: 5,
+    questions: [],
+    answers: [],
+    current: 0,
+    showPassage: false
+  };
+
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, function(c){
+      return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c];
+    });
+  }
+
+  function passageHtml(){
+    return PASSAGE_PARAGRAPHS.map(function(p){
+      return '<p>' + escapeHtml(p) + '</p>';
+    }).join('');
+  }
+
+  function shuffle(arr){
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--){
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+    }
+    return a;
+  }
+
+  function pickQuizSet(difficulty, count){
+    var pool = shuffle(QUESTION_BANK[difficulty]);
+    return pool.slice(0, count).map(function(item){
+      var order = shuffle([0, 1, 2, 3]);
+      var options = order.map(function(i){ return item.options[i]; });
+      return {
+        question: item.q,
+        options: options,
+        answerIndex: order.indexOf(0),
+        explanation: item.explain
+      };
+    });
+  }
+
+  function startQuiz(){
+    state.questions = pickQuizSet(state.difficulty, state.questionCount);
+    state.answers = new Array(state.questions.length).fill(null);
+    state.current = 0;
+    state.showPassage = false;
+    state.screen = 'quiz';
+    render();
+  }
+
+  function selectOption(i){
+    if (state.answers[state.current] !== null) return;
+    state.answers[state.current] = i;
+    render();
+  }
+  function goPrev(){
+    if (state.current > 0){ state.current--; render(); }
+  }
+  function goNext(){
+    if (state.current < state.questions.length - 1){
+      state.current++;
+      render();
+    } else {
+      state.screen = 'result';
+      render();
+    }
+  }
+  function backToSetup(){
+    state.questions = [];
+    state.answers = [];
+    state.current = 0;
+    state.screen = 'setup';
+    render();
+  }
+  function retrySameQuiz(){
+    startQuiz();
+  }
+  function togglePassage(){
+    state.showPassage = !state.showPassage;
+    render();
+  }
+
+  function renderSetupScreen(){
+    var diffs = ['쉬움','보통','어려움'];
+    var diffRow = diffs.map(function(d){
+      return '<button type="button" class="diff-pill' + (state.difficulty === d ? ' active' : '') + '" data-diff="' + d + '">' + d + '</button>';
+    }).join('');
+
+    var counts = [5, 7, 10];
+    var countRow = counts.map(function(n){
+      return '<button type="button" class="diff-pill' + (state.questionCount === n ? ' active' : '') + '" data-count="' + n + '">' + n + '문제</button>';
+    }).join('');
+
+    app.innerHTML =
+      '<p class="eyebrow">' + escapeHtml(SUBTITLE) + ' · ' + escapeHtml(UNIT) + '</p>' +
+      '<h1 class="title">「' + escapeHtml(TITLE) + '」 퀴즈</h1>' +
+      '<p class="lede">문제 수와 난이도를 골라서 풀어보세요. 파이팅!</p>' +
+      '<div class="card">' +
+        '<div class="field-block">' +
+          '<label class="field-label">문제 수</label>' +
+          '<div class="diff-row" id="count-row">' + countRow + '</div>' +
+        '</div>' +
+        '<div class="field-block">' +
+          '<label class="field-label">난이도</label>' +
+          '<div class="diff-row" id="diff-row">' + diffRow + '</div>' +
+        '</div>' +
+        '<button type="button" class="btn btn-primary" id="generate-btn">퀴즈 시작하기</button>' +
+      '</div>' +
+      '<p class="signature">' + escapeHtml(SIGNATURE) + '</p>';
+
+    var diffRowEl = document.getElementById('diff-row');
+    diffRowEl.addEventListener('click', function(ev){
+      var btn = ev.target.closest('.diff-pill');
+      if (!btn) return;
+      state.difficulty = btn.getAttribute('data-diff');
+      diffRowEl.querySelectorAll('.diff-pill').forEach(function(p){
+        p.classList.toggle('active', p === btn);
+      });
+    });
+    var countRowEl = document.getElementById('count-row');
+    countRowEl.addEventListener('click', function(ev){
+      var btn = ev.target.closest('.diff-pill');
+      if (!btn) return;
+      state.questionCount = parseInt(btn.getAttribute('data-count'), 10);
+      countRowEl.querySelectorAll('.diff-pill').forEach(function(p){
+        p.classList.toggle('active', p === btn);
+      });
+    });
+    document.getElementById('generate-btn').addEventListener('click', function(){
+      startQuiz();
+    });
+  }
+
+  function renderPassageToggle(){
+    return '<div class="quiz-passage-wrap">' +
+      '<button type="button" class="passage-toggle-btn" id="passage-toggle-btn">' + (state.showPassage ? '교과서 접기' : '교과서 보기') + '</button>' +
+      (state.showPassage ? '<div class="passage-box expanded" style="margin-top:10px;">' + passageHtml() + '</div>' : '') +
+    '</div>';
+  }
+
+  function renderQuizScreen(){
+    var total = state.questions.length;
+    var q = state.questions[state.current];
+    var selected = state.answers[state.current];
+    var answered = selected !== null;
+    var isLast = state.current === total - 1;
+    var pct = Math.round(((state.current) / total) * 100);
+    var isCorrect = answered && selected === q.answerIndex;
+
+    var optionsHtml = q.options.map(function(opt, i){
+      var marks = ['A','B','C','D'];
+      var cls = 'option';
+      if (answered){
+        if (i === q.answerIndex) cls += ' correct';
+        else if (i === selected) cls += ' wrong';
+      } else if (selected === i){
+        cls += ' selected';
+      }
+      return '<button type="button" class="' + cls + '" data-opt="' + i + '"' + (answered ? ' disabled' : '') + '>' +
+        '<span class="option-mark">' + marks[i] + '</span>' +
+        '<span>' + escapeHtml(opt) + '</span>' +
+      '</button>';
+    }).join('');
+
+    var feedbackHtml = answered
+      ? '<div class="feedback-box ' + (isCorrect ? 'correct' : 'wrong') + '">' +
+          '<p class="feedback-label ' + (isCorrect ? 'correct' : 'wrong') + '">' + (isCorrect ? '정답이에요!' : '오답이에요') + '</p>' +
+          '<p class="feedback-explain">' + escapeHtml(q.explanation) + '</p>' +
+        '</div>'
+      : '';
+
+    app.innerHTML =
+      '<div class="card">' +
+        '<div class="progress-row">' +
+          '<span class="progress-label">질문 ' + (state.current + 1) + ' / ' + total + '</span>' +
+          '<span class="diff-tag">' + escapeHtml(state.difficulty) + '</span>' +
+        '</div>' +
+        '<div class="progress-track"><div class="progress-fill" style="width:' + pct + '%"></div></div>' +
+        renderPassageToggle() +
+        '<p class="question-text">' + escapeHtml(q.question) + '</p>' +
+        '<div class="options">' + optionsHtml + '</div>' +
+        feedbackHtml +
+        '<div class="nav-row">' +
+          '<button type="button" class="btn btn-ghost" id="prev-btn"' + (state.current === 0 ? ' disabled' : '') + '>이전</button>' +
+          '<button type="button" class="btn btn-primary" id="next-btn"' + (answered ? '' : ' disabled') + '>' + (isLast ? '결과 보기' : '다음 문제') + '</button>' +
+        '</div>' +
+      '</div>';
+
+    if (!answered){
+      app.querySelectorAll('.option').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          selectOption(parseInt(btn.getAttribute('data-opt'), 10));
+        });
+      });
+    }
+    document.getElementById('passage-toggle-btn').addEventListener('click', togglePassage);
+    document.getElementById('prev-btn').addEventListener('click', goPrev);
+    document.getElementById('next-btn').addEventListener('click', goNext);
+  }
+
+  function renderResultScreen(){
+    var total = state.questions.length;
+    var score = 0;
+    state.questions.forEach(function(q, i){
+      if (state.answers[i] === q.answerIndex) score++;
+    });
+    var tier = score >= Math.ceil(total * 0.8) ? 'tier-good' : (score <= Math.floor(total * 0.4) ? 'tier-bad' : 'tier-mid');
+    var pctText = Math.round((score / total) * 100) + '점';
+
+    var items = state.questions.map(function(q, i){
+      var mine = state.answers[i];
+      var correct = mine === q.answerIndex;
+      var marks = ['A','B','C','D'];
+      return '<div class="review-item ' + (correct ? 'correct' : 'wrong') + '">' +
+        '<div class="review-head">' +
+          '<span class="review-index">Q' + (i + 1) + '</span>' +
+          '<span class="review-q">' + escapeHtml(q.question) + '</span>' +
+        '</div>' +
+        '<span class="review-chip ' + (correct ? 'correct' : 'wrong') + '">' + (correct ? '정답' : '오답') + '</span>' +
+        '<div class="review-answers">' +
+          '내 답: <b>' + marks[mine] + '. ' + escapeHtml(q.options[mine]) + '</b>' +
+          (correct ? '' : '<br>정답: <b>' + marks[q.answerIndex] + '. ' + escapeHtml(q.options[q.answerIndex]) + '</b>') +
+        '</div>' +
+        '<p class="review-explain"><b>해설</b> ' + escapeHtml(q.explanation) + '</p>' +
+      '</div>';
+    }).join('');
+
+    var encourageText = score === total ? '참 잘했어요!'
+      : tier === 'tier-good' ? '잘했어요! 틀린 문제만 다시 확인해볼까요?'
+      : tier === 'tier-mid' ? '좋아요! 틀린 문제를 다시 살펴봐요.'
+      : '한 번 더 도전해봐요!';
+    var perfectHtml = '<p class="perfect-badge' + (score === total ? '' : ' encourage') + '">' + encourageText + '</p>';
+
+    app.innerHTML =
+      '<p class="eyebrow">채점 결과</p>' +
+      '<h1 class="title">"' + escapeHtml(TITLE) + '" 퀴즈 결과</h1>' +
+      '<div class="card">' +
+        '<div class="score-tile">' +
+          '<p class="score-number ' + tier + '">' + score + '/' + total + '</p>' +
+          '<p class="score-caption">' + total + '문제 중 ' + score + '개 정답 · ' + pctText + '</p>' +
+          perfectHtml +
+        '</div>' +
+      '</div>' +
+      '<div class="card" style="margin-top:16px;">' + renderPassageToggle() + items + '</div>' +
+      '<div class="btn-row">' +
+        '<button type="button" class="btn btn-primary" id="retry-btn">다시 풀기</button>' +
+        '<button type="button" class="btn btn-ghost" id="reset-btn">난이도 다시 선택</button>' +
+      '</div>' +
+      '<p class="signature">' + escapeHtml(SIGNATURE) + '</p>';
+
+    var toggleBtn = document.getElementById('passage-toggle-btn');
+    if (toggleBtn) toggleBtn.addEventListener('click', togglePassage);
+    document.getElementById('retry-btn').addEventListener('click', retrySameQuiz);
+    document.getElementById('reset-btn').addEventListener('click', backToSetup);
+  }
+
+  function suppressHoverUntilMove(){
+    document.body.classList.add('suppress-hover');
+    document.addEventListener('mousemove', function onMove(){
+      document.body.classList.remove('suppress-hover');
+      document.removeEventListener('mousemove', onMove);
+    }, { once: true });
+  }
+
+  function render(){
+    suppressHoverUntilMove();
+    if (state.screen === 'setup') renderSetupScreen();
+    else if (state.screen === 'quiz') renderQuizScreen();
+    else if (state.screen === 'result') renderResultScreen();
+  }
+
+  render();
+})();
+</script>
+</body>
+</html>
