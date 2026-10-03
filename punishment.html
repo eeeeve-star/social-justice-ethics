@@ -406,13 +406,6 @@
 
   @media (prefers-reduced-motion: reduce){ *{ animation:none !important; transition:none !important; } html{ scroll-behavior:auto; } }
 </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<style id="flow-save-css">
-  .flow-save{ display:flex; justify-content:center; margin:22px 0 4px; }
-  .flow-save button{ font:inherit; font-size:16px; font-weight:700; padding:12px 22px; border-radius:999px; border:none; cursor:pointer; background:var(--accent, #4a5568); color:#fff; box-shadow:0 4px 14px rgba(0,0,0,.12); }
-  .flow-save button:disabled{ opacity:.6; cursor:default; }
-  .flow-sig{ text-align:center; margin-top:18px; font-size:14px; opacity:.75; }
-</style>
 </head>
 <body>
 
@@ -728,7 +721,6 @@
         </div>
       </div>
     </div>
-    <div class="flow-save"><button type="button" id="flow-save-btn">흐름도 이미지로 저장</button></div>
   </section>
 
   <footer>
@@ -843,27 +835,6 @@
   }
   document.getElementById('quizReset').addEventListener('click', buildQuiz);
   buildQuiz();
-})();
-</script>
-<script>
-(function(){
-  var btn = document.getElementById('flow-save-btn'); if(!btn) return;
-  btn.addEventListener('click', function(){
-    if(typeof html2canvas === 'undefined'){ alert('이미지 저장 기능을 불러오지 못했습니다. 화면 캡처로 저장합니다.'); return; }
-    var sec = document.getElementById('recap');
-    var wrap = btn.parentNode, label = btn.textContent;
-    var sig = document.createElement('div'); sig.className = 'flow-sig'; sig.textContent = '현대사회와 윤리 수강 2학년♥무늬T';
-    btn.disabled = true; btn.textContent = '저장 중...';
-    wrap.style.display = 'none'; sec.appendChild(sig);
-    var anim = []; sec.querySelectorAll('*').forEach(function(el){ anim.push([el, el.style.animation, el.style.transition]); el.style.animation = 'none'; el.style.transition = 'none'; });
-    var bg = getComputedStyle(document.body).backgroundColor;
-    if(!bg || bg === 'rgba(0, 0, 0, 0)' || bg === 'transparent') bg = getComputedStyle(document.documentElement).getPropertyValue('--bg') || '#ffffff';
-    function restore(){ sig.remove(); wrap.style.display = ''; anim.forEach(function(a){ a[0].style.animation = a[1]; a[0].style.transition = a[2]; }); btn.disabled = false; btn.textContent = label; }
-    html2canvas(sec, { backgroundColor: bg.trim(), scale: Math.max(3, window.devicePixelRatio || 1), useCORS: true }).then(function(canvas){
-      restore();
-      var a = document.createElement('a'); a.download = '교정적정의_사형제도_흐름도.png'; a.href = canvas.toDataURL('image/png'); a.click();
-    }).catch(function(){ restore(); alert('이미지 저장에 실패했습니다. 화면 캡처로 저장합니다.'); });
-  });
 })();
 </script>
 </body>
