@@ -1,0 +1,976 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>분배적 정의</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700;900&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+  :root{
+    --bg:#FCEAF1;
+    --hero-top:#F7CFE0;
+    --surface:#FFFFFF;
+    --surface-2:#FAE0EB;
+    --ink:#2A2028;
+    --ink-soft:#5E4E59;
+    --ink-faint:#8E7887;
+    --line:#F0D0DE;
+    --line-strong:#E2B3C7;
+    --page:#C2407A; --page-ink:#9A2C5E; --on-accent:#FFFFFF;
+
+    --rawls:#8B6FD6; --rawls-ink:#5A3FAE; --rawls-soft:#EFEAFB; --rawls-soft-2:#E2D9F7;
+    --nozick:#E5609A; --nozick-ink:#B4336D; --nozick-soft:#FCE9F1; --nozick-soft-2:#F8D6E5;
+    --niebuhr:#8D6E63; --niebuhr-ink:#654C42; --niebuhr-soft:#F3ECE8;
+    --aristo:#A1887F; --aristo-ink:#6F5951; --aristo-soft:#F4EFEC;
+
+    --c-eq:#3E8DD0; --c-ab:#C99412; --c-ef:#24998A; --c-ac:#E0703F; --c-ne:#6E9A31;
+
+    --good:#2E7D53; --good-soft:#E4F3E9;
+    --bad:#C1443A; --bad-soft:#FBE7E4;
+
+    --shadow: 0 1px 2px rgba(36,34,42,0.05), 0 10px 26px -16px rgba(36,34,42,0.22);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#1F1119; --hero-top:#3A1A2C; --surface:#2B1924; --surface-2:#36202F;
+      --ink:#F3E9EE; --ink-soft:#C9B4C0; --ink-faint:#977D8C;
+      --line:#4A2D3D; --line-strong:#5F3A4F;
+      --page:#F08DB8; --page-ink:#F8BCD6; --on-accent:#1F1119;
+      --rawls:#AD97EE; --rawls-ink:#D3C7FA; --rawls-soft:#2B2541; --rawls-soft-2:#362E52;
+      --nozick:#F28DBA; --nozick-ink:#FAC2DB; --nozick-soft:#3D2230; --nozick-soft-2:#4C2A3B;
+      --niebuhr:#C4A69B; --niebuhr-ink:#E4D0C8; --niebuhr-soft:#342B27;
+      --aristo:#CDB7AF; --aristo-ink:#E9DCD6; --aristo-soft:#332C29;
+      --c-eq:#7DB8EC; --c-ab:#E8C25A; --c-ef:#5CCDBC; --c-ac:#F59F78; --c-ne:#A3CC6B;
+      --good:#74CE9B; --good-soft:#1E3527; --bad:#E8867B; --bad-soft:#3B2622;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 10px 28px -14px rgba(0,0,0,0.6);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#1F1119; --hero-top:#3A1A2C; --surface:#2B1924; --surface-2:#36202F;
+    --ink:#F3E9EE; --ink-soft:#C9B4C0; --ink-faint:#977D8C;
+    --line:#4A2D3D; --line-strong:#5F3A4F;
+    --page:#F08DB8; --page-ink:#F8BCD6; --on-accent:#1F1119;
+    --rawls:#AD97EE; --rawls-ink:#D3C7FA; --rawls-soft:#2B2541; --rawls-soft-2:#362E52;
+    --nozick:#F28DBA; --nozick-ink:#FAC2DB; --nozick-soft:#3D2230; --nozick-soft-2:#4C2A3B;
+    --niebuhr:#C4A69B; --niebuhr-ink:#E4D0C8; --niebuhr-soft:#342B27;
+    --aristo:#CDB7AF; --aristo-ink:#E9DCD6; --aristo-soft:#332C29;
+    --c-eq:#7DB8EC; --c-ab:#E8C25A; --c-ef:#5CCDBC; --c-ac:#F59F78; --c-ne:#A3CC6B;
+    --good:#74CE9B; --good-soft:#1E3527; --bad:#E8867B; --bad-soft:#3B2622;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 10px 28px -14px rgba(0,0,0,0.6);
+  }
+
+  *{box-sizing:border-box;}
+  html{ scroll-behavior:smooth; scroll-padding-top:64px; }
+  html,body{ margin:0; padding:0; }
+  body{
+    background:linear-gradient(180deg, var(--hero-top) 0, var(--bg) 620px) no-repeat, var(--bg); color:var(--ink);
+    font-family:"Noto Sans KR","Malgun Gothic",sans-serif;
+    font-size:17px; line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,h4,.display{ font-family:"Gowun Batang","Malgun Gothic",serif; letter-spacing:-0.01em; text-wrap:balance; }
+  .mono{ font-family:"IBM Plex Mono","Noto Sans KR",monospace; }
+  button{ font-family:inherit; }
+  img{ max-width:100%; display:block; }
+
+  .wrap{ max-width:900px; margin:0 auto; padding:0 20px 100px; }
+
+  /* ---------- topbar ---------- */
+  .topbar{
+    position:sticky; top:0; z-index:50;
+    background:color-mix(in srgb, var(--bg) 90%, transparent);
+    backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar-inner{ max-width:900px; margin:0 auto; padding:10px 20px; display:flex; align-items:center; gap:12px; }
+  .topbar-title{ font-size:14px; font-weight:700; color:var(--page-ink); white-space:nowrap; }
+  .topnav{ display:flex; gap:2px; overflow-x:auto; min-width:0; flex:1; scrollbar-width:none; }
+  .topnav::-webkit-scrollbar{ display:none; }
+  .topnav a{ font-size:14px; color:var(--ink-soft); text-decoration:none; padding:6px 10px; border-radius:999px; white-space:nowrap; }
+  .topnav a:hover{ background:var(--surface-2); color:var(--ink); }
+  .theme-btn{
+    flex:0 0 auto; border:1px solid var(--line-strong); background:var(--surface); color:var(--ink-soft);
+    border-radius:999px; padding:6px 12px; font-size:13px; font-weight:700; cursor:pointer;
+  }
+  .theme-btn:hover{ color:var(--ink); }
+  @media (max-width:640px){ .topbar-title{ display:none; } }
+
+  /* ---------- hero ---------- */
+  .hero{ padding:52px 0 36px; }
+  .hero-tag{
+    display:inline-block; font-size:13px; font-weight:700; color:var(--page-ink);
+    background:var(--surface); border:1px solid var(--line-strong); padding:5px 13px; border-radius:999px; margin-bottom:20px;
+  }
+  .hero h1{ font-size:clamp(30px,6vw,46px); line-height:1.25; margin:0 0 16px; }
+  .hero h1 .hl{ background:linear-gradient(transparent 62%, color-mix(in srgb, var(--page) 30%, transparent) 62%); }
+  .hero h1 .hl2{ background:linear-gradient(transparent 62%, var(--nozick-soft-2) 62%); }
+  .lede{ font-size:17.5px; color:var(--ink-soft); max-width:62ch; margin:0 0 26px; }
+  .duo{ display:flex; gap:14px; flex-wrap:wrap; margin-bottom:26px; }
+  .duo-item{
+    display:flex; align-items:center; gap:12px; padding:10px 18px 10px 10px;
+    background:var(--surface); border:1.5px solid var(--c); border-radius:999px; box-shadow:var(--shadow);
+  }
+  .duo-item img{ width:54px; height:54px; border-radius:50%; object-fit:cover; border:2px solid var(--c); }
+  .duo-item .n{ font-weight:900; color:var(--ci); font-size:17px; line-height:1.3; }
+  .duo-item .s{ font-size:13.5px; color:var(--ink-soft); }
+  .goals{ background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:16px 20px; box-shadow:var(--shadow); }
+  .goals .t{ font-size:13.5px; font-weight:700; color:var(--ink-faint); margin-bottom:4px; }
+  .goals ul{ margin:0; padding-left:20px; }
+  .legend{ margin-top:12px; font-size:14.5px; color:var(--ink-soft); }
+
+  /* ---------- sections ---------- */
+  .scene{ padding:52px 0; border-top:1px solid var(--line); }
+  .eyebrow{ display:flex; align-items:center; gap:10px; margin-bottom:12px; font-size:13.5px; font-weight:700; color:var(--ink-faint); letter-spacing:0.02em; }
+  .eyebrow .num{
+    display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px; border-radius:8px;
+    background:var(--page); color:var(--on-accent); font-family:"IBM Plex Mono",monospace; font-size:13px;
+  }
+  .scene h2{ font-size:clamp(25px,4.6vw,31px); line-height:1.35; margin:0 0 14px; }
+  .scene > p, .para{ color:var(--ink-soft); max-width:66ch; }
+  .scene p b, .para b{ color:var(--ink); }
+
+  .card{ background:var(--surface); border:1px solid var(--line); border-radius:18px; padding:22px; box-shadow:var(--shadow); }
+  .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  @media (max-width:680px){ .grid2{ grid-template-columns:1fr; } }
+
+  .theme-r{ --accent:var(--rawls); --accent-ink:var(--rawls-ink); --accent-soft:var(--rawls-soft); --accent-soft-2:var(--rawls-soft-2); }
+  .theme-n{ --accent:var(--nozick); --accent-ink:var(--nozick-ink); --accent-soft:var(--nozick-soft); --accent-soft-2:var(--nozick-soft-2); }
+
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    background:var(--accent, var(--page)); color:var(--on-accent); border:none; border-radius:999px;
+    padding:12px 22px; font-size:16px; font-weight:700; cursor:pointer; min-height:46px;
+  }
+  .btn:hover{ opacity:.9; }
+  .btn:focus-visible, .opt:focus-visible, .pick:focus-visible{ outline:2px solid var(--accent, var(--ink)); outline-offset:2px; }
+  .btn.ghost{ background:transparent; color:var(--accent-ink, var(--ink)); border:1.5px solid var(--accent, var(--line-strong)); }
+  .btn-row{ display:flex; gap:10px; flex-wrap:wrap; margin-top:16px; }
+
+  .note{
+    display:flex; gap:12px; align-items:flex-start; background:var(--surface-2); border:1px solid var(--line);
+    border-radius:14px; padding:14px 18px; margin:18px 0; font-size:16px; color:var(--ink-soft);
+  }
+  .note b{ color:var(--ink); }
+  .note .ic{ font-size:20px; line-height:1.4; flex:0 0 auto; }
+
+  .fade{ animation:fadein .28s ease; }
+  @keyframes fadein{ from{opacity:0; transform:translateY(5px);} to{opacity:1; transform:none;} }
+
+  /* ---------- scholarship ---------- */
+  .scholar-img{ background:#fff; border:1px solid var(--line); border-radius:16px; overflow:hidden; margin:18px 0 6px; }
+  .scholar-img img{ width:100%; height:auto; }
+  .q-banner{ font-weight:700; font-size:18px; margin:18px 0 12px; color:var(--ink); }
+  .picks{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+  @media (max-width:680px){ .picks{ grid-template-columns:1fr; } }
+  .pick{
+    position:relative; text-align:left; background:var(--surface); color:var(--ink);
+    border:1.5px solid var(--line-strong); border-radius:16px; padding:16px 18px 16px;
+    font-size:16.5px; font-weight:700; line-height:1.5; cursor:pointer; box-shadow:var(--shadow);
+    transition:border-color .15s, background .15s, transform .15s;
+  }
+  .pick:hover{ border-color:var(--ink-faint); transform:translateY(-2px); }
+  .pick .who{ display:block; font-size:13px; font-weight:700; color:var(--ink-faint); margin-bottom:6px; }
+  .pick.chosen{ border-color:var(--pc); background:color-mix(in srgb, var(--pc) 10%, var(--surface)); }
+  .pick.chosen::after{ content:"내 선택"; position:absolute; top:12px; right:14px; font-size:12px; color:var(--on-accent); background:var(--pc); padding:2px 9px; border-radius:999px; }
+  .pick-result{ margin-top:16px; border-radius:16px; padding:18px 20px; background:var(--surface); border:1.5px solid var(--pc); box-shadow:var(--shadow); }
+  .pick-result .big{ font-size:18.5px; font-weight:700; margin-bottom:8px; }
+  .pick-result .crit{ color:var(--pc); font-weight:900; }
+  .map-list{ display:grid; gap:8px; margin-top:12px; }
+  .map-row{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; padding:9px 12px; border-radius:10px; background:var(--surface-2); font-size:15.5px; }
+  .map-row .tag{ font-size:13px; font-weight:700; color:var(--on-accent); background:var(--tc); padding:2px 10px; border-radius:999px; white-space:nowrap; }
+
+  .portrait{ flex:0 0 auto; width:96px; height:96px; border-radius:50%; object-fit:cover; border:3px solid var(--accent); background:#fff; }
+  .quote{
+    position:relative; margin:18px 0 0; padding:20px 22px 18px 24px; border-radius:16px;
+    background:var(--accent-soft, var(--surface-2)); border-left:5px solid var(--accent, var(--ink-faint));
+    font-family:"Gowun Batang",serif; font-size:17.5px; line-height:1.8;
+  }
+  .quote .src{ display:block; margin-top:8px; font-family:"Noto Sans KR",sans-serif; font-size:14px; color:var(--ink-faint); text-align:right; }
+  .quote .lbl{ display:inline-block; font-family:"Noto Sans KR",sans-serif; font-size:13px; font-weight:700; color:var(--accent-ink, var(--ink-soft)); margin-bottom:6px; }
+  details.deepen{ margin-top:18px; border:1px dashed var(--line-strong); border-radius:14px; background:var(--surface); }
+  details.deepen summary{ list-style:none; cursor:pointer; padding:14px 18px; font-weight:700; font-size:16px; color:var(--ink-soft); display:flex; gap:10px; align-items:center; }
+  details.deepen summary::-webkit-details-marker{ display:none; }
+  details.deepen summary::before{ content:"＋"; color:var(--accent, var(--ink)); font-weight:900; }
+  details.deepen[open] summary::before{ content:"－"; }
+  details.deepen .body{ padding:0 18px 18px; color:var(--ink-soft); font-size:16px; }
+  details.deepen .body b{ color:var(--ink); }
+
+  /* ---------- thinker head ---------- */
+  .th-head{ display:flex; gap:18px; align-items:center; margin-bottom:12px; flex-wrap:wrap; }
+  .th-head .portrait{ width:104px; height:104px; }
+  .th-head .who{ font-size:30px; font-weight:700; color:var(--accent-ink); font-family:"Gowun Batang",serif; line-height:1.2; }
+  .th-head .yrs{ font-size:14.5px; color:var(--ink-faint); }
+  .pill{ display:inline-block; font-size:13.5px; font-weight:700; color:var(--accent-ink); background:var(--accent-soft); padding:3px 11px; border-radius:999px; margin:6px 6px 0 0; }
+
+  /* veil sim */
+  .sim{ border:1.5px solid var(--accent); border-radius:20px; overflow:hidden; margin-top:24px; background:var(--surface); box-shadow:var(--shadow); }
+  .sim-head{ background:var(--accent-soft); padding:14px 20px; display:flex; gap:10px; align-items:center; border-bottom:1px solid var(--line); }
+  .sim-head .dot{ width:10px; height:10px; border-radius:50%; background:var(--accent); flex:0 0 auto; }
+  .sim-head .t{ font-weight:700; color:var(--accent-ink); font-size:16.5px; }
+  .sim-body{ padding:20px; }
+  .steps{ display:flex; gap:6px; margin-bottom:14px; }
+  .steps span{ width:30px; height:5px; border-radius:3px; background:var(--line-strong); }
+  .steps span.on{ background:var(--accent); }
+  .step-label{ font-size:14px; font-weight:700; color:var(--ink-faint); margin-bottom:10px; }
+  .veil-cards{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:16px; }
+  @media (max-width:600px){ .veil-cards{ grid-template-columns:1fr 1fr; } }
+  .vc{
+    border-radius:14px; padding:12px; text-align:center; min-height:96px; display:flex; flex-direction:column; justify-content:center;
+    background:repeating-linear-gradient(45deg, var(--accent-soft), var(--accent-soft) 8px, var(--accent-soft-2) 8px, var(--accent-soft-2) 16px);
+    border:1.5px dashed var(--accent);
+  }
+  .vc .k{ font-size:13.5px; font-weight:700; color:var(--accent-ink); }
+  .vc .v{ font-size:22px; font-weight:900; color:var(--accent-ink); }
+  .vc.open{ background:var(--surface); border-style:solid; }
+  .vc.open .v{ font-size:15.5px; color:var(--ink); line-height:1.4; }
+  .opt-list{ display:flex; flex-direction:column; gap:10px; }
+  .opt{
+    text-align:left; width:100%; border:1.5px solid var(--line-strong); background:var(--surface); color:var(--ink);
+    border-radius:14px; padding:13px 16px; font-size:16px; cursor:pointer; line-height:1.55;
+  }
+  .opt:hover{ border-color:var(--accent); background:var(--accent-soft); }
+  .opt .lbl{ display:inline-block; font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:14px; color:var(--accent-ink); margin-right:8px; }
+  .opt.chosen{ border-color:var(--accent); background:var(--accent-soft); font-weight:700; }
+  .result-box{ margin-top:16px; border-radius:16px; padding:18px; background:var(--surface-2); border:1px solid var(--line); }
+  .tier{ display:inline-block; font-weight:900; padding:4px 12px; border-radius:999px; font-size:15px; margin-bottom:8px; }
+  .tier.t2{ background:var(--good-soft); color:var(--good); }
+  .tier.t1{ background:var(--surface); color:var(--ink-soft); border:1px solid var(--line-strong); }
+  .tier.t0{ background:var(--bad-soft); color:var(--bad); }
+  .bars{ display:grid; gap:8px; margin-top:10px; }
+  .bar-row{ display:grid; grid-template-columns:minmax(90px,150px) 1fr 52px; gap:10px; align-items:center; font-size:14.5px; }
+  .bar-row .nm{ color:var(--ink-soft); font-weight:700; }
+  .bar-row.cur .nm{ color:var(--accent-ink); }
+  .bar-track{ height:14px; border-radius:7px; background:var(--surface); border:1px solid var(--line); overflow:hidden; }
+  .bar-fill{ height:100%; border-radius:7px; background:var(--ink-faint); transition:width .5s ease; }
+  .bar-row.cur .bar-fill{ background:var(--accent); }
+  .bar-row .val{ font-family:"IBM Plex Mono",monospace; font-size:14px; text-align:right; color:var(--ink-soft); }
+  .flag{ font-size:12.5px; color:var(--bad); font-weight:700; }
+  .verdict{ margin-top:16px; border-radius:16px; padding:18px 20px; background:var(--accent-soft); border:1.5px solid var(--accent); }
+  .verdict .h{ font-weight:900; color:var(--accent-ink); font-size:17px; margin-bottom:6px; }
+
+  .principles{ display:grid; gap:12px; margin-top:22px; }
+  .pr{ border-radius:16px; padding:18px 20px; background:var(--surface); border:1px solid var(--line); box-shadow:var(--shadow); }
+  .pr .no{ display:inline-block; font-size:13.5px; font-weight:900; color:var(--on-accent); background:var(--accent); padding:2px 11px; border-radius:999px; margin-bottom:8px; }
+  .pr .nm{ font-size:19px; font-weight:700; font-family:"Gowun Batang",serif; }
+  .pr .tx{ color:var(--ink-soft); font-size:16px; margin-top:4px; }
+  .pr .sub2{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px; }
+  @media (max-width:560px){ .pr .sub2{ grid-template-columns:1fr; } }
+  .pr .sub2 > div{ background:var(--accent-soft); border-radius:12px; padding:12px 14px; font-size:15.5px; }
+  .pr .sub2 .k{ font-weight:900; color:var(--accent-ink); }
+  .priority{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-top:12px; font-size:15.5px; color:var(--ink-soft); }
+  .priority .p1, .priority .p2{ padding:6px 12px; border-radius:10px; font-weight:700; }
+  .priority .p1{ background:var(--accent); color:var(--on-accent); }
+  .priority .p2{ background:var(--accent-soft); color:var(--accent-ink); }
+
+  /* nozick flow */
+  .flow3{ display:grid; grid-template-columns:1fr auto 1fr auto 1fr; gap:8px; align-items:stretch; margin-top:22px; }
+  .flow3 .fx{ border-radius:16px; padding:16px; background:var(--surface); border:1px solid var(--line); border-top:5px solid var(--accent); box-shadow:var(--shadow); }
+  .flow3 .fx .no{ font-family:"IBM Plex Mono",monospace; font-size:13px; font-weight:600; color:var(--accent-ink); }
+  .flow3 .fx .nm{ font-size:20px; font-weight:700; font-family:"Gowun Batang",serif; margin:2px 0 6px; }
+  .flow3 .fx p{ margin:0; font-size:15.5px; color:var(--ink-soft); }
+  .flow3 .fx.fix{ border-top-style:dashed; }
+  .flow3 .ar{ display:flex; align-items:center; justify-content:center; color:var(--accent); font-size:22px; font-weight:900; }
+  .flow3 .ar .d{ display:none; }
+  @media (max-width:720px){
+    .flow3{ grid-template-columns:1fr; }
+    .flow3 .ar .r{ display:none; }
+    .flow3 .ar .d{ display:inline; }
+  }
+  .judge{ margin-top:24px; }
+  .jcase{ border:1px solid var(--line); border-radius:16px; padding:16px 18px; background:var(--surface); margin-bottom:12px; box-shadow:var(--shadow); }
+  .jcase .q{ font-weight:700; font-size:16.5px; margin-bottom:10px; }
+  .jopts{ display:flex; gap:8px; flex-wrap:wrap; }
+  .jbtn{ border:1.5px solid var(--line-strong); background:var(--surface); color:var(--ink); border-radius:999px; padding:8px 14px; font-size:15px; font-weight:700; cursor:pointer; }
+  .jbtn:hover:not(:disabled){ border-color:var(--accent); background:var(--accent-soft); }
+  .jbtn:disabled{ cursor:default; opacity:.6; }
+  .jbtn.correct{ border-color:var(--good); background:var(--good-soft); color:var(--good); opacity:1; }
+  .jbtn.wrong{ border-color:var(--bad); background:var(--bad-soft); color:var(--bad); opacity:1; }
+  .jfb{ margin-top:10px; font-size:15.5px; color:var(--ink-soft); }
+  .jfb b{ color:var(--ink); }
+  .state-box{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:14px; }
+  @media (max-width:560px){ .state-box{ grid-template-columns:1fr; } }
+  .state-box > div{ border-radius:14px; padding:14px 16px; font-size:15.5px; }
+  .state-box .yes{ background:var(--accent-soft); }
+  .state-box .no{ background:var(--surface-2); color:var(--ink-soft); }
+  .state-box .k{ font-weight:900; margin-bottom:4px; }
+  .state-box .yes .k{ color:var(--accent-ink); }
+  .state-box ul{ margin:0; padding-left:20px; }
+
+  /* compare */
+  .cmp{ border:1px solid var(--line); border-radius:18px; overflow:hidden; background:var(--surface); box-shadow:var(--shadow); margin-top:18px; }
+  .cmp-row{ display:grid; grid-template-columns:150px 1fr 1fr; border-bottom:1px solid var(--line); }
+  .cmp-row:last-child{ border-bottom:none; }
+  .cmp-row > div{ padding:14px 16px; font-size:15.5px; }
+  .cmp-row .lab{ background:var(--surface-2); font-weight:700; color:var(--ink-soft); }
+  .cmp-row .r{ border-left:4px solid var(--rawls); }
+  .cmp-row .n{ border-left:4px solid var(--nozick); }
+  .cmp-row.head > div{ font-weight:900; font-size:16.5px; }
+  .cmp-row.head .r{ color:var(--rawls-ink); background:var(--rawls-soft); }
+  .cmp-row.head .n{ color:var(--nozick-ink); background:var(--nozick-soft); }
+  .cmp-row .who{ display:none; font-size:12.5px; font-weight:900; margin-bottom:2px; }
+  .cmp-row .r .who{ color:var(--rawls-ink); }
+  .cmp-row .n .who{ color:var(--nozick-ink); }
+  @media (max-width:640px){
+    .cmp-row{ grid-template-columns:1fr; }
+    .cmp-row.head{ display:none; }
+    .cmp-row .who{ display:block; }
+  }
+  .article{ display:grid; grid-template-columns:1fr 190px; gap:18px; align-items:start; margin-top:22px; }
+  @media (max-width:640px){ .article{ grid-template-columns:1fr; } }
+  .article .paper{ background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:18px 20px; box-shadow:var(--shadow); font-size:16px; }
+  .article .paper .hd{ font-size:13.5px; font-weight:700; color:var(--ink-faint); margin-bottom:6px; }
+  .article .paper p{ margin:0 0 10px; color:var(--ink); }
+  .article .paper .src{ font-size:13.5px; color:var(--ink-faint); text-align:right; margin:0; }
+  .article figure{ margin:0; }
+  .article figure img{ border-radius:14px; width:100%; max-width:240px; margin:0 auto; border:1px solid var(--line); }
+  .article figcaption{ font-size:13.5px; color:var(--ink-faint); text-align:center; margin-top:6px; }
+  .eval{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:16px; }
+  @media (max-width:640px){ .eval{ grid-template-columns:1fr; } }
+  .eval .ev{ border-radius:16px; padding:16px 18px; border:1.5px solid var(--accent); background:var(--surface); }
+  .eval .ev .h{ display:flex; align-items:center; gap:10px; font-weight:900; color:var(--accent-ink); font-size:17px; }
+  .eval .ev .h img{ width:40px; height:40px; border-radius:50%; object-fit:cover; border:2px solid var(--accent); background:#fff; }
+  .eval .ev .ans{ display:none; margin-top:10px; font-size:15.5px; color:var(--ink-soft); }
+  .eval .ev.open .ans{ display:block; animation:fadein .25s ease; }
+  .eval .ev .ans b{ color:var(--ink); }
+  .eval .ev .btn{ margin-top:10px; padding:9px 18px; min-height:0; font-size:15px; }
+  .eval .ev.open .btn{ display:none; }
+
+  /* quiz */
+  .score-bar{ display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-top:16px; padding:12px 16px; border-radius:14px; background:var(--surface); border:1px solid var(--line); position:sticky; top:58px; z-index:5; box-shadow:var(--shadow); }
+  .score-bar .s{ font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:17px; }
+  .score-bar .reset{ border:1.5px solid var(--line-strong); background:transparent; color:var(--ink); border-radius:999px; padding:6px 14px; font-weight:700; font-size:14px; cursor:pointer; }
+  .quiz-list{ display:grid; gap:14px; margin-top:14px; }
+  .qz{ border-radius:18px; padding:18px 20px; background:var(--surface); border:1px solid var(--line); box-shadow:var(--shadow); }
+  .qz .qn{ font-family:"IBM Plex Mono",monospace; font-size:13.5px; color:var(--ink-faint); font-weight:600; }
+  .qz .qt{ font-size:17.5px; font-weight:700; margin:6px 0 12px; line-height:1.6; }
+  .qopts{ display:flex; gap:8px; flex-wrap:wrap; }
+  .qo{ border:1.5px solid var(--line-strong); background:var(--surface); color:var(--ink); border-radius:12px; padding:10px 16px; font-size:16px; font-weight:700; cursor:pointer; min-height:44px; }
+  .qo:hover:not(:disabled){ background:var(--surface-2); }
+  .qo:disabled{ cursor:default; opacity:.55; }
+  .qo.r-opt{ border-color:var(--rawls); color:var(--rawls-ink); }
+  .qo.n-opt{ border-color:var(--nozick); color:var(--nozick-ink); }
+  .qo.correct{ border-color:var(--good); background:var(--good-soft); color:var(--good); opacity:1; }
+  .qo.wrong{ border-color:var(--bad); background:var(--bad-soft); color:var(--bad); opacity:1; }
+  .qfb{ margin-top:12px; border-radius:12px; padding:12px 14px; font-size:15.5px; border:1px solid; }
+  .qfb.correct{ background:var(--good-soft); border-color:var(--good); }
+  .qfb.wrong{ background:var(--bad-soft); border-color:var(--bad); }
+  .qfb .l{ font-weight:900; margin-bottom:2px; }
+  .qfb.correct .l{ color:var(--good); }
+  .qfb.wrong .l{ color:var(--bad); }
+  .final{ display:none; margin-top:16px; border-radius:18px; padding:20px; text-align:center; background:var(--surface); border:2px solid var(--ink); }
+  .final.show{ display:block; animation:fadein .3s ease; }
+  .final .big{ font-family:"IBM Plex Mono",monospace; font-size:40px; font-weight:600; }
+
+  /* recap flow */
+  .fc{ margin-top:22px; }
+  .fc-pill{ display:block; max-width:560px; margin:0 auto; text-align:center; background:var(--surface); border:2px solid var(--fcc, var(--ink)); border-radius:18px; padding:12px 18px; }
+  .fc-pill .k{ font-weight:900; font-size:17.5px; color:var(--fcc-ink, var(--ink)); }
+  .fc-pill .v{ font-size:15px; color:var(--ink-soft); }
+  .fc-down{ display:flex; justify-content:center; margin:2px 0; }
+  .fc-down svg{ display:block; }
+  .fc-split{ position:relative; height:44px; }
+  .fc-split .stem{ position:absolute; left:50%; top:0; height:12px; border-left:2.5px solid var(--ink-faint); transform:translateX(-1px); }
+  .fc-split .hline{ position:absolute; top:11px; left:calc(25% - 6.5px); right:calc(25% - 6.5px); border-top:2.5px solid var(--ink-faint); }
+  .fc-split .heads{ position:absolute; left:0; right:0; top:12px; display:grid; grid-template-columns:1fr 1fr; gap:26px; }
+  .fc-split .heads > div{ display:flex; justify-content:center; }
+  .fc-split .heads svg{ display:block; margin-top:-1px; }
+  .fc-cols{ display:grid; grid-template-columns:1fr 1fr; gap:26px; }
+  @media (max-width:720px){
+    .fc-cols{ grid-template-columns:1fr; gap:30px; }
+    .fc-split{ display:none; }
+    .fc-split-m{ display:flex !important; }
+  }
+  .fc-split-m{ display:none; justify-content:center; margin:2px 0; }
+  .fc-colhead{ display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+  .fc-colhead img{ width:46px; height:46px; border-radius:50%; object-fit:cover; border:2.5px solid var(--accent); background:#fff; }
+  .fc-colhead h3{ margin:0; font-size:19px; color:var(--accent-ink); }
+  .fc-colhead .ln{ flex:1; height:3px; border-radius:2px; background:var(--accent); }
+  .fc-step{ background:var(--surface); border:1px solid var(--line); border-left:6px solid var(--accent); border-radius:14px; padding:12px 16px; box-shadow:var(--shadow); }
+  .fc-step .b{ display:inline-block; font-family:"IBM Plex Mono",monospace; font-size:12.5px; font-weight:600; color:var(--accent-ink); border:1.5px solid var(--accent); border-radius:999px; padding:1px 9px; margin-bottom:4px; }
+  .fc-step h4{ margin:0 0 4px; font-size:17.5px; }
+  .fc-step p{ margin:0; font-size:15px; color:var(--ink-soft); }
+  .fc-sub{ display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  .fc-sub.three{ grid-template-columns:1fr 1fr 1fr; }
+  @media (max-width:420px){ .fc-sub.three{ grid-template-columns:1fr; } }
+  .fc-sub > div{ background:var(--accent-soft); border-radius:12px; padding:10px 10px; text-align:center; font-size:14.5px; }
+  .fc-sub .k{ font-weight:900; color:var(--accent-ink); font-size:15px; }
+  .fc-end{ background:var(--accent-soft-2); border-radius:14px; padding:12px 16px; text-align:center; }
+  .fc-end h4{ margin:0 0 4px; color:var(--accent-ink); font-size:17.5px; }
+  .fc-end p{ margin:0; font-size:15px; }
+  .fc-issue{ margin-top:26px; border:2px dashed var(--line-strong); border-radius:18px; padding:16px 20px; text-align:center; background:var(--surface); }
+  .fc-issue .k{ font-weight:900; font-size:17.5px; }
+  .fc-issue p{ margin:4px 0 0; font-size:15.5px; color:var(--ink-soft); }
+
+  footer{ margin-top:50px; padding-top:22px; border-top:1px solid var(--line); color:var(--ink-faint); font-size:14px; text-align:center; }
+  footer .sig{ margin-top:8px; font-size:15px; font-weight:700; color:var(--page-ink); letter-spacing:.03em; }
+
+  @media (max-width:480px){
+    body{ font-size:16.5px; }
+    .wrap{ padding:0 16px 80px; }
+    .card, .sim-body{ padding:18px 16px; }
+    .bar-row{ grid-template-columns:86px 1fr 40px; font-size:13.5px; }
+  }
+  @media (prefers-reduced-motion: reduce){ *{ animation-duration:.01ms !important; transition:none !important; scroll-behavior:auto !important; } }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <span class="topbar-title">롤스 vs 노직</span>
+    <nav class="topnav" aria-label="섹션 이동">
+      <a href="#open">장학금 상황</a>
+      <a href="#rawls">롤스</a>
+      <a href="#nozick">노직</a>
+      <a href="#compare">비교</a>
+      <a href="#quiz">퀴즈</a>
+      <a href="#recap">흐름도</a>
+    </nav>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="화면 테마 바꾸기">🌙 다크</button>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- ================= HERO ================= -->
+  <section class="hero">
+    <span class="hero-tag">현대사회와 윤리 · 분배적 정의 · 롤스 vs 노직</span>
+    <h1>무엇을 어떻게 나누어야<br><span class="hl">공정</span>할까?</h1>
+    <p class="lede">사람들의 욕구는 끝이 없는데, 나눌 수 있는 자원은 한정되어 있습니다. 그래서 &lsquo;누구에게, 무엇을 기준으로, 얼마나&rsquo; 나눌지가 중요해집니다. 장학금 한 자리를 두고 고민해 본 뒤, <b style="color:var(--rawls-ink)">롤스</b>와 <b style="color:var(--nozick-ink)">노직</b>이 &lsquo;공정한 분배&rsquo;에 대해 내놓은 서로 다른 답을 직접 체험하며 비교해 봅시다.</p>
+    <div class="duo">
+      <div class="duo-item" style="--c:var(--rawls);--ci:var(--rawls-ink)">
+        <img src="img/rawls.png" alt="롤스 초상">
+        <div><div class="n">롤스</div><div class="s">공정으로서의 정의</div></div>
+      </div>
+      <div class="duo-item" style="--c:var(--nozick);--ci:var(--nozick-ink)">
+        <img src="img/nozick.png" alt="노직 초상">
+        <div><div class="n">노직</div><div class="s">소유권으로서의 정의</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 0. OPEN ================= -->
+  <section class="scene" id="open">
+    <div class="eyebrow"><span class="num">0</span>상황</div>
+    <h2>어떤 학생에게 장학금을 주어야 할까?</h2>
+    <p>고등학교에서 어떤 학생에게 장학금을 줄지 논의하고 있습니다. 선생님 세 분의 의견이 모두 다릅니다. 내가 이 회의에 참여했다면 어느 의견에 손을 들겠는가? <b>먼저 하나를 골라 봅시다.</b></p>
+    <div class="scholar-img"><img src="img/scholarship.jpg" alt="장학금 대상을 두고 선생님 세 분이 회의하는 삽화" loading="lazy"></div>
+    <div class="q-banner">👉 나라면 누구에게 장학금을 줄까?</div>
+    <div class="picks" id="picks">
+      <button class="pick" type="button" data-k="need" style="--pc:var(--c-ne)"><span class="who">의견 ①</span>가정 형편이 어려운 학생에게 주자.</button>
+      <button class="pick" type="button" data-k="effort" style="--pc:var(--c-ef)"><span class="who">의견 ②</span>성적이 가장 많이 향상된 학생에게 주자.</button>
+      <button class="pick" type="button" data-k="merit" style="--pc:var(--c-ac)"><span class="who">의견 ③</span>성적이 가장 우수한 학생에게 주자.</button>
+    </div>
+    <div id="pickResult" aria-live="polite"></div>
+  </section>
+
+  <!-- ================= 3. RAWLS ================= -->
+  <section class="scene theme-r" id="rawls">
+    <div class="eyebrow"><span class="num">1</span>공정으로서의 정의</div>
+    <div class="th-head">
+      <img class="portrait" src="img/rawls.png" alt="롤스 초상">
+      <div>
+        <div class="who">롤스</div>
+        <div class="yrs">Rawls, J., 1921~2002 · 미국의 현대 철학자·윤리학자</div>
+        <span class="pill">공정으로서의 정의</span><span class="pill">절차의 공정성</span>
+      </div>
+    </div>
+    <p class="para">롤스는 정의의 본질을 <b>공정성</b>으로 해석하면서 <b>절차의 공정성</b>을 강조했습니다. 공정한 절차를 통해 합의된 것이라면 정의롭다고 본 것입니다. 그래서 정의의 원칙을 합의하기 위한 공정한 절차로 <b>원초적 입장</b>이라는 가상적 계약 상황을 설정했습니다.</p>
+
+    <div class="grid2" style="margin-top:16px">
+      <div class="pr">
+        <span class="no">장치 1</span>
+        <div class="nm">원초적 입장</div>
+        <div class="tx">정의의 원칙을 합의하기 위한 <b>가상적 계약 상황</b>. 계약 당사자들은 타인의 이익에는 무관심하고, 자신의 이익을 합리적으로 추구한다.</div>
+      </div>
+      <div class="pr">
+        <span class="no">장치 2</span>
+        <div class="nm">무지의 베일</div>
+        <div class="tx">자신의 <b>재능, 출신, 성별, 사회적 상황</b> 등 자연적·사회적 조건을 알지 못하게 하는 장치</div>
+      </div>
+    </div>
+
+    <!-- veil sim -->
+    <div class="sim">
+      <div class="sim-head"><span class="dot"></span><span class="t">무지의 베일 체험 — 내가 누구로 태어날지 모르는 채로 사회의 원칙 고르기</span></div>
+      <div class="sim-body">
+        <div class="steps"><span id="vs1" class="on"></span><span id="vs2"></span><span id="vs3"></span></div>
+
+        <div class="step-label" id="veilLabel">STEP 1 · 지금 당신은 무지의 베일을 쓰고 있습니다</div>
+        <div class="veil-cards" id="veilCards">
+          <div class="vc"><div class="k">재능</div><div class="v">?</div></div>
+          <div class="vc"><div class="k">출신</div><div class="v">?</div></div>
+          <div class="vc"><div class="k">성별</div><div class="v">?</div></div>
+          <div class="vc"><div class="k">사회적 상황</div><div class="v">?</div></div>
+        </div>
+
+        <div id="veilStep1">
+          <p style="margin:0 0 12px;color:var(--ink-soft);font-size:16px">베일을 벗으면 이 네 가지가 <b style="color:var(--ink)">무작위로</b> 정해집니다. 그 전에, 우리 사회가 따를 원칙을 하나 골라 봅시다. 한번 고르면 바꿀 수 없습니다.</p>
+          <div class="opt-list" id="ruleOpts">
+            <button class="opt" type="button" data-r="A"><span class="lbl">원칙 A</span>모든 것을 자유 경쟁에 맡긴다. 재능 있고 형편이 좋은 사람은 훨씬 많이 갖게 되고, 어려운 사람을 위한 지원은 따로 없다.</button>
+            <button class="opt" type="button" data-r="B"><span class="lbl">원칙 B</span>누가 무엇을 하든 모두가 완전히 똑같이 나누어 갖는다.</button>
+            <button class="opt" type="button" data-r="C"><span class="lbl">원칙 C</span>기본적 자유는 모두에게 똑같이 보장한다. 불평등은 가장 불리한 사람에게도 이익이 되고, 좋은 지위가 모두에게 열려 있을 때만 허용한다.</button>
+            <button class="opt" type="button" data-r="D"><span class="lbl">원칙 D</span>사회 전체의 부를 가장 크게 하기 위해서라면, 일부 사람의 기본적 자유를 제한할 수 있다.</button>
+          </div>
+        </div>
+
+        <div id="veilStep2" style="display:none">
+          <p style="margin:0 0 12px;color:var(--ink-soft);font-size:16px">원칙이 확정되었습니다. 이제 베일을 벗고, 당신이 어떤 사람으로 태어났는지 확인해 봅시다.</p>
+          <button class="btn" type="button" id="liftBtn">🎭 베일 벗기</button>
+        </div>
+
+        <div id="veilResult" aria-live="polite"></div>
+        <div class="btn-row" id="veilAgain" style="display:none">
+          <button class="btn ghost" type="button" id="rebornBtn">🔁 같은 원칙으로 다시 태어나기</button>
+          <button class="btn ghost" type="button" id="resetVeilBtn">⬅ 원칙 다시 고르기</button>
+        </div>
+      </div>
+    </div>
+
+    <details class="deepen">
+      <summary>무지의 베일은 왜 필요할까? (설정 이유)</summary>
+      <div class="body">정의의 원칙을 정할 때 <b>운</b>, 곧 자신의 <b>선천적·환경적 우연성</b>이 끼어들지 못하도록 막기 위해서입니다. 내가 재능을 타고났는지, 어떤 집에서 태어났는지 알면 나에게 유리한 원칙만 고르게 됩니다. 롤스는 또 개인이 지닌 <b>재능의 분포 상황을 사회의 공동 자산</b>으로 간주했습니다.</div>
+    </details>
+
+    <h3 style="font-size:24px;margin:34px 0 4px">원초적 입장에서 합의되는 정의의 원칙</h3>
+    <p class="para" style="margin:0">계약 당사자들은 자신이 <b>사회적 약자가 되는 위험한 상황을 회피</b>하려 하기 때문에, 다음 원칙에 합의합니다.</p>
+    <div class="principles">
+      <div class="pr">
+        <span class="no">제1원칙</span>
+        <div class="nm">평등한 자유의 원칙</div>
+        <div class="tx">각 개인은 기본적 자유에 있어 <b>평등한 권리</b>를 가져야 한다.</div>
+      </div>
+      <div class="pr">
+        <span class="no">제2원칙</span>
+        <div class="nm">사회적·경제적 불평등이 허용되는 두 조건</div>
+        <div class="tx">사회적·경제적 불평등은 다음 두 조건을 <b>만족시킬 때</b> 정당화될 수 있다.</div>
+        <div class="sub2">
+          <div><div class="k">① 차등의 원칙</div><b>최소 수혜자</b>에게 최대의 이익이 보장되고,</div>
+          <div><div class="k">② <b>기회균등</b>의 원칙</div>불평등의 계기가 되는 사회적 지위는 <b>모든 사람에게 개방</b>되어야 한다.</div>
+        </div>
+      </div>
+    </div>
+    <div class="note">
+      <span class="ic">⚖️</span>
+      <div><b>제1원칙의 우선성과 자유주의</b><br>제1원칙과 제2원칙이 충돌하면 <b>제1원칙이 우선</b>합니다. 즉 복지를 위해서라도 개인의 자유를 침해할 수 없다는 <b>자유주의</b>의 입장을 취합니다.
+        <div class="priority"><span class="p1">제1원칙 평등한 자유</span><span>&gt;</span><span class="p2">제2원칙 차등·기회균등</span></div>
+      </div>
+    </div>
+    <div class="quote">
+      <span class="lbl">롤스의 말</span><br>
+      모든 사람은 기본적 자유를 누릴 수 있는 평등한 권리를 가져야 합니다. 다수의 이익을 위해 개인의 기본적 자유가 침해되는 것은 허용되지 않습니다.
+      <span class="src">- 롤스, 『정의론』</span>
+    </div>
+  </section>
+
+  <!-- ================= 4. NOZICK ================= -->
+  <section class="scene theme-n" id="nozick">
+    <div class="eyebrow"><span class="num">2</span>소유권으로서의 정의</div>
+    <div class="th-head">
+      <img class="portrait" src="img/nozick.png" alt="노직 초상">
+      <div>
+        <div class="who">노직</div>
+        <div class="yrs">Nozick, R., 1938~2002 · 미국의 철학자</div>
+        <span class="pill">소유권으로서의 정의</span><span class="pill">자유 지상주의</span>
+      </div>
+    </div>
+    <p class="para">노직은 개인의 자유를 <b>최우선의 권리</b>라고 보는 자유 지상주의의 관점에서, 정의란 개인의 <b>소유권</b>을 보장해 주는 것이라는 <b>소유 권리론</b>을 주장했습니다. 재화의 <b>취득과 양도의 절차가 정당하다면</b>, 그 소유물에 대해 개인은 <b>절대적인 권리</b>를 갖는다는 것입니다.</p>
+
+    <div class="flow3" aria-label="노직의 정의의 원칙 세 가지">
+      <div class="fx">
+        <div class="no">원칙 1</div>
+        <div class="nm">취득의 원칙</div>
+        <p>정당한 노동을 통해 얻은 소유물에 대해 소유 권리를 가진다.</p>
+      </div>
+      <div class="ar" aria-hidden="true"><span class="r">→</span><span class="d">↓</span></div>
+      <div class="fx">
+        <div class="no">원칙 2</div>
+        <div class="nm">양도의 원칙</div>
+        <p>자유롭게 양도한 소유물에 대해 정당한 소유 권리를 가진다.</p>
+      </div>
+      <div class="ar" aria-hidden="true"><span class="r">→</span><span class="d">↓</span></div>
+      <div class="fx fix">
+        <div class="no">원칙 3 · 부정의가 생기면</div>
+        <div class="nm">교정의 원칙</div>
+        <p>취득과 양도의 과정에서 부정의가 발생한다면 이를 교정해야 한다.</p>
+      </div>
+    </div>
+
+    <div class="judge">
+      <h3 style="font-size:22px;margin:0 0 4px">✋ 노직이라면 어떻게 판정할까?</h3>
+      <p class="para" style="margin:0 0 14px">아래 소유물마다 노직의 세 원칙 중 어디에 해당하는지 골라 봅시다.</p>
+      <div id="judgeList"></div>
+    </div>
+
+    <h3 style="font-size:24px;margin:30px 0 4px"><b>최소</b> 국가론</h3>
+    <p class="para" style="margin:0">소유권이 그만큼 중요하다면, 국가는 무엇을 해야 하는가? 노직은 국가가 개인의 소유를 <b>절도·사기로부터 보호</b>하고 <b>국방</b>을 담당하는 역할 정도만 해야 한다고 주장했습니다.</p>
+    <div class="state-box">
+      <div class="yes"><div class="k">✔ 국가가 할 일</div><ul><li>개인의 소유를 절도·사기로부터 보호</li><li>국방 담당</li></ul></div>
+      <div class="no"><div class="k">✘ 그 이상은 지나친 역할</div><ul><li>정당하게 얻은 소유물은 개인이 절대적 권리를 가지므로, 국가가 그 이상으로 개입하는 것은 정당하지 않다고 봄</li></ul></div>
+    </div>
+  </section>
+
+  <!-- ================= 5. COMPARE ================= -->
+  <section class="scene" id="compare">
+    <div class="eyebrow"><span class="num">3</span>롤스와 노직 나란히 보기</div>
+    <h2>같은 &lsquo;정의&rsquo;, 다른 답</h2>
+    <p>두 사람 모두 개인의 자유를 소중히 여기지만, 분배를 바라보는 눈은 크게 다릅니다.</p>
+    <div class="cmp" role="table" aria-label="롤스와 노직 비교">
+      <div class="cmp-row head" role="row"><div class="lab" role="columnheader">구분</div><div class="r" role="columnheader">롤스</div><div class="n" role="columnheader">노직</div></div>
+      <div class="cmp-row" role="row">
+        <div class="lab" role="rowheader">정의의 핵심</div>
+        <div class="r" role="cell"><div class="who">롤스</div>공정으로서의 정의 — 공정한 절차(원초적 입장)를 통해 합의된 원칙은 정의롭다</div>
+        <div class="n" role="cell"><div class="who">노직</div>소유권으로서의 정의 — 개인의 소유를 보장하는 것이 정의다 (소유 권리론)</div>
+      </div>
+      <div class="cmp-row" role="row">
+        <div class="lab" role="rowheader">중시하는 것</div>
+        <div class="r" role="cell"><div class="who">롤스</div>절차의 공정성, 평등한 자유, <b>최소 수혜자</b>의 이익, 기회균등</div>
+        <div class="n" role="cell"><div class="who">노직</div>개인의 자유(최우선의 권리), 취득·양도 <b>절차의 정당성</b></div>
+      </div>
+      <div class="cmp-row" role="row">
+        <div class="lab" role="rowheader">정의의 원칙</div>
+        <div class="r" role="cell"><div class="who">롤스</div>제1원칙 평등한 자유 / 제2원칙 차등 · 기회균등</div>
+        <div class="n" role="cell"><div class="who">노직</div>취득의 원칙 · 양도의 원칙 · 교정의 원칙</div>
+      </div>
+      <div class="cmp-row" role="row">
+        <div class="lab" role="rowheader">국가의 역할</div>
+        <div class="r" role="cell"><div class="who">롤스</div>불평등이 최소 수혜자에게 최대 이익이 되도록 사회 제도를 마련해야 함 (단, 기본적 자유는 침해 불가)</div>
+        <div class="n" role="cell"><div class="who">노직</div>최소 국가 — 소유를 절도·사기로부터 보호하고 국방을 담당하는 정도</div>
+      </div>
+    </div>
+
+    <h3 style="font-size:23px;margin:36px 0 4px">💬 복지 정책, 두 사람은 어떻게 볼까?</h3>
+    <p class="para" style="margin:0">소득과 자산의 격차가 점점 커지자, 정부가 세금을 더 걷어 형편이 어려운 사람들을 지원하는 <b>복지 예산을 늘리기로</b> 했다고 해 봅시다. 롤스와 노직은 각각 어떻게 평가하겠는가? 먼저 예상해 본 뒤 카드를 열어 봅시다.</p>
+    <div class="article">
+      <div class="paper">
+        <div class="hd">🏛️ 가상의 정책 발표</div>
+        <p>&ldquo;소득 격차가 커지면서 사회적 약자의 삶이 어려워지고 있습니다. 정부는 내년부터 세금을 더 걷어, 형편이 어려운 가정을 지원하는 복지 예산을 크게 늘리겠습니다.&rdquo;</p>
+      </div>
+      <figure>
+        <img src="img/welfare_protest.jpg" alt="시민 단체가 국민 기초 생활 보장 제도의 개선을 요구하는 모습" loading="lazy">
+        <figcaption>국민 기초 생활 보장 제도의 개선을 요구하는 시민 단체</figcaption>
+      </figure>
+    </div>
+    <div class="eval">
+      <div class="ev theme-r" id="evR">
+        <div class="h"><img src="img/rawls.png" alt="">롤스라면?</div>
+        <button class="btn" type="button" data-open="evR">롤스의 생각 열기</button>
+        <div class="ans"><b>찬성하는 쪽</b>입니다. 사회적·경제적 불평등은 <b>최소 수혜자에게 최대의 이익</b>이 될 때만 정당하다는 <b>차등의 원칙</b>에 비추어 보면, 사회적 약자를 지원하는 복지 확대는 정의에 가까워지는 일입니다. 다만 <b>제1원칙이 우선</b>하므로, 복지를 위해서라도 개인의 기본적 자유를 침해해서는 안 된다고 봅니다.</div>
+      </div>
+      <div class="ev theme-n" id="evN">
+        <div class="h"><img src="img/nozick.png" alt="">노직이라면?</div>
+        <button class="btn" type="button" data-open="evN">노직의 생각 열기</button>
+        <div class="ans"><b>반대하는 쪽</b>입니다. 취득과 양도의 절차가 정당했다면 개인은 그 소유물에 <b>절대적인 권리</b>를 가지므로, 세금으로 거두어 다른 사람에게 나누는 것은 <b>소유권 침해</b>입니다. 국가는 소유를 절도·사기로부터 보호하고 국방을 담당하는 <b>최소 국가</b>에 머물러야 합니다. 단, 취득·양도 과정에 부정의가 있었다면 <b>교정의 원칙</b>에 따라 바로잡아야 한다고 봅니다.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 7. QUIZ ================= -->
+  <section class="scene" id="quiz">
+    <div class="eyebrow"><span class="num">4</span>확인 퀴즈</div>
+    <h2>이 주장, 롤스일까 노직일까?</h2>
+    <p>각 주장을 읽고 누구의 생각인지 골라 봅시다.</p>
+    <div class="score-bar"><span class="s" id="scoreTxt">0 / 6 맞힘 · 0문항 풂</span><button class="reset" type="button" id="quizReset">↺ 다시 풀기</button></div>
+    <div class="quiz-list" id="quizList"></div>
+    <div class="final" id="quizFinal"></div>
+  </section>
+
+  <!-- ================= 8. RECAP ================= -->
+  <section class="scene" id="recap">
+    <div class="eyebrow"><span class="num">5</span>흐름도</div>
+    <h2>한 장으로 다시 보기</h2>
+    <p>&lsquo;공정한 분배&rsquo;라는 같은 질문에서 출발해, 롤스와 노직의 길이 어디서 갈라지는지 따라가 봅시다.</p>
+
+    <div class="fc">
+      <div class="fc-pill">
+        <div class="k">분배적 정의</div>
+        <div class="v">사회적 이익이나 부담을 공정하게 분배하여 구성원 각자가 정당한 몫을 누리도록 하는 것</div>
+      </div>
+      <div class="fc-split" aria-hidden="true">
+        <span class="stem"></span><span class="hline"></span>
+        <div class="heads">
+          <div><svg width="18" height="24"><path d="M9 0 V14" stroke="var(--rawls)" stroke-width="2.5"/><polygon points="3,13 15,13 9,24" fill="var(--rawls)"/></svg></div>
+          <div><svg width="18" height="24"><path d="M9 0 V14" stroke="var(--nozick)" stroke-width="2.5"/><polygon points="3,13 15,13 9,24" fill="var(--nozick)"/></svg></div>
+        </div>
+      </div>
+      <div class="fc-split-m" aria-hidden="true"><svg width="20" height="30"><path d="M10 0 V20" stroke="var(--ink-faint)" stroke-width="2.5"/><polygon points="3,19 17,19 10,30" fill="var(--ink-faint)"/></svg></div>
+
+      <div class="fc-cols">
+        <div class="theme-r">
+          <div class="fc-colhead"><img src="img/rawls.png" alt=""><h3>롤스</h3><div class="ln"></div></div>
+          <div class="fc-step"><span class="b">1</span><h4>원초적 입장</h4><p>정의의 원칙에 합의하기 위한 공정한 절차(가상적 계약 상황)</p></div>
+          <div class="fc-down"><svg width="18" height="24" aria-hidden="true"><path d="M9 0 V14" stroke="var(--rawls)" stroke-width="2.5"/><polygon points="3,13 15,13 9,24" fill="var(--rawls)"/></svg></div>
+          <div class="fc-step"><span class="b">2</span><h4>무지의 베일</h4><p>재능·출신·성별·사회적 상황을 모름 → 운(우연성)의 개입 차단</p></div>
+          <div class="fc-down"><svg width="18" height="24" aria-hidden="true"><path d="M9 0 V14" stroke="var(--rawls)" stroke-width="2.5"/><polygon points="3,13 15,13 9,24" fill="var(--rawls)"/></svg></div>
+          <div class="fc-step"><span class="b">3</span><h4>정의의 원칙 합의</h4>
+            <div class="fc-sub" style="margin-top:8px">
+              <div><div class="k">제1원칙</div>평등한 자유</div>
+              <div><div class="k">제2원칙</div>차등 · <b>기회균등</b></div>
+            </div>
+          </div>
+          <div class="fc-down"><svg width="18" height="24" aria-hidden="true"><path d="M9 0 V14" stroke="var(--rawls)" stroke-width="2.5"/><polygon points="3,13 15,13 9,24" fill="var(--rawls)"/></svg></div>
+          <div class="fc-end"><h4>공정으로서의 정의</h4><p>제1원칙 우선 · 최소 수혜자 배려 → 복지에 긍정적</p></div>
+        </div>
+
+        <div class="theme-n">
+          <div class="fc-colhead"><img src="img/nozick.png" alt=""><h3>노직</h3><div class="ln"></div></div>
+          <div class="fc-step"><span class="b">1</span><h4>소유 권리론</h4><p>정의 = 개인의 <b>소유권</b> 보장 (자유 지상주의)</p></div>
+          <div class="fc-down"><svg width="18" height="24" aria-hidden="true"><path d="M9 0 V14" stroke="var(--nozick)" stroke-width="2.5"/><polygon points="3,13 15,13 9,24" fill="var(--nozick)"/></svg></div>
+          <div class="fc-step"><span class="b">2</span><h4>정의의 세 원칙</h4>
+            <div class="fc-sub three" style="margin-top:8px">
+              <div><div class="k">취득</div>정당한 노동</div>
+              <div><div class="k">양도</div>자유로운 양도</div>
+              <div><div class="k">교정</div>부정의 바로잡기</div>
+            </div>
+          </div>
+          <div class="fc-down"><svg width="18" height="24" aria-hidden="true"><path d="M9 0 V14" stroke="var(--nozick)" stroke-width="2.5"/><polygon points="3,13 15,13 9,24" fill="var(--nozick)"/></svg></div>
+          <div class="fc-step"><span class="b">3</span><h4>절대적 소유 권리</h4><p>취득·양도 절차가 정당하면 소유물에 절대적 권리</p></div>
+          <div class="fc-down"><svg width="18" height="24" aria-hidden="true"><path d="M9 0 V14" stroke="var(--nozick)" stroke-width="2.5"/><polygon points="3,13 15,13 9,24" fill="var(--nozick)"/></svg></div>
+          <div class="fc-end"><h4><b>최소</b> 국가론</h4><p>소유 보호(절도·사기)와 국방만 → 복지 확대에 부정적</p></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div>현대사회와 윤리 &middot; 분배적 정의 &mdash; 롤스 vs 노직</div>
+    <div class="sig">♥무늬T♥</div>
+  </footer>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  function $(id){ return document.getElementById(id); }
+  function store(k, v){ try{ if(v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); }catch(e){ return null; } }
+
+  /* ---------- theme ---------- */
+  var root = document.documentElement, themeBtn = $('themeBtn');
+  function isDark(){
+    var t = root.getAttribute('data-theme');
+    if(t) return t === 'dark';
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  }
+  function syncThemeBtn(){ themeBtn.textContent = isDark() ? '☀️ 라이트' : '🌙 다크'; }
+  var savedTheme = store('rn2-theme');
+  if(savedTheme === 'light' || savedTheme === 'dark') root.setAttribute('data-theme', savedTheme);
+  syncThemeBtn();
+  themeBtn.addEventListener('click', function(){
+    var next = isDark() ? 'light' : 'dark';
+    root.setAttribute('data-theme', next); store('rn2-theme', next); syncThemeBtn();
+  });
+  if(window.matchMedia){
+    var mq = window.matchMedia('(prefers-color-scheme: dark)');
+    if(mq.addEventListener) mq.addEventListener('change', syncThemeBtn);
+  }
+
+  /* ---------- scholarship pick ---------- */
+  var PICK = {
+    need:   { label:'필요', why:'형편이 어려운 학생에게 먼저 주자는 것은 각자에게 <b>필요한 만큼</b> 나누자는 생각입니다.' },
+    effort: { label:'노력', why:'성적이 많이 오른 학생에게 주자는 것은 그 학생이 <b>기울인 노력</b>에 보상하자는 생각입니다.' },
+    merit:  { label:'업적', why:'성적이 가장 우수한 학생에게 주자는 것은 이미 이룬 <b>성과(업적)</b>에 보상하자는 생각입니다.' }
+  };
+  var ORDER = ['need','effort','merit'];
+  var TEXT = { need:'가정 형편이 어려운 학생', effort:'성적이 가장 많이 향상된 학생', merit:'성적이 가장 우수한 학생' };
+  var COLOR = { need:'var(--c-ne)', effort:'var(--c-ef)', merit:'var(--c-ac)' };
+
+  function applyPick(k, scroll){
+    var p = PICK[k]; if(!p) return;
+    Array.prototype.forEach.call(document.querySelectorAll('.pick'), function(b){ b.classList.toggle('chosen', b.getAttribute('data-k') === k); });
+    var rows = ORDER.map(function(o){
+      return '<div class="map-row"><span class="tag" style="--tc:' + COLOR[o] + '">' + PICK[o].label + '</span><span>' + TEXT[o] + (o === k ? ' <b>← 내 선택</b>' : '') + '</span></div>';
+    }).join('');
+    var box = $('pickResult');
+    box.innerHTML = '<div class="pick-result fade" style="--pc:' + COLOR[k] + '">' +
+      '<div class="big">당신은 <span class="crit">' + p.label + '</span>에 따른 분배를 골랐습니다.</div>' +
+      '<div style="color:var(--ink-soft);font-size:16px">' + p.why + '</div>' +
+      '<div class="map-list">' + rows + '</div>' +
+      '<div style="margin-top:12px;font-size:16px;color:var(--ink-soft)">같은 장학금이라도 <b style="color:var(--ink)">무엇을 기준으로 나누느냐</b>에 따라 &lsquo;공정&rsquo;의 답이 달라집니다. 이 질문에 <b style="color:var(--rawls-ink)">롤스</b>와 <b style="color:var(--nozick-ink)">노직</b>은 아주 다른 답을 내놓았습니다. <a href="#rawls" style="color:var(--page-ink);font-weight:700">롤스부터 만나 보기 ↓</a></div>' +
+      '</div>';
+    if(scroll) box.scrollIntoView({behavior:'smooth', block:'nearest'});
+  }
+  $('picks').addEventListener('click', function(e){
+    var b = e.target.closest('.pick'); if(!b) return;
+    var k = b.getAttribute('data-k'); store('rn2-pick', k); applyPick(k, true);
+  });
+  var savedPick = store('rn2-pick'); if(savedPick && PICK[savedPick]) applyPick(savedPick, false);
+
+  /* ---------- veil of ignorance ---------- */
+  var TALENT = [{t:'뛰어난 재능',v:2},{t:'보통의 재능',v:1},{t:'눈에 띄는 재능이 없음',v:0}];
+  var ORIGIN = [{t:'부유한 가정',v:2},{t:'평범한 가정',v:1},{t:'형편이 어려운 가정',v:0}];
+  var GENDER = [{t:'여성'},{t:'남성'}];
+  var SITU = [{t:'일자리가 많은 도시',v:2},{t:'평범한 동네',v:1},{t:'일자리가 적은 지역',v:0}];
+  var RULES = {
+    A:{ name:'원칙 A · 자유 경쟁', v:[1,5,10], flag:[false,false,false],
+        say:['가진 것 없이 경쟁에 내던져졌습니다. 기댈 지원이 하나도 없습니다.','열심히 하면 그럭저럭 살 수 있지만, 위로 올라가기는 어렵습니다.','타고난 재능과 좋은 환경 덕분에 아주 많이 가졌습니다.'] },
+    B:{ name:'원칙 B · 완전 균등', v:[4,4,4], flag:[false,false,false],
+        say:['모두와 똑같이 받았습니다. 그런데 열심히 일할 이유가 줄어 사회 전체의 몫이 작아졌습니다.','누구나 같은 몫이라 무난하지만, 나눌 몫 자체가 작습니다.','많이 기여해도 남과 똑같이 받으니 일할 의욕이 떨어집니다.'] },
+    C:{ name:'원칙 C · 평등한 자유 + 차등·기회균등', v:[5,6,8], flag:[false,false,false],
+        say:['가장 불리한 처지로 태어났지만, 불평등이 나에게도 이익이 되도록 짜인 사회라 최소한의 삶이 보장되고 기회도 열려 있습니다.','기본적 자유를 누리며, 열린 기회 속에서 안정적으로 삽니다.','더 많이 갖지만, 그 불평등은 가장 불리한 사람에게도 이익이 될 때만 허용됩니다.'] },
+    D:{ name:'원칙 D · 전체 부를 위해 자유 제한', v:[2,7,9], flag:[true,false,false],
+        say:['사회 전체는 부유해졌지만, 나는 그 ‘일부 사람’이 되어 기본적 자유까지 제한받았습니다.','사회 전체가 부유해져 꽤 잘 삽니다. 하지만 언제 내 자유가 제한될지 모릅니다.','사회 전체가 부유해진 덕을 크게 봤습니다.'] }
+  };
+  var TIER_NAME = ['가장 불리한 처지','중간 처지','유리한 처지'];
+  var chosenRule = null, me = null;
+
+  function rand(a){ return a[Math.floor(Math.random()*a.length)]; }
+  function setSteps(n){ ['vs1','vs2','vs3'].forEach(function(id,i){ $(id).classList.toggle('on', i < n); }); }
+  function resetCards(){
+    var ks = ['재능','출신','성별','사회적 상황'];
+    $('veilCards').innerHTML = ks.map(function(k){ return '<div class="vc"><div class="k">' + k + '</div><div class="v">?</div></div>'; }).join('');
+  }
+  $('ruleOpts').addEventListener('click', function(e){
+    var b = e.target.closest('.opt'); if(!b) return;
+    chosenRule = b.getAttribute('data-r');
+    Array.prototype.forEach.call(this.querySelectorAll('.opt'), function(x){ x.classList.toggle('chosen', x === b); });
+    $('veilStep1').style.display = 'none';
+    $('veilStep2').style.display = 'block';
+    $('veilLabel').textContent = 'STEP 2 · 선택한 원칙: ' + RULES[chosenRule].name.split(' · ')[0] + ' — 이제 베일을 벗을 차례';
+    setSteps(2);
+  });
+  function born(){
+    var t = rand(TALENT), o = rand(ORIGIN), g = rand(GENDER), s = rand(SITU);
+    var sum = t.v + o.v + s.v;
+    me = { t:t, o:o, g:g, s:s, tier: sum >= 4 ? 2 : (sum >= 2 ? 1 : 0) };
+    var vals = [t.t, o.t, g.t, s.t], ks = ['재능','출신','성별','사회적 상황'];
+    $('veilCards').innerHTML = ks.map(function(k,i){ return '<div class="vc open fade"><div class="k">' + k + '</div><div class="v">' + vals[i] + '</div></div>'; }).join('');
+    renderVeil();
+  }
+  function renderVeil(){
+    var R = RULES[chosenRule], tier = me.tier;
+    var bars = ['A','B','C','D'].map(function(r){
+      var x = RULES[r], v = x.v[0];
+      return '<div class="bar-row' + (r === chosenRule ? ' cur' : '') + '"><span class="nm">' + x.name.split(' · ')[0] + (x.flag[0] ? ' <span class="flag">자유 제한</span>' : '') + '</span>' +
+        '<span class="bar-track"><span class="bar-fill" style="display:block;width:' + (v*10) + '%"></span></span><span class="val">' + v + '/10</span></div>';
+    }).join('');
+    var myV = R.v[tier];
+    $('veilResult').innerHTML =
+      '<div class="result-box fade">' +
+        '<span class="tier t' + tier + '">' + TIER_NAME[tier] + '로 태어났습니다</span>' +
+        '<div style="font-size:16px;margin-bottom:8px">선택한 <b>' + R.name + '</b>에서 나의 삶의 형편: <b style="font-family:IBM Plex Mono,monospace">' + myV + ' / 10</b>' + (R.flag[tier] ? ' <span class="flag">· 기본적 자유 제한됨</span>' : '') + '</div>' +
+        '<div style="color:var(--ink-soft);font-size:15.5px">' + R.say[tier] + '</div>' +
+        '<div style="margin-top:14px;font-weight:700;font-size:15.5px">💭 만약 내가 <span style="color:var(--bad)">가장 불리한 처지</span>로 태어난다면, 원칙마다 어떻게 될까?</div>' +
+        '<div class="bars">' + bars + '</div>' +
+      '</div>' +
+      '<div class="verdict fade"><div class="h">' + (chosenRule === 'C' ? '🎯 당신은 롤스의 정의 원칙을 골랐습니다!' : '🎯 원칙 C가 바로 롤스의 정의 원칙입니다') + '</div>' +
+        '<div style="font-size:15.5px">원초적 입장의 당사자들은 자신이 <b>사회적 약자가 되는 위험한 상황을 회피</b>하려 합니다. 내가 누구로 태어날지 모른다면, 가장 불리한 처지가 되어도 견딜 수 있고 기본적 자유도 지켜지는 <b>원칙 C</b>를 고르게 됩니다. 원칙 C의 앞부분이 <b>제1원칙(평등한 자유)</b>, 뒷부분이 <b>제2원칙(차등의 원칙·기회균등의 원칙)</b>입니다.' +
+        (chosenRule === 'D' ? ' 원칙 D는 다수의 이익을 위해 개인의 기본적 자유를 침해하므로, 제1원칙을 우선하는 롤스는 받아들이지 않습니다.' : '') +
+        (chosenRule === 'A' ? ' 원칙 A는 재능과 출신 같은 <b>운</b>이 결과를 거의 결정해 버립니다. 무지의 베일은 바로 이런 우연성의 개입을 막으려는 장치입니다.' : '') +
+        (chosenRule === 'B' ? ' 원칙 B는 가장 불리한 사람도 원칙 C보다 적게 받습니다. 롤스는 불평등이라도 최소 수혜자에게 이익이 된다면 허용했습니다.' : '') +
+        '</div></div>';
+    setSteps(3);
+    $('veilLabel').textContent = 'STEP 3 · 베일을 벗었습니다';
+    $('veilStep2').style.display = 'none';
+    $('veilAgain').style.display = 'flex';
+  }
+  $('liftBtn').addEventListener('click', born);
+  $('rebornBtn').addEventListener('click', born);
+  $('resetVeilBtn').addEventListener('click', function(){
+    chosenRule = null; me = null; resetCards();
+    Array.prototype.forEach.call(document.querySelectorAll('#ruleOpts .opt'), function(x){ x.classList.remove('chosen'); });
+    $('veilResult').innerHTML = ''; $('veilAgain').style.display = 'none';
+    $('veilStep2').style.display = 'none'; $('veilStep1').style.display = 'block';
+    $('veilLabel').textContent = 'STEP 1 · 지금 당신은 무지의 베일을 쓰고 있습니다';
+    setSteps(1);
+  });
+
+  /* ---------- nozick judge ---------- */
+  var JUDGE = [
+    { q:'🛵 방학 동안 편의점 아르바이트를 해서 받은 월급', a:'acq', fb:'정당한 노동을 통해 얻은 소유물이므로 <b>취득의 원칙</b>에 따라 소유 권리를 가집니다.' },
+    { q:'⌚ 할아버지가 스스로 원해서 손자에게 물려준 손목시계', a:'tra', fb:'정당한 소유자가 자유롭게 넘겨준 것이므로 <b>양도의 원칙</b>에 따라 정당한 소유 권리를 가집니다.' },
+    { q:'📱 중고 거래에서 고장 난 사실을 숨기고 비싸게 팔아 번 돈', a:'cor', fb:'속임수(사기)로 얻은 것은 양도 과정에 부정의가 있으므로 <b>교정의 원칙</b>에 따라 바로잡아야 합니다.' },
+    { q:'🎫 친구가 자기 돈으로 사서 생일 선물로 준 공연 티켓', a:'tra', fb:'친구가 자유롭게 넘겨준 것이므로 <b>양도의 원칙</b>에 해당합니다.' },
+    { q:'🚲 남의 자전거를 몰래 가져다 팔아서 생긴 돈', a:'cor', fb:'절도로 얻은 것이므로 정당한 취득이 아닙니다. <b>교정의 원칙</b>에 따라 원래대로 바로잡아야 합니다.' }
+  ];
+  var JLAB = { acq:'취득의 원칙', tra:'양도의 원칙', cor:'교정 필요' };
+  var jl = $('judgeList');
+  JUDGE.forEach(function(j){
+    var d = document.createElement('div'); d.className = 'jcase';
+    d.innerHTML = '<div class="q">' + j.q + '</div><div class="jopts">' +
+      ['acq','tra','cor'].map(function(k){ return '<button class="jbtn" type="button" data-k="' + k + '">' + JLAB[k] + '</button>'; }).join('') +
+      '</div><div class="jfb" aria-live="polite"></div>';
+    d.querySelector('.jopts').addEventListener('click', function(e){
+      var b = e.target.closest('.jbtn'); if(!b) return;
+      var k = b.getAttribute('data-k'), ok = k === j.a;
+      Array.prototype.forEach.call(this.querySelectorAll('.jbtn'), function(x){
+        x.disabled = true;
+        if(x.getAttribute('data-k') === j.a) x.classList.add('correct');
+        else if(x === b) x.classList.add('wrong');
+      });
+      d.querySelector('.jfb').innerHTML = (ok ? '⭕ 정답입니다. ' : '❌ 오답입니다. ') + j.fb;
+    });
+    jl.appendChild(d);
+  });
+
+  /* ---------- article eval & court ---------- */
+  document.addEventListener('click', function(e){
+    var o = e.target.closest('[data-open]'); if(o){ $(o.getAttribute('data-open')).classList.add('open'); }
+    var c = e.target.closest('[data-case]'); if(c){ $(c.getAttribute('data-case')).classList.add('open'); }
+  });
+
+  /* ---------- quiz ---------- */
+  var WHO = ['롤스','노직'];
+  var QUIZ = [
+    { q:'자신의 재능·출신·성별·사회적 상황을 모르는 무지의 베일 속에서 합의한 원칙이 정의롭다.', a:0,
+      exp:'롤스입니다. 정의의 원칙을 합의하기 위한 공정한 절차로 원초적 입장을 설정하고, 그 안의 사람들이 무지의 베일을 쓰고 있다고 보았습니다.' },
+    { q:'재화의 취득과 양도의 절차가 정당하다면, 개인은 그 소유물에 대해 절대적인 권리를 갖는다.', a:1,
+      exp:'노직의 소유 권리론입니다. 정의란 개인의 소유권을 보장해 주는 것이라고 보았습니다.' },
+    { q:'사회적·경제적 불평등은 최소 수혜자에게 최대의 이익이 보장될 때 정당화될 수 있다.', a:0,
+      exp:'롤스 제2원칙의 차등의 원칙입니다. 불평등의 계기가 되는 사회적 지위가 모두에게 개방되어야 한다는 기회균등의 원칙도 함께 충족해야 합니다.' },
+    { q:'국가는 개인의 소유를 절도·사기로부터 보호하고 국방을 담당하는 역할 정도만 해야 한다.', a:1,
+      exp:'노직의 최소 국가론입니다.' },
+    { q:'복지를 위해서라도 개인의 기본적 자유를 침해할 수는 없다. 두 원칙이 충돌하면 평등한 자유의 원칙이 우선한다.', a:0,
+      exp:'롤스입니다. 제1원칙(평등한 자유의 원칙)이 제2원칙보다 우선한다고 보아 자유주의의 입장을 취했습니다. 복지를 긍정하는 롤스도 자유를 앞세운다는 점이 함정!' },
+    { q:'취득이나 양도의 과정에서 부정의가 발생했다면, 이를 바로잡아야 한다.', a:1,
+      exp:'노직의 교정의 원칙입니다. 절도나 사기로 얻은 소유물은 정당하지 않으므로 바로잡아야 합니다.' }
+  ];
+  var answered = {}, score = 0;
+  var qList = $('quizList');
+  function updateScore(){
+    var n = Object.keys(answered).length;
+    $('scoreTxt').textContent = score + ' / ' + QUIZ.length + ' 맞힘 · ' + n + '문항 풂';
+    var f = $('quizFinal');
+    if(n === QUIZ.length){
+      var msg = score === QUIZ.length ? '모두 맞혔습니다! 롤스와 노직을 확실히 구분하고 있습니다. 🎉' :
+                score >= 4 ? '잘했습니다! 틀린 문항의 해설을 한 번 더 읽어 봅시다. 👍' :
+                '롤스와 노직 부분을 다시 훑어보고 한 번 더 도전해 봅시다. 💪';
+      f.innerHTML = '<div class="big">' + score + ' / ' + QUIZ.length + '</div><div style="margin-top:6px">' + msg + '</div>';
+      f.classList.add('show');
+    } else { f.classList.remove('show'); f.innerHTML = ''; }
+  }
+  function renderQuiz(){
+    answered = {}; score = 0; qList.innerHTML = '';
+    QUIZ.forEach(function(item, i){
+      var d = document.createElement('div'); d.className = 'qz';
+      d.innerHTML = '<div><span class="qn">Q' + (i+1) + '</span></div>' +
+        '<div class="qt">&ldquo;' + item.q + '&rdquo;</div>' +
+        '<div class="qopts">' + WHO.map(function(o, j){
+          var cls = j === 0 ? ' r-opt' : ' n-opt';
+          return '<button class="qo' + cls + '" type="button" data-j="' + j + '">' + o + '</button>';
+        }).join('') + '</div><div class="qfb-wrap" aria-live="polite"></div>';
+      d.querySelector('.qopts').addEventListener('click', function(e){
+        var b = e.target.closest('.qo'); if(!b || answered[i] !== undefined) return;
+        var j = +b.getAttribute('data-j'), ok = j === item.a;
+        answered[i] = j; if(ok) score++;
+        Array.prototype.forEach.call(this.querySelectorAll('.qo'), function(x){
+          x.disabled = true;
+          var xj = +x.getAttribute('data-j');
+          if(xj === item.a) x.classList.add('correct'); else if(x === b) x.classList.add('wrong');
+        });
+        d.querySelector('.qfb-wrap').innerHTML = '<div class="qfb fade ' + (ok ? 'correct' : 'wrong') + '"><div class="l">' + (ok ? '⭕ 정답!' : '❌ 정답은 ' + WHO[item.a]) + '</div>' + item.exp + '</div>';
+        updateScore();
+      });
+      qList.appendChild(d);
+    });
+    updateScore();
+  }
+  $('quizReset').addEventListener('click', renderQuiz);
+  renderQuiz();
+})();
+</script>
+</body>
+</html>

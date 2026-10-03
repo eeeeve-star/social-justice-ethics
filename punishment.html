@@ -1,0 +1,841 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>처벌은 왜 하는가</title>
+<meta name="description" content="현대사회와 윤리 교정적 정의 — 응보주의와 공리주의, 사형 제도에 대한 칸트·루소·베카리아의 입장 비교">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700;900&family=IBM+Plex+Mono:wght@500;600&family=Gaegu:wght@700&display=swap">
+<style>
+  :root{
+    --bg:#E2F3F6;
+    --hero-a:#C3E6EE; --hero-b:#E2F3F6;
+    --theme:#1B8AA6; --theme-ink:#11657A;
+    --surface:#FFFFFF;
+    --surface-2:#EDF6F8;
+    --ink:#1D2A2E;
+    --ink-soft:#4E6167;
+    --ink-faint:#7A8D93;
+    --line:#C9E2E8;
+    --line-strong:#A9CDD6;
+
+    --kant:#3A6EA5; --kant-ink:#2A5285; --kant-soft:#E5EDF6; --kant-soft-2:#D3E1F0;
+    --rous:#F2795B; --rous-ink:#B04A2F; --rous-soft:#FDECE6; --rous-soft-2:#FADBD0;
+    --becc:#20A4C4; --becc-ink:#11708A; --becc-soft:#E0F3F8; --becc-soft-2:#C9EAF3;
+    --bent:#7FA33A; --bent-ink:#56721F; --bent-soft:#EEF4E1; --bent-soft-2:#E0EBC8;
+
+    --pro:#A86B12; --pro-soft:#FBF0DC;
+    --con:#5C5A9C; --con-soft:#ECEBF7;
+
+    --good:#2E7D53; --good-soft:#E4F3E9;
+    --bad:#C1443A; --bad-soft:#FBE7E4;
+
+    --shadow:0 1px 2px rgba(34,37,43,.05), 0 10px 26px -16px rgba(34,37,43,.22);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0E1B1F; --surface:#16282D; --surface-2:#1D3238;
+      --hero-a:#123A44; --hero-b:#0E1B1F;
+      --theme:#5CC4DC; --theme-ink:#A9E3F0;
+      --ink:#E8F1F3; --ink-soft:#A9BEC4; --ink-faint:#7C939A;
+      --line:#264047; --line-strong:#33535B;
+      --kant:#7EA9DA; --kant-ink:#B9D3F1; --kant-soft:#1F2B3B; --kant-soft-2:#27374C;
+      --rous:#F79A82; --rous-ink:#FBC3B4; --rous-soft:#3A2520; --rous-soft-2:#4A2E27;
+      --becc:#5CCBE5; --becc-ink:#A6E5F4; --becc-soft:#173039; --becc-soft-2:#1D3D48;
+      --bent:#A8CB65; --bent-ink:#CDE5A0; --bent-soft:#262F1A; --bent-soft-2:#313D21;
+      --pro:#E6B05A; --pro-soft:#3A2E1A;
+      --con:#A9A6EC; --con-soft:#2A2944;
+      --good:#74CE9B; --good-soft:#1E3527;
+      --bad:#E8867B; --bad-soft:#3B2622;
+      --shadow:0 1px 2px rgba(0,0,0,.3), 0 10px 28px -14px rgba(0,0,0,.6);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0E1B1F; --surface:#16282D; --surface-2:#1D3238;
+    --hero-a:#123A44; --hero-b:#0E1B1F;
+    --theme:#5CC4DC; --theme-ink:#A9E3F0;
+    --ink:#E8F1F3; --ink-soft:#A9BEC4; --ink-faint:#7C939A;
+    --line:#264047; --line-strong:#33535B;
+    --kant:#7EA9DA; --kant-ink:#B9D3F1; --kant-soft:#1F2B3B; --kant-soft-2:#27374C;
+    --rous:#F79A82; --rous-ink:#FBC3B4; --rous-soft:#3A2520; --rous-soft-2:#4A2E27;
+    --becc:#5CCBE5; --becc-ink:#A6E5F4; --becc-soft:#173039; --becc-soft-2:#1D3D48;
+    --bent:#A8CB65; --bent-ink:#CDE5A0; --bent-soft:#262F1A; --bent-soft-2:#313D21;
+    --pro:#E6B05A; --pro-soft:#3A2E1A;
+    --con:#A9A6EC; --con-soft:#2A2944;
+    --good:#74CE9B; --good-soft:#1E3527;
+    --bad:#E8867B; --bad-soft:#3B2622;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 10px 28px -14px rgba(0,0,0,.6);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth; scroll-padding-top:70px;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:"Noto Sans KR","Malgun Gothic",sans-serif;
+    font-size:16.5px; line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden; word-break:keep-all; overflow-wrap:anywhere;
+  }
+  h1,h2,h3,h4,.display{ font-family:"Gowun Batang","Malgun Gothic",serif; letter-spacing:-0.01em; text-wrap:balance; }
+  .mono{ font-family:"IBM Plex Mono","Noto Sans KR",monospace; }
+  img{ max-width:100%; display:block; }
+  button{ font-family:inherit; }
+  b, strong{ font-weight:700; }
+
+  .wrap{ max-width:900px; margin:0 auto; padding:0 20px 80px; }
+
+  /* thinker themes */
+  .t-kant{ --accent:var(--kant); --accent-ink:var(--kant-ink); --accent-soft:var(--kant-soft); --accent-soft-2:var(--kant-soft-2); }
+  .t-rous{ --accent:var(--rous); --accent-ink:var(--rous-ink); --accent-soft:var(--rous-soft); --accent-soft-2:var(--rous-soft-2); }
+  .t-becc{ --accent:var(--becc); --accent-ink:var(--becc-ink); --accent-soft:var(--becc-soft); --accent-soft-2:var(--becc-soft-2); }
+  .t-bent{ --accent:var(--bent); --accent-ink:var(--bent-ink); --accent-soft:var(--bent-soft); --accent-soft-2:var(--bent-soft-2); }
+  .t-pro{ --accent:var(--pro); --accent-ink:var(--pro); --accent-soft:var(--pro-soft); --accent-soft-2:var(--pro-soft); }
+  .t-con{ --accent:var(--con); --accent-ink:var(--con); --accent-soft:var(--con-soft); --accent-soft-2:var(--con-soft); }
+
+  /* ---------- topbar ---------- */
+  .topbar{
+    position:sticky; top:0; z-index:50;
+    background:color-mix(in srgb, var(--bg) 90%, transparent);
+    backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar-inner{ max-width:900px; margin:0 auto; padding:10px 20px; display:flex; align-items:center; gap:12px; }
+  .topbar-title{ font-size:13px; font-weight:600; color:var(--ink-soft); white-space:nowrap; letter-spacing:.04em; }
+  .topnav{ display:flex; gap:2px; overflow-x:auto; scrollbar-width:none; flex:1; min-width:0; }
+  .topnav::-webkit-scrollbar{ display:none; }
+  .topnav a{ font-size:13.5px; color:var(--ink-soft); text-decoration:none; padding:6px 10px; border-radius:999px; white-space:nowrap; }
+  .topnav a:hover{ background:var(--surface); color:var(--theme-ink); }
+  .theme-btn{
+    flex:0 0 auto; width:38px; height:38px; border-radius:50%;
+    border:1px solid var(--line-strong); background:var(--surface); color:var(--ink);
+    cursor:pointer; font-size:17px; display:inline-flex; align-items:center; justify-content:center;
+  }
+  .theme-btn:focus-visible, .topnav a:focus-visible{ outline:2px solid var(--theme); outline-offset:2px; }
+  @media (max-width:560px){ .topbar-title{ display:none; } }
+
+  /* ---------- hero ---------- */
+  .hero{ padding:52px 0 36px; position:relative; }
+  .hero::before{ content:""; position:absolute; z-index:-1; top:0; bottom:0; left:50%; width:100vw; transform:translateX(-50%); background:linear-gradient(180deg, var(--hero-a) 0%, var(--hero-b) 100%); }
+  .hero-tag{ color:var(--theme-ink) !important; border-color:var(--line-strong) !important; }
+  .hero-tag{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:12.5px; font-weight:700; letter-spacing:.03em; color:var(--ink-soft);
+    background:var(--surface); border:1px solid var(--line);
+    padding:5px 13px; border-radius:999px; margin-bottom:20px;
+  }
+  .hero h1{ font-size:clamp(32px, 6vw, 50px); font-weight:700; margin:0 0 16px; line-height:1.2; }
+  .hero h1 .sub{ display:block; font-size:.5em; color:var(--ink-soft); font-weight:400; margin-top:10px; line-height:1.4; }
+  .hero p.lede{ font-size:17.5px; color:var(--ink-soft); max-width:62ch; margin:0 0 28px; }
+  .avatars{ display:flex; gap:18px; flex-wrap:wrap; }
+  .av{ display:flex; flex-direction:column; align-items:center; gap:6px; width:92px; text-align:center; }
+  .av .ring{
+    width:84px; height:84px; border-radius:50%; padding:3px; background:var(--accent);
+  }
+  .av .ring img, .av .ring .init{
+    width:100%; height:100%; border-radius:50%; object-fit:cover; background:#fff; border:3px solid var(--surface);
+  }
+  .av .ring .init{
+    display:flex; align-items:center; justify-content:center; background:var(--accent-soft);
+    font-family:"Gowun Batang",serif; font-weight:700; font-size:30px; color:var(--accent-ink);
+  }
+  .av .nm{ font-weight:700; font-size:15px; color:var(--accent-ink); line-height:1.2; }
+  .av .ds{ font-size:12px; color:var(--ink-faint); line-height:1.3; }
+  @media (max-width:480px){ .avatars{ gap:4px; justify-content:space-between; } .av{ width:70px; } .av .ring{ width:62px; height:62px; } .av .ring .init{ font-size:24px; } .av .ds{ font-size:11.5px; } }
+
+  .goals{
+    margin-top:30px; background:var(--surface); border:1px solid var(--line); border-radius:16px;
+    padding:18px 22px; box-shadow:var(--shadow);
+  }
+  .goals .k{ font-size:13px; font-weight:700; color:var(--ink-faint); letter-spacing:.06em; margin-bottom:6px; }
+  .goals ul{ margin:0; padding-left:20px; }
+  .goals li{ margin:3px 0; }
+
+  /* ---------- scenes ---------- */
+  .scene{ padding:56px 0; border-top:1px solid var(--line); }
+  .eyebrow{
+    font-size:13px; font-weight:700; letter-spacing:.06em; color:var(--theme-ink);
+    display:flex; align-items:center; gap:10px; margin-bottom:12px;
+  }
+  .eyebrow .num{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:24px; height:24px; border-radius:7px; background:var(--theme); color:var(--surface);
+    font-family:"IBM Plex Mono",monospace; font-size:12px;
+  }
+  .scene h2{ font-size:clamp(25px, 4.4vw, 32px); margin:0 0 14px; line-height:1.3; }
+  .scene > p, .scene p.intro{ color:var(--ink-soft); max-width:66ch; }
+  h3.sub-h{ font-size:21px; margin:36px 0 12px; }
+
+  .card{
+    background:var(--surface); border:1px solid var(--line); border-radius:18px;
+    padding:24px; box-shadow:var(--shadow);
+  }
+  @media (max-width:560px){ .card{ padding:18px; } }
+
+  .figure{ margin:18px 0; background:#fff; border:1px solid var(--line); border-radius:16px; overflow:hidden; }
+  .figure img{ width:100%; height:auto; }
+  .figure figcaption{ background:var(--surface); border-top:1px solid var(--line); padding:12px 16px; font-size:14.5px; color:var(--ink-soft); }
+  .figure figcaption b{ color:var(--ink); }
+
+  .note{
+    display:flex; gap:12px; align-items:flex-start;
+    background:var(--surface-2); border:1px solid var(--line); border-radius:14px;
+    padding:14px 18px; margin:18px 0; font-size:15.5px; color:var(--ink-soft);
+  }
+  .note .ic{ font-size:19px; line-height:1.4; }
+  .note b{ color:var(--ink); }
+
+  /* buttons */
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    background:var(--accent, var(--ink)); color:var(--surface); border:none; border-radius:999px;
+    padding:11px 20px; font-size:15px; font-weight:700; cursor:pointer; min-height:44px;
+  }
+  .btn:hover{ opacity:.9; }
+  .btn:focus-visible{ outline:2px solid var(--accent-ink, var(--ink)); outline-offset:2px; }
+  .btn.ghost{ background:transparent; color:var(--accent-ink, var(--ink)); border:1.5px solid var(--accent, var(--line-strong)); }
+  .btn.small{ padding:7px 14px; font-size:14px; min-height:36px; }
+  .btn-row{ display:flex; gap:10px; flex-wrap:wrap; margin-top:14px; }
+
+  /* reveal */
+  details.reveal{ margin-top:12px; border:1px dashed var(--line-strong); border-radius:12px; }
+  details.reveal summary{ list-style:none; cursor:pointer; padding:10px 14px; font-weight:700; font-size:14.5px; color:var(--accent-ink, var(--ink-soft)); display:flex; gap:8px; align-items:center; }
+  details.reveal summary::-webkit-details-marker{ display:none; }
+  details.reveal summary::before{ content:"＋"; font-family:"IBM Plex Mono",monospace; }
+  details.reveal[open] summary::before{ content:"－"; }
+  details.reveal .body{ padding:0 16px 14px; font-size:15.5px; color:var(--ink-soft); }
+
+  /* ---------- 1. 상황 ---------- */
+  .news{
+    background:var(--surface); border:1px solid var(--line); border-left:5px solid var(--ink-faint);
+    border-radius:12px; padding:14px 18px; margin:16px 0; font-size:16px;
+  }
+  .news .lbl{ font-size:12.5px; font-weight:700; color:var(--ink-faint); letter-spacing:.06em; display:block; margin-bottom:2px; }
+  .age-strip{ margin:18px 0 6px; }
+  .age-track{ display:grid; grid-template-columns:repeat(9,1fr); gap:4px; }
+  .age-track span{
+    text-align:center; font-family:"IBM Plex Mono",monospace; font-size:14px; font-weight:600;
+    padding:8px 0; border-radius:8px; background:var(--surface-2); color:var(--ink-faint);
+  }
+  .age-track span.on{ background:var(--becc-soft-2); color:var(--becc-ink); }
+  .age-legend{ display:flex; justify-content:space-between; gap:10px; font-size:13.5px; color:var(--ink-soft); margin-top:6px; flex-wrap:wrap; }
+  .bubbles{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:20px; }
+  @media (max-width:640px){ .bubbles{ grid-template-columns:1fr; } }
+  .bubble{
+    position:relative; text-align:left; cursor:pointer;
+    background:var(--surface); color:var(--ink); border:2px solid var(--line-strong);
+    border-radius:18px; padding:18px 18px 16px; font-size:16px; line-height:1.65;
+    transition:border-color .15s, background .15s;
+  }
+  .bubble .who{ display:block; font-size:13px; font-weight:700; color:var(--accent-ink); margin-bottom:6px; }
+  .bubble:hover{ border-color:var(--accent); }
+  .bubble.chosen{ border-color:var(--accent); background:var(--accent-soft); }
+  .bubble:focus-visible{ outline:2px solid var(--accent); outline-offset:3px; }
+  .bubble .pick{ display:block; margin-top:10px; font-size:13px; font-weight:700; color:var(--accent-ink); }
+  .open-result{ display:none; margin-top:16px; }
+  .open-result.show{ display:block; animation:fadein .25s ease; }
+  @keyframes fadein{ from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:none;} }
+
+  /* ---------- 2. 교정적 정의 ---------- */
+  .def-box{
+    background:var(--surface); border:2px solid var(--ink); border-radius:18px; padding:20px 22px; margin:18px 0;
+    font-size:17.5px; line-height:1.75;
+  }
+  .def-box .k{ font-family:"Gowun Batang",serif; font-weight:700; font-size:19px; display:block; margin-bottom:4px; }
+  .fig-row{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  @media (max-width:640px){ .fig-row{ grid-template-columns:1fr; } }
+  .fig-row .figure{ margin:0; display:flex; flex-direction:column; }
+  .fig-row .figure .imgbox{ display:flex; justify-content:center; align-items:center; padding:12px; height:230px; background:#fff; }
+  .fig-row .figure .imgbox img{ max-height:206px; width:auto; }
+  .fig-row .figure figcaption{ flex:1; }
+
+  .vs-grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:20px; }
+  @media (max-width:700px){ .vs-grid{ grid-template-columns:1fr; } }
+  .view-card{ border-top:6px solid var(--accent); display:flex; flex-direction:column; gap:12px; }
+  .view-head{ display:flex; align-items:center; gap:12px; }
+  .view-head .face{ width:58px; height:58px; border-radius:50%; flex:0 0 auto; overflow:hidden; border:3px solid var(--accent); background:#fff; }
+  .view-head .face img{ width:100%; height:100%; object-fit:cover; }
+  .view-head .face.init{ display:flex; align-items:center; justify-content:center; background:var(--accent-soft); font-family:"Gowun Batang",serif; font-weight:700; font-size:22px; color:var(--accent-ink); }
+  .view-head h3{ margin:0; font-size:22px; color:var(--accent-ink); line-height:1.25; }
+  .view-head .who{ font-size:14px; color:var(--ink-soft); }
+  .row-k{ font-size:13px; font-weight:700; color:var(--accent-ink); letter-spacing:.03em; margin-bottom:2px; }
+  .pane{ background:var(--accent-soft); border-radius:12px; padding:12px 14px; font-size:16px; }
+  .pane.crit{ background:var(--surface-2); }
+  .pane.crit .row-k{ color:var(--bad); }
+
+  .scale{ display:flex; align-items:stretch; gap:8px; margin-top:4px; }
+  .scale div{ flex:1; border-radius:10px; padding:10px; text-align:center; font-size:14px; line-height:1.45; }
+  .scale .minus{ background:var(--surface-2); color:var(--ink-soft); }
+  .scale .plus{ background:var(--accent-soft-2); color:var(--accent-ink); font-weight:700; }
+  .scale .op{ flex:0 0 auto; align-self:center; font-weight:900; color:var(--ink-faint); background:none; padding:0; }
+
+  /* ---------- 4. 사상가 ---------- */
+  .thinker{ margin-top:22px; border-left:6px solid var(--accent); }
+  .th-top{ display:grid; grid-template-columns:150px 1fr; gap:22px; align-items:start; }
+  @media (max-width:600px){ .th-top{ grid-template-columns:1fr; } }
+  .th-pic{ width:150px; height:150px; border-radius:18px; overflow:hidden; background:#fff; border:2px solid var(--accent); }
+  .th-pic img{ width:100%; height:100%; object-fit:cover; object-position:center top; }
+  @media (max-width:600px){ .th-pic{ width:120px; height:120px; } }
+  .th-name{ display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; margin-bottom:6px; }
+  .th-name h3{ margin:0; font-size:27px; color:var(--accent-ink); }
+  .th-name .yr{ font-size:13.5px; color:var(--ink-faint); }
+  .stance{ display:inline-flex; align-items:center; gap:6px; font-size:14px; font-weight:700; padding:4px 12px; border-radius:999px; }
+  .stance.pro{ background:var(--pro-soft); color:var(--pro); border:1.5px solid var(--pro); }
+  .stance.con{ background:var(--con-soft); color:var(--con); border:1.5px solid var(--con); }
+  .basis{ font-size:14px; font-weight:700; color:var(--accent-ink); background:var(--accent-soft); padding:4px 12px; border-radius:999px; }
+  .points{ list-style:none; margin:14px 0 0; padding:0; display:flex; flex-direction:column; gap:8px; }
+  .points li{ display:flex; gap:10px; align-items:flex-start; background:var(--accent-soft); border-radius:12px; padding:11px 14px; font-size:16px; }
+  .points li .no{ flex:0 0 auto; width:24px; height:24px; border-radius:50%; background:var(--accent); color:var(--surface); font-weight:700; font-size:13px; display:inline-flex; align-items:center; justify-content:center; margin-top:2px; }
+  blockquote.quote{
+    margin:16px 0 0; padding:16px 20px; border-radius:14px; background:var(--surface-2);
+    border-left:4px solid var(--accent); font-family:"Gowun Batang",serif; font-size:17.5px; line-height:1.75;
+  }
+  blockquote.quote cite{ display:block; margin-top:8px; font-family:"Noto Sans KR",sans-serif; font-style:normal; font-size:13.5px; color:var(--accent-ink); font-weight:700; }
+  .quotes{ display:flex; flex-direction:column; gap:10px; margin-top:14px; }
+  .quotes blockquote{ margin:0; }
+
+  /* 같은 출발점, 다른 결론 */
+  .fork{ margin-top:30px; }
+  .fork-root{
+    max-width:460px; margin:0 auto; text-align:center; background:var(--surface);
+    border:2px solid var(--ink); border-radius:999px; padding:12px 20px; font-weight:700; font-size:17px;
+  }
+  .fork-root small{ display:block; font-weight:400; font-size:13.5px; color:var(--ink-soft); }
+  .fork-lines{ height:34px; position:relative; max-width:640px; margin:0 auto; }
+  .fork-lines::before{ content:""; position:absolute; left:50%; top:0; height:16px; border-left:2px solid var(--ink-soft); }
+  .fork-lines::after{ content:""; position:absolute; left:25%; right:25%; top:16px; height:18px; border:2px solid var(--ink-soft); border-bottom:none; border-radius:8px 8px 0 0; }
+  .fork-cols{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .fork-col{ background:var(--surface); border:2px solid var(--accent); border-radius:16px; padding:16px; }
+  .fork-col h4{ margin:0 0 10px; font-size:19px; color:var(--accent-ink); text-align:center; }
+  .fork-step{ background:var(--accent-soft); border-radius:10px; padding:9px 12px; font-size:15px; text-align:center; }
+  .fork-arrow{ text-align:center; color:var(--accent); font-size:16px; line-height:1.2; padding:2px 0; }
+  .fork-end{ margin-top:2px; text-align:center; font-weight:700; font-size:16.5px; padding:10px; border-radius:10px; }
+  .fork-end.pro{ background:var(--pro-soft); color:var(--pro); border:1.5px solid var(--pro); }
+  .fork-end.con{ background:var(--con-soft); color:var(--con); border:1.5px solid var(--con); }
+  @media (max-width:600px){
+    .fork-lines{ height:24px; }
+    .fork-lines::after{ display:none; }
+    .fork-lines::before{ height:24px; }
+    .fork-cols{ grid-template-columns:1fr; }
+  }
+
+  .intensity{ margin-top:14px; display:flex; flex-direction:column; gap:10px; }
+  .int-row{ display:grid; grid-template-columns:110px 1fr; gap:10px; align-items:center; font-size:15px; }
+  .int-row .lab{ font-weight:700; }
+  .int-bars{ display:flex; flex-direction:column; gap:4px; }
+  .int-bar{ display:flex; align-items:center; gap:8px; font-size:13px; color:var(--ink-soft); }
+  .int-bar .tk{ width:34px; flex:0 0 auto; }
+  .int-bar .fill{ height:12px; border-radius:6px; background:var(--accent); }
+  .int-bar .fill.dim{ background:var(--line-strong); }
+
+  /* ---------- 5. 비교표 ---------- */
+  .cmp{ width:100%; border-collapse:separate; border-spacing:0; background:var(--surface); border:1px solid var(--line); border-radius:16px; overflow:hidden; }
+  .cmp th, .cmp td{ padding:13px 15px; text-align:left; vertical-align:top; font-size:15.5px; border-bottom:1px solid var(--line); }
+  .cmp thead th{ background:var(--surface-2); font-size:16px; }
+  .cmp thead th.k{ color:var(--kant-ink); border-bottom:3px solid var(--kant); }
+  .cmp thead th.r{ color:var(--rous-ink); border-bottom:3px solid var(--rous); }
+  .cmp thead th.b{ color:var(--becc-ink); border-bottom:3px solid var(--becc); }
+  .cmp tbody th{ background:var(--surface-2); color:var(--ink-soft); font-weight:700; width:20%; font-size:14.5px; }
+  .cmp tr:last-child th, .cmp tr:last-child td{ border-bottom:none; }
+  .kw{ display:inline-block; background:var(--accent-soft); color:var(--accent-ink); font-weight:700; font-size:14px; padding:2px 9px; border-radius:999px; margin:2px 2px 2px 0; }
+  @media (max-width:680px){
+    .cmp, .cmp tbody, .cmp tr, .cmp th, .cmp td{ display:block; width:100%; }
+    .cmp thead{ display:none; }
+    .cmp{ border:none; background:none; }
+    .cmp tr{ background:var(--surface); border:1px solid var(--line); border-radius:14px; overflow:hidden; margin-bottom:12px; }
+    .cmp tbody th{ width:100%; }
+    .cmp td{ border-left:4px solid var(--accent); }
+    .cmp td::before{ content:attr(data-who); display:block; font-size:13px; font-weight:700; color:var(--accent-ink); }
+  }
+
+  /* ---------- 8. 퀴즈 ---------- */
+  .quiz-top{ display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-top:12px; }
+  .quiz-score{ font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:15px; color:var(--ink-soft); }
+  .quiz-list{ display:flex; flex-direction:column; gap:14px; margin-top:16px; }
+  .qitem .qn{ font-family:"IBM Plex Mono",monospace; font-size:12.5px; color:var(--ink-faint); margin-bottom:6px; }
+  .qitem .qt{ font-family:"Gowun Batang",serif; font-size:18px; font-weight:700; line-height:1.6; margin-bottom:12px; }
+  .qopts{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }
+  @media (max-width:560px){ .qopts{ grid-template-columns:1fr 1fr; } }
+  .qopt{
+    border:2px solid var(--accent); background:var(--surface); color:var(--accent-ink);
+    border-radius:12px; padding:10px 6px; font-size:16px; font-weight:700; cursor:pointer; min-height:46px;
+  }
+  .qopt:hover:not(:disabled){ background:var(--accent-soft); }
+  .qopt:disabled{ cursor:default; opacity:.45; }
+  .qopt.right{ background:var(--accent); color:var(--surface); opacity:1; }
+  .qopt.wrongpick{ border-color:var(--bad); color:var(--bad); background:var(--bad-soft); opacity:1; text-decoration:line-through; }
+  .qopt:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+  .qfb{ display:none; margin-top:12px; padding:12px 14px; border-radius:12px; font-size:15.5px; }
+  .qfb.show{ display:block; animation:fadein .2s ease; }
+  .qfb.ok{ background:var(--good-soft); border:1.5px solid var(--good); }
+  .qfb.no{ background:var(--bad-soft); border:1.5px solid var(--bad); }
+  .qfb .h{ font-weight:700; }
+  .qfb.ok .h{ color:var(--good); } .qfb.no .h{ color:var(--bad); }
+  .quiz-end{ display:none; text-align:center; margin-top:16px; }
+  .quiz-end.show{ display:block; }
+
+  /* ---------- 9. 흐름도 ---------- */
+  .flow{ display:flex; flex-direction:column; align-items:stretch; gap:0; margin-top:18px; }
+  .fl-pill{
+    align-self:center; max-width:560px; width:100%; text-align:center;
+    background:var(--surface); border:2px solid var(--ink); border-radius:18px;
+    padding:12px 18px; font-weight:700; font-size:17px;
+  }
+  .fl-pill small{ display:block; font-weight:400; font-size:14px; color:var(--ink-soft); margin-top:2px; }
+  .fl-down{ display:flex; justify-content:center; padding:4px 0; }
+  .fl-down svg{ display:block; }
+  .fl-two{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .fl-three{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; }
+  @media (max-width:640px){ .fl-two, .fl-three{ grid-template-columns:1fr; gap:10px; } }
+  .fl-box{ background:var(--surface); border:2px solid var(--accent); border-left-width:7px; border-radius:14px; padding:12px 14px; }
+  .fl-box h4{ margin:0 0 4px; font-size:17.5px; color:var(--accent-ink); }
+  .fl-box p{ margin:0; font-size:14.5px; color:var(--ink); line-height:1.55; }
+  .fl-box .tag{ display:inline-block; margin-top:6px; font-size:12.5px; font-weight:700; padding:2px 9px; border-radius:999px; }
+  .fl-box .tag.pro{ background:var(--pro-soft); color:var(--pro); border:1px solid var(--pro); }
+  .fl-box .tag.con{ background:var(--con-soft); color:var(--con); border:1px solid var(--con); }
+  .fl-group{ border:1.5px dashed var(--line-strong); border-radius:18px; padding:12px; }
+  .fl-group .gl{ font-size:13px; font-weight:700; color:var(--ink-faint); text-align:center; margin-bottom:8px; }
+  .fl-split{ grid-template-columns:2fr 1fr; }
+  @media (max-width:640px){ .fl-split{ grid-template-columns:1fr; } }
+  .t-neu{ --accent:var(--ink-soft); --accent-ink:var(--ink); --accent-soft:var(--surface-2); --accent-soft-2:var(--surface-2); }
+
+  footer{ margin-top:40px; padding-top:22px; border-top:1px solid var(--line); color:var(--ink-faint); font-size:13px; text-align:center; }
+  footer .signature{ font-family:"Gaegu",cursive; font-weight:700; font-size:20px; color:var(--rous-ink); margin-top:10px; }
+
+  @media (prefers-reduced-motion: reduce){ *{ animation:none !important; transition:none !important; } html{ scroll-behavior:auto; } }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <span class="topbar-title">교정적 정의</span>
+    <nav class="topnav" aria-label="목차">
+      <a href="#open">상황</a>
+      <a href="#meaning">응보 vs 공리</a>
+      <a href="#thinkers">사형과 세 사상가</a>
+      <a href="#compare">비교표</a>
+      <a href="#quiz">퀴즈</a>
+      <a href="#recap">흐름도</a>
+    </nav>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="밝은/어두운 화면 전환">◐</button>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- ================= HERO ================= -->
+  <section class="hero">
+    <span class="hero-tag">현대사회와 윤리 · 교정적 정의</span>
+    <h1>처벌은 왜 하는가?<span class="sub">응보주의와 공리주의, 그리고 사형 제도를 둘러싼 칸트·루소·베카리아의 대화</span></h1>
+    <p class="lede">누군가 잘못을 저질렀을 때 우리는 &ldquo;벌을 받아야 한다&rdquo;고 말합니다. 그런데 <b>왜</b> 벌을 주는가? 저지른 잘못만큼 갚기 위해서인가, 아니면 앞으로의 범죄를 막고 사회를 지키기 위해서인가? 이 질문에 대한 답에 따라, 가장 무거운 형벌인 사형에 대한 생각도 달라집니다. 차분히 하나씩 따라가 봅시다.</p>
+    <div class="avatars">
+      <div class="av t-kant"><div class="ring"><img src="img/kant.png" alt="칸트 초상"></div><span class="nm">칸트</span><span class="ds">응보주의</span></div>
+      <div class="av t-bent"><div class="ring"><span class="init" aria-hidden="true">벤</span></div><span class="nm">벤담</span><span class="ds">공리주의</span></div>
+      <div class="av t-rous"><div class="ring"><img src="img/rousseau.png" alt="루소 초상"></div><span class="nm">루소</span><span class="ds">사회 계약 · 사형 찬성</span></div>
+      <div class="av t-becc"><div class="ring"><img src="img/beccaria_cartoon.png" alt="베카리아 일러스트" style="object-position:center 8%;"></div><span class="nm">베카리아</span><span class="ds">사회 계약 · 사형 반대</span></div>
+    </div>
+  </section>
+
+  <!-- ================= 1. 주제 열기 ================= -->
+  <section class="scene" id="open">
+    <div class="eyebrow"><span class="num">1</span>상황</div>
+    <h2>촉법소년의 기준 나이를 낮춰야 할까?</h2>
+    <figure class="figure">
+      <img src="img/chokbeop.jpg" alt="거실에서 텔레비전 뉴스를 보며 두 사람이 서로 다른 의견을 이야기하는 삽화" loading="lazy">
+    </figure>
+    <div class="news">
+      <span class="lbl">TV 뉴스</span>
+      만 13세 청소년이 법을 어겼지만, 촉법소년 제도에 따라 형사 처벌 대신 보호 처분을 받았다는 뉴스가 나왔습니다.
+    </div>
+
+    <div class="age-strip" aria-label="촉법소년 기준 나이">
+      <div class="age-track">
+        <span>8</span><span>9</span><span class="on">10</span><span class="on">11</span><span class="on">12</span><span class="on">13</span><span>14</span><span>15</span><span>16</span>
+      </div>
+      <div class="age-legend"><span>▲ 색칠한 칸 = 촉법소년 (10세 이상 14세 미만)</span><span>단위: 만 나이</span></div>
+    </div>
+    <div class="note"><span class="ic">📌</span><div><b>촉법소년 제도</b>는 범법 행위를 한 <b>10세 이상 14세 미만</b>의 청소년에게 형사 처벌 대신 <b>보호 처분</b>을 내리는 제도입니다.</div></div>
+
+    <p class="intro" style="margin-top:22px;">뉴스를 본 두 사람의 의견이 갈렸습니다. 내 생각과 더 가까운 말풍선을 골라 봅시다.</p>
+    <div class="bubbles" id="openBubbles">
+      <button class="bubble t-neu" type="button" data-pick="a">
+        <span class="who">의견 A</span>
+        &ldquo;미성숙한 어린 청소년들은 실수할 수 있어. 법을 강화하는 것만이 능사가 아니야. 그들을 교화시키고 재발 방지 대책을 세워야 하지 않을까?&rdquo;
+        <span class="pick">이 의견 선택 →</span>
+      </button>
+      <button class="bubble t-neu" type="button" data-pick="b">
+        <span class="who">의견 B</span>
+        &ldquo;청소년은 전보다 성숙해졌어. 촉법소년 제도를 악용해서 흉악한 범죄를 저지르기도 하니까 기준 나이를 낮춰야 한다고 생각해.&rdquo;
+        <span class="pick">이 의견 선택 →</span>
+      </button>
+    </div>
+    <div class="open-result card" id="openResult">
+      <div id="openResultText"></div>
+    </div>
+  </section>
+
+  <!-- ================= 2. 교정적 정의 ================= -->
+  <section class="scene" id="meaning">
+    <div class="eyebrow"><span class="num">2</span>교정적 정의의 의미</div>
+    <h2>잘못을 바로잡는 정의, 교정적 정의</h2>
+    <div class="def-box">
+      <span class="k">교정적 정의란?</span>
+      범죄 행위에 대해 공정하게 <b>처벌</b>하고, 발생한 손해에 대해 합당하게 배상하도록 하여 <b>부정의를 바로잡는 것</b>입니다. 교정적 정의를 실현하려면 국가에 의해 제도화된 보편적 기준으로서 <b>법</b>이 필요합니다.
+    </div>
+
+    <div class="fig-row">
+      <figure class="figure">
+        <div class="imgbox"><img src="img/hammurabi.jpg" alt="함무라비 법전이 새겨진 비석" loading="lazy"></div>
+        <figcaption><b>함무라비 법전</b> — 고대 바빌로니아 함무라비왕이 반포한 법전으로, &lsquo;눈에는 눈, 이에는 이&rsquo;라는 원칙이 기록되어 있습니다.</figcaption>
+      </figure>
+      <figure class="figure">
+        <div class="imgbox"><img src="img/justitia.jpg" alt="한 손에 검, 다른 손에 저울을 든 정의의 여신상" loading="lazy"></div>
+        <figcaption><b>정의의 여신</b> — 한 손에는 검을, 다른 손에는 저울을 들고 있습니다. <b>검</b>은 법 집행의 엄격함을, <b>저울</b>은 법 집행의 공정함을 상징합니다.</figcaption>
+      </figure>
+    </div>
+
+    <h3 class="sub-h">처벌을 바라보는 두 가지 관점</h3>
+    <p class="intro">처벌과 관련된 교정적 정의에 대한 관점은 크게 두 가지로 나뉩니다. &ldquo;이미 저지른 잘못&rdquo;을 보느냐, &ldquo;처벌이 가져올 결과&rdquo;를 보느냐의 차이입니다.</p>
+
+    <div class="vs-grid">
+      <div class="card view-card t-kant">
+        <div class="view-head">
+          <div class="face"><img src="img/kant.png" alt="칸트 초상"></div>
+          <div><h3>응보주의 관점</h3><div class="who">대표 사상가 · 칸트</div></div>
+        </div>
+        <div class="pane"><div class="row-k">처벌이란?</div>범죄 행위에 상응하는 <b>보복</b>을 가하는 것</div>
+        <div class="pane"><div class="row-k">칸트의 주장</div>이성적이고 자율적인 존재인 인간은 자신의 행위에 책임을 져야 하기 때문에, 범죄 행위에 대한 대가로 <b>응분의 처벌</b>을 받는 것이 마땅하다.</div>
+        <div class="pane crit"><div class="row-k">비판</div>범죄 예방과 범죄자들의 <b>교화</b>를 소홀히 한다.</div>
+      </div>
+
+      <div class="card view-card t-bent">
+        <div class="view-head">
+          <div class="face init" aria-hidden="true">벤</div>
+          <div><h3><b>공리주의</b> 관점</h3><div class="who">대표 사상가 · 벤담</div></div>
+        </div>
+        <div class="pane"><div class="row-k">처벌이란?</div>범죄 예방과 범죄자 교화를 통해 <b>사회의 이익을 증진하는 수단</b></div>
+        <div class="pane"><div class="row-k">벤담의 주장 — 처벌은 &lsquo;필요악&rsquo;</div>처벌 그 자체는 고통을 증진하기 때문에 악하다고 볼 수 있지만, 이를 통해 사회적 이익이 증진되기 때문에 <b>사회에 필요한 악</b>이다.
+          <div class="scale" aria-hidden="true">
+            <div class="minus">처벌의 고통<br>(그 자체는 악)</div>
+            <div class="op">&lt;</div>
+            <div class="plus">범죄 예방 · 교화로<br>늘어나는 사회적 이익</div>
+          </div>
+        </div>
+        <div class="pane crit"><div class="row-k">비판</div>사회적 이익을 최우선으로 여겨 <b>인간 존엄성</b>을 훼손할 수 있다.</div>
+      </div>
+    </div>
+
+    <details class="reveal" style="margin-top:18px;">
+      <summary>한 줄로 정리하면?</summary>
+      <div class="body"><b style="color:var(--kant-ink)">응보주의</b>는 &ldquo;잘못했으니 그만큼 벌을 받아야 한다&rdquo;(과거의 범죄를 봄), <b style="color:var(--bent-ink)">공리주의</b>는 &ldquo;벌을 주면 사회에 이익이 생기니까 벌을 준다&rdquo;(미래의 결과를 봄). 그래서 응보주의는 &lsquo;예방·교화 소홀&rsquo;, 공리주의는 &lsquo;인간 존엄성 훼손 가능&rsquo;이라는 비판을 각각 받습니다.</div>
+    </details>
+  </section>
+
+  <!-- ================= 4. 세 사상가 ================= -->
+  <section class="scene" id="thinkers">
+    <div class="eyebrow"><span class="num">3</span>사형 제도에 대한 사상가의 입장</div>
+    <h2>칸트 · 루소 · 베카리아는 어떻게 보았을까?</h2>
+    <p class="intro">교정적 정의에서 가장 큰 형벌은 <b>사형</b>, 곧 국가가 범죄자의 생명을 박탈하여 사회에서 영원히 격리하는 형벌입니다. 세 사상가 모두 사형 제도에 대해 분명한 입장을 밝혔습니다. 누가 찬성하고 누가 반대했는지, 그리고 <b>무엇을 근거로</b> 그렇게 판단했는지에 주목해 봅시다.</p>
+
+    <!-- 칸트 -->
+    <article class="card thinker t-kant" id="kant">
+      <div class="th-top">
+        <div class="th-pic"><img src="img/kant_cartoon.png" alt="벤치에 앉아 이야기하는 칸트 일러스트" loading="lazy"></div>
+        <div>
+          <div class="th-name"><h3>칸트</h3><span class="stance pro">사형 찬성</span><span class="basis">응보주의</span></div>
+          <p style="margin:0;color:var(--ink-soft);">칸트는 살인자는 누구든 사형에 처해지지 않으면 안 된다고 보았습니다.</p>
+          <ul class="points">
+            <li><span class="no">1</span><span><b>동등성</b>의 원리에 따라 살인자에 대한 사형은 정당하며, 사형 이외의 형벌은 정의에 부합하지 않는다.</span></li>
+            <li><span class="no">2</span><span>형벌은 어떤 다른 선을 촉진하기 위한 수단으로 가해져서는 안 되며, 언제나 <b>범죄를 저질렀다는 오직 그 이유만으로</b> 부과되어야 한다.</span></li>
+            <li><span class="no">3</span><span>사형은 살인자의 고통받는 내면적 인격을 해방하여 <b>인간의 존엄성을 실현</b>하는 조치이다.</span></li>
+          </ul>
+        </div>
+      </div>
+      <blockquote class="quote">&ldquo;시민 사회가 모든 구성원의 동의로써 해체될 때조차도 감옥에 있는 마지막 살인자는 반드시 처형되어야 한다.&rdquo;<cite>— 칸트, 『윤리 형이상학』</cite></blockquote>
+      <details class="reveal">
+        <summary>왜 &lsquo;사회가 해체될 때조차도&rsquo;일까?</summary>
+        <div class="body">사회가 사라지면 범죄를 예방하거나 사회를 지킬 이유도 없어집니다. 그런데도 처형해야 한다는 말은, 칸트에게 형벌의 이유가 <b>예방이나 사회의 이익이 아니라 &lsquo;범죄를 저질렀다는 것&rsquo; 그 자체</b>라는 뜻입니다. 응보주의의 생각이 가장 선명하게 드러나는 문장입니다.</div>
+      </details>
+    </article>
+
+    <!-- 루소 -->
+    <article class="card thinker t-rous" id="rousseau">
+      <div class="th-top">
+        <div class="th-pic"><img src="img/rousseau.png" alt="루소 초상" loading="lazy"></div>
+        <div>
+          <div class="th-name"><h3><b>루소</b></h3><span class="stance pro">사형 찬성</span><span class="basis">사회 계약</span></div>
+          <p style="margin:0;color:var(--ink-soft);">루소는 사회 계약의 관점에서, 계약자인 시민의 생명과 안전을 확보하기 위한 사형은 정당하다고 보았습니다.</p>
+          <ul class="points">
+            <li><span class="no">1</span><span>사회 계약의 관점에서 <b>시민의 생명과 안전</b>을 확보하기 위한 사형은 정당하다.</span></li>
+            <li><span class="no">2</span><span>타인을 희생하여 생존하려는 살인자는 마땅히 <b>자신의 생명을 희생</b>해야 한다.</span></li>
+            <li><span class="no">3</span><span>법을 집행할 때 살인자는 시민이라기보다는 <b>적</b>으로서 간주해야 하며, <b>추방에 의해서나 죽음에 의해</b> 국가로부터 분리되어야 한다. 국가의 보존은 살인자의 보존과 양립할 수 없기 때문이다.</span></li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <!-- 베카리아 -->
+    <article class="card thinker t-becc" id="beccaria">
+      <div class="th-top">
+        <div class="th-pic"><img src="img/beccaria_cartoon.png" alt="책상에 앉아 생각에 잠긴 베카리아 일러스트" loading="lazy"></div>
+        <div>
+          <div class="th-name"><h3>베카리아</h3><span class="yr">1738~1794</span><span class="stance con">사형 반대</span><span class="basis">사회 계약 + 공리주의</span></div>
+          <p style="margin:0;color:var(--ink-soft);">베카리아는 <b>처음으로 사형 제도의 폐지를 명시적으로 주장한 사상가</b>입니다. 그는 법을 자유롭고 독립적인 사람들이 사회에서 결속하기 위해 만든 계약으로 보았고, 범죄의 경중과 균형을 이루는 형벌을 입법자가 법률로 엄격히 규정해야 한다는 <b>죄형 법정주의</b>를 역설했습니다. 고문을 비롯한 비인도적인 가혹한 형벌과 사형 제도의 폐지를 주장했습니다.</p>
+        </div>
+      </div>
+      <blockquote class="quote">&ldquo;국가라 할지라도 국민의 한 생명을 빼앗을 권리는 없다.&rdquo;<cite>— 베카리아</cite></blockquote>
+      <ul class="points">
+        <li><span class="no">1</span><span><b>사회 계약의 관점</b>: 사회 계약은 계약자의 생명 보존이 목적이기 때문에, 자신의 생명을 빼앗을 권능을 타인에게 양도할 자는 없다. 그러므로 살인자의 생명을 빼앗는 사형은 정당하지 않다.</span></li>
+        <li><span class="no">2</span><span><b>공리주의의 관점</b>: 형벌은 타인의 범죄를 <b>억제</b>하기에 충분한 정도의 강도만을 가져야 한다.</span></li>
+        <li><span class="no">3</span><span>한순간에 강렬한 인상만을 주는 사형보다, 오랫동안 고통의 본보기가 되는 <b>종신 노역형</b>이 범죄 예방과 사회 전체 이익에 부합한다.</span></li>
+      </ul>
+
+      <div class="intensity" aria-label="형벌의 강도와 지속성 개념도">
+        <div class="row-k" style="margin-top:6px;">개념도 · 베카리아가 본 &lsquo;강도&rsquo;와 &lsquo;지속&rsquo;</div>
+        <div class="int-row"><span class="lab">사형</span>
+          <div class="int-bars">
+            <div class="int-bar"><span class="tk">강도</span><span class="fill" style="width:92%"></span></div>
+            <div class="int-bar"><span class="tk">지속</span><span class="fill dim" style="width:8%"></span></div>
+          </div></div>
+        <div class="int-row"><span class="lab">종신 노역형</span>
+          <div class="int-bars">
+            <div class="int-bar"><span class="tk">강도</span><span class="fill dim" style="width:40%"></span></div>
+            <div class="int-bar"><span class="tk">지속</span><span class="fill" style="width:92%"></span></div>
+          </div></div>
+        <div style="font-size:14px;color:var(--ink-soft);">사형은 형벌의 강도는 강하지만 지속적인 범죄 예방 효과를 지니지는 못한다 → 공리주의적 관점에서 효율성이 낮고 공익에 이바지하는 바가 적다.</div>
+      </div>
+
+      <h4 style="margin:22px 0 0;font-size:18px;color:var(--accent-ink);">『범죄와 형벌』 속 베카리아의 말</h4>
+      <div class="quotes">
+        <blockquote class="quote">가혹한 형벌이 공익이나 의도한 목적에 어긋나지 않더라도, 그것이 범죄를 방지하지 못한다는 사실이 입증된다면, 가혹한 형벌은 개화된 이성의 결과인 계몽주의와 박애 정신에 어긋난다.</blockquote>
+        <blockquote class="quote">사형은 우리를 더 낫게 한 적이 없는 무익한 형벌로, 공정하고 제대로 통치되는 국가에서 실제로 유용한지 묻고 싶다. 사람이 무슨 권리로 자기 이웃의 목을 벨 수 있단 말인가. 법의 지배를 받는 정부에서는 어떤 이유로든 국민의 생명을 빼앗을 수 없다.</blockquote>
+        <blockquote class="quote">한 국민의 죽음은 한 가지 경우를 제외하고는 필연적일 수가 없다. 그가 자유를 박탈당하더라도 국가의 안전을 위협할 만한 충분한 힘과 조직을 보유하고 있다는 사실이 명백한 경우다. 그러나 평온한 시대에 법의 지배를 받는 정부에서는 어떤 이유로든 국민의 생명을 빼앗을 수 없다.</blockquote>
+        <blockquote class="quote">인간의 정신에 가장 큰 영향을 미치는 것은 고통의 강렬함이 아니라 고통이 지속되는 정도다. 우리의 감성은 폭력적이고 순간적인 충동보다 강도가 약해도 반복되는 인상에 의해 더 쉽게 그리고 더 강력하게 영향을 받기 때문이다. 범죄자의 죽음은 끔찍하지만 순간적인 광경에 지나지 않는다.<cite>— 베카리아, 『범죄와 형벌』</cite></blockquote>
+      </div>
+
+    </article>
+
+    <!-- 같은 출발점 다른 결론 -->
+    <div class="fork">
+      <h3 class="sub-h" style="text-align:center;margin-top:40px;">같은 출발점, 정반대의 결론</h3>
+      <p class="intro" style="text-align:center;margin:0 auto 18px;">루소와 베카리아는 둘 다 <b>&lsquo;사회 계약&rsquo;</b>에서 출발합니다. 그런데 계약의 목적을 어떻게 읽느냐에 따라 결론이 갈립니다.</p>
+      <div class="fork-root">사회 계약<small>사람들은 생명과 안전을 지키기 위해 계약을 맺어 국가를 이룬다</small></div>
+      <div class="fork-lines" aria-hidden="true"></div>
+      <div class="fork-cols">
+        <div class="fork-col t-rous">
+          <h4>루소</h4>
+          <div class="fork-step">계약자인 <b>시민의 생명과 안전</b>을 확보해야 한다</div>
+          <div class="fork-arrow">▼</div>
+          <div class="fork-step">타인을 희생해 생존하려는 살인자는 시민이 아니라 <b>적</b>이다</div>
+          <div class="fork-arrow">▼</div>
+          <div class="fork-step">추방이나 죽음으로 국가로부터 <b>분리</b>해야 한다</div>
+          <div class="fork-arrow">▼</div>
+          <div class="fork-end pro">사형 찬성</div>
+        </div>
+        <div class="fork-col t-becc">
+          <h4>베카리아</h4>
+          <div class="fork-step">사회 계약의 목적은 <b>계약자의 생명 보존</b>이다</div>
+          <div class="fork-arrow">▼</div>
+          <div class="fork-step">자신의 생명을 빼앗을 권능을 타인에게 <b>양도할 자는 없다</b></div>
+          <div class="fork-arrow">▼</div>
+          <div class="fork-step">국가도 살인자의 생명을 빼앗을 <b>권리가 없다</b></div>
+          <div class="fork-arrow">▼</div>
+          <div class="fork-end con">사형 반대</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="note" style="margin-top:28px;"><span class="ic">🕊️</span><div>20세기 들어 인권 사상의 대두와 함께 사형 제도 폐지가 본격적으로 논의되기 시작했습니다. 최근에는 다수 국가에서 사형 제도를 폐지하는 추세이지만 아직도 일부 국가에서는 유지하고 있습니다. 사형 제도 폐지 문제는 <b>처벌의 본질, 범죄 예방 효과, 인권 존중</b> 등을 고려하여 신중하게 다루어져야 합니다.</div></div>
+  </section>
+
+  <!-- ================= 5. 비교표 ================= -->
+  <section class="scene" id="compare">
+    <div class="eyebrow"><span class="num">4</span>나란히 놓고 보기</div>
+    <h2>세 사상가 한눈에 비교</h2>
+    <p class="intro">찬성과 반대만 외우지 말고, <b>어떤 관점에서</b> 그런 결론이 나왔는지 함께 기억해 둡시다.</p>
+    <table class="cmp">
+      <thead><tr><th></th><th class="k">칸트</th><th class="r">루소</th><th class="b">베카리아</th></tr></thead>
+      <tbody>
+        <tr><th>사형 제도</th>
+          <td class="t-kant" data-who="칸트"><span class="stance pro">찬성</span></td>
+          <td class="t-rous" data-who="루소"><span class="stance pro">찬성</span></td>
+          <td class="t-becc" data-who="베카리아"><span class="stance con">반대</span></td></tr>
+        <tr><th>근거가 되는 관점</th>
+          <td class="t-kant" data-who="칸트">응보주의</td>
+          <td class="t-rous" data-who="루소">사회 계약</td>
+          <td class="t-becc" data-who="베카리아">사회 계약 + 공리주의</td></tr>
+        <tr><th>핵심 논리</th>
+          <td class="t-kant" data-who="칸트">형벌은 오직 범죄를 저질렀다는 이유만으로 부과되어야 하며, 살인에는 사형만이 정의에 부합한다</td>
+          <td class="t-rous" data-who="루소">시민의 생명과 안전을 위해, 적이 된 살인자는 추방이나 죽음으로 국가로부터 분리해야 한다</td>
+          <td class="t-becc" data-who="베카리아">생명을 빼앗을 권능은 양도할 수 없고, 사형보다 종신 노역형이 범죄 예방에 더 효과적이다</td></tr>
+        <tr><th>핵심 키워드</th>
+          <td class="t-kant" data-who="칸트"><span class="kw">동등성의 원리</span><span class="kw">인간 존엄성 실현</span></td>
+          <td class="t-rous" data-who="루소"><span class="kw">시민의 생명·안전</span><span class="kw">살인자 = 적</span><span class="kw">추방 또는 죽음</span></td>
+          <td class="t-becc" data-who="베카리아"><span class="kw">생명 처분권 양도 불가</span><span class="kw">범죄 억제</span><span class="kw">종신 노역형</span></td></tr>
+        <tr><th>대표 문장</th>
+          <td class="t-kant" data-who="칸트">&ldquo;감옥에 있는 마지막 살인자는 반드시 처형되어야 한다.&rdquo;</td>
+          <td class="t-rous" data-who="루소">국가의 보존은 살인자의 보존과 양립할 수 없다.</td>
+          <td class="t-becc" data-who="베카리아">&ldquo;국가라 할지라도 국민의 한 생명을 빼앗을 권리는 없다.&rdquo;</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ================= 8. 퀴즈 ================= -->
+  <section class="scene" id="quiz">
+    <div class="eyebrow"><span class="num">5</span>확인 퀴즈</div>
+    <h2>이 주장, 누가 했을까?</h2>
+    <p class="intro">칸트 · 루소 · 베카리아 · 벤담 중 한 명을 골라 봅시다.</p>
+    <div class="quiz-top"><span class="quiz-score" id="quizScore">0 / 8 문항 · 정답 0</span><button class="btn small ghost" type="button" id="quizReset">다시 풀기</button></div>
+    <div class="quiz-list" id="quizList"></div>
+    <div class="quiz-end card" id="quizEnd"></div>
+  </section>
+
+  <!-- ================= 9. 흐름도 ================= -->
+  <section class="scene" id="recap">
+    <div class="eyebrow"><span class="num">6</span>흐름도</div>
+    <h2>흐름으로 다시 보기</h2>
+    <p class="intro">오늘 배운 내용을 처음부터 끝까지 한 번에 따라가 봅시다.</p>
+
+    <div class="flow">
+      <div class="fl-pill">교정적 정의<small>범죄 행위를 공정하게 처벌하고, 손해를 합당하게 배상하게 하여 부정의를 바로잡음</small></div>
+      <div class="fl-down"><svg width="20" height="26" aria-hidden="true"><path d="M10 0 V16" stroke="var(--ink-soft)" stroke-width="2.5"/><polygon points="3,15 17,15 10,25" fill="var(--ink-soft)"/></svg></div>
+      <div class="fl-two">
+        <div class="fl-box t-kant"><h4>응보주의 · 칸트</h4><p>처벌 = 범죄에 상응하는 보복<br>이성적·자율적 인간은 행위에 책임져야 함</p><p style="color:var(--ink-soft);margin-top:4px;">비판: 범죄 예방과 교화를 소홀히 함</p></div>
+        <div class="fl-box t-bent"><h4>공리주의 · 벤담</h4><p>처벌 = 사회의 이익을 증진하는 수단<br>처벌 그 자체는 악이지만 &lsquo;필요악&rsquo;</p><p style="color:var(--ink-soft);margin-top:4px;">비판: 인간 존엄성을 훼손할 수 있음</p></div>
+      </div>
+      <div class="fl-down"><svg width="20" height="26" aria-hidden="true"><path d="M10 0 V16" stroke="var(--ink-soft)" stroke-width="2.5"/><polygon points="3,15 17,15 10,25" fill="var(--ink-soft)"/></svg></div>
+      <div class="fl-pill">가장 큰 형벌, 사형 제도에 대한 입장<small>처벌의 본질 · 범죄 예방 효과 · 인권 존중</small></div>
+      <div class="fl-down"><svg width="20" height="26" aria-hidden="true"><path d="M10 0 V16" stroke="var(--ink-soft)" stroke-width="2.5"/><polygon points="3,15 17,15 10,25" fill="var(--ink-soft)"/></svg></div>
+      <div class="fl-two fl-split" id="flSplit">
+        <div class="fl-group t-pro"><div class="gl">사형 찬성</div>
+          <div class="fl-two" style="gap:10px;">
+            <div class="fl-box t-kant"><h4>칸트</h4><p>동등성의 원리 · 범죄 그 자체만이 형벌의 이유 · 인간 존엄성 실현</p><span class="tag pro">응보주의</span></div>
+            <div class="fl-box t-rous"><h4>루소</h4><p>시민의 생명·안전 확보 · 살인자는 적 · 추방 또는 죽음으로 분리</p><span class="tag pro">사회 계약</span></div>
+          </div>
+        </div>
+        <div class="fl-group t-con"><div class="gl">사형 반대</div>
+          <div class="fl-box t-becc"><h4>베카리아</h4><p>생명 처분권 양도 불가 · 범죄 억제에 충분한 강도만 · 종신 노역형이 더 효과적</p><span class="tag con">사회 계약 + 공리주의</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div>현대사회와 윤리 · 교정적 정의 — 칸트·벤담·루소·베카리아 비교</div>
+    <div class="signature">♥무늬T♥</div>
+  </footer>
+</div>
+
+<script>
+(function(){
+  // ---------- storage (safe) ----------
+  var store = {
+    get:function(k){ try{ return window.localStorage.getItem(k); }catch(e){ return null; } },
+    set:function(k,v){ try{ window.localStorage.setItem(k,v); return true; }catch(e){ return false; } }
+  };
+
+  // ---------- theme ----------
+  var root = document.documentElement;
+  var saved = store.get('dp_theme');
+  if(saved === 'light' || saved === 'dark') root.setAttribute('data-theme', saved);
+  function isDark(){
+    var t = root.getAttribute('data-theme');
+    if(t) return t === 'dark';
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  }
+  var themeBtn = document.getElementById('themeBtn');
+  function paintThemeBtn(){ themeBtn.textContent = isDark() ? '☀' : '☾'; }
+  paintThemeBtn();
+  themeBtn.addEventListener('click', function(){
+    var next = isDark() ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    store.set('dp_theme', next);
+    paintThemeBtn();
+  });
+
+  // ---------- 1. 상황 ----------
+  var openMsg = {
+    a: '<b style="color:var(--becc-ink)">의견 A</b>를 골랐습니다. 이 의견은 처벌을 강화하는 것보다 <b>교화</b>와 <b>재발 방지</b>에 더 주목하고 있습니다. &ldquo;처벌이 앞으로 어떤 결과를 가져올까?&rdquo;를 묻는 셈입니다. 이 생각이 오늘 배울 어느 관점과 가까운지 다음 장에서 확인해 봅시다.',
+    b: '<b style="color:var(--kant-ink)">의견 B</b>를 골랐습니다. 이 의견은 저지른 <b>범죄의 무게</b>에 맞는 처벌이 이루어져야 한다는 데 주목하고 있습니다. 동시에 제도를 악용하는 범죄를 막아야 한다는 생각도 담겨 있습니다. 이 생각이 오늘 배울 어느 관점과 가까운지 다음 장에서 확인해 봅시다.'
+  };
+  var bubbles = document.getElementById('openBubbles');
+  var openResult = document.getElementById('openResult');
+  function setOpen(p){
+    Array.prototype.forEach.call(bubbles.querySelectorAll('.bubble'), function(b){
+      var on = b.getAttribute('data-pick') === p;
+      b.classList.toggle('chosen', on);
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    document.getElementById('openResultText').innerHTML = openMsg[p];
+    openResult.classList.add('show');
+  }
+  bubbles.addEventListener('click', function(e){
+    var b = e.target.closest('.bubble'); if(!b) return;
+    var p = b.getAttribute('data-pick');
+    store.set('dp_open_pick', p);
+    setOpen(p);
+  });
+  var op = store.get('dp_open_pick');
+  if(op === 'a' || op === 'b') setOpen(op);
+
+  // ---------- 8. 퀴즈 ----------
+  var WHO = {kant:'칸트', rous:'루소', becc:'베카리아', bent:'벤담'};
+  var QUIZ = [
+    {q:'이성적이고 자율적인 존재인 인간은 자신의 행위에 책임을 져야 하므로, 범죄 행위에 대한 대가로 응분의 처벌을 받는 것이 마땅하다.', a:'kant', e:'응보주의의 대표 사상가 칸트의 주장입니다. 처벌을 범죄 행위에 상응하는 보복으로 봅니다.'},
+    {q:'처벌 그 자체는 고통을 증진하기 때문에 악하다고 볼 수 있지만, 이를 통해 사회적 이익이 증진되기 때문에 사회에 필요한 악이다.', a:'bent', e:'공리주의 관점의 벤담입니다. 처벌을 사회의 이익을 증진하는 수단, 즉 &lsquo;필요악&rsquo;으로 봅니다.'},
+    {q:'법을 집행할 때 살인자는 시민이라기보다는 적으로서 간주해야 하며, 추방에 의해서나 죽음에 의해 국가로부터 분리되어야 한다.', a:'rous', e:'루소입니다. 사회 계약의 관점에서 시민의 생명과 안전을 확보하기 위한 사형은 정당하다고 보았습니다.'},
+    {q:'인간의 정신에 가장 큰 영향을 미치는 것은 고통의 강렬함이 아니라 고통이 지속되는 정도다.', a:'becc', e:'베카리아의 『범죄와 형벌』 속 문장입니다. 그래서 한순간의 사형보다 오래 지속되는 종신 노역형이 범죄 예방에 효과적이라고 보았습니다.'},
+    {q:'시민 사회가 모든 구성원의 동의로써 해체될 때조차도 감옥에 있는 마지막 살인자는 반드시 처형되어야 한다.', a:'kant', e:'칸트의 『윤리 형이상학』 속 문장입니다. 형벌의 이유는 사회의 이익이 아니라 범죄를 저질렀다는 것 그 자체라는 응보주의의 생각이 담겨 있습니다.'},
+    {q:'사회 계약은 계약자의 생명 보존이 목적이므로, 자신의 생명을 빼앗을 권능을 타인에게 양도할 자는 없다.', a:'becc', e:'베카리아입니다. 루소와 같은 사회 계약에서 출발했지만, 이 논리로 사형에 반대했습니다.'},
+    {q:'타인을 희생하여 생존하려는 살인자는 마땅히 자신의 생명을 희생해야 한다. 국가의 보존은 살인자의 보존과 양립할 수 없다.', a:'rous', e:'루소입니다. 사회 계약을 근거로 사형에 찬성했다는 점에서 베카리아와 결론이 정반대입니다.'},
+    {q:'처벌은 범죄 예방과 범죄자 교화를 통해 사회의 이익을 증진하는 수단이다.', a:'bent', e:'공리주의 관점(벤담)입니다. 다만 사회적 이익을 최우선으로 여겨 인간 존엄성을 훼손할 수 있다는 비판을 받습니다.'}
+  ];
+  var quizList = document.getElementById('quizList');
+  var qDone = 0, qRight = 0;
+  function quizScore(){
+    document.getElementById('quizScore').textContent = qDone + ' / ' + QUIZ.length + ' 문항 · 정답 ' + qRight;
+    var end = document.getElementById('quizEnd');
+    if(qDone === QUIZ.length){
+      var msg = qRight === QUIZ.length ? '모두 맞혔습니다! 네 사상가의 생각을 정확히 구분하고 있습니다.' :
+                qRight >= 6 ? '잘했습니다! 틀린 문항의 해설을 한 번 더 읽어 봅시다.' :
+                '위의 &lsquo;세 사상가&rsquo;와 &lsquo;비교표&rsquo;를 다시 읽고 도전해 봅시다.';
+      end.innerHTML = '<div style="font-family:\'Gowun Batang\',serif;font-size:24px;font-weight:700;">' + QUIZ.length + '문항 중 ' + qRight + '문항 정답</div><div style="color:var(--ink-soft);margin-top:4px;">' + msg + '</div>';
+      end.classList.add('show');
+    } else end.classList.remove('show');
+  }
+  function buildQuiz(){
+    quizList.innerHTML = ''; qDone = 0; qRight = 0;
+    QUIZ.forEach(function(item, i){
+      var card = document.createElement('div');
+      card.className = 'card qitem';
+      var opts = ['kant','rous','becc','bent'].map(function(k){
+        return '<button class="qopt t-' + k + '" type="button" data-k="' + k + '">' + WHO[k] + '</button>';
+      }).join('');
+      card.innerHTML = '<div class="qn">Q' + (i+1) + '</div><div class="qt">&ldquo;' + item.q + '&rdquo;</div><div class="qopts">' + opts + '</div><div class="qfb" aria-live="polite"></div>';
+      card.querySelector('.qopts').addEventListener('click', function(e){
+        var b = e.target.closest('.qopt'); if(!b || b.disabled) return;
+        var k = b.getAttribute('data-k'), ok = k === item.a;
+        qDone++; if(ok) qRight++;
+        Array.prototype.forEach.call(card.querySelectorAll('.qopt'), function(x){
+          x.disabled = true;
+          if(x.getAttribute('data-k') === item.a) x.classList.add('right');
+          else if(x === b) x.classList.add('wrongpick');
+        });
+        var fb = card.querySelector('.qfb');
+        fb.className = 'qfb show ' + (ok ? 'ok' : 'no');
+        fb.innerHTML = '<span class="h">' + (ok ? '정답입니다!' : '오답입니다. 정답은 ' + WHO[item.a] + '입니다.') + '</span><br>' + item.e;
+        quizScore();
+      });
+      quizList.appendChild(card);
+    });
+    quizScore();
+  }
+  document.getElementById('quizReset').addEventListener('click', buildQuiz);
+  buildQuiz();
+})();
+</script>
+</body>
+</html>
