@@ -227,8 +227,9 @@
       <div class="kicker">나의 정의관 진단</div>
       <h1>나는 <span class="r">롤스형</span>? <span class="n">노직형</span>?</h1>
       <p class="lead">학교와 일상에서 만나는 열 가지 상황에 답하면, 나의 분배 정의관이 어느 사상가와 가까운지 나옵니다.</p>
-      <label class="f-label" for="nickInput">닉네임 <small>(선택)</small></label>
+      <label class="f-label" for="nickInput">닉네임</label>
       <input class="text-in" type="text" id="nickInput" maxlength="12" placeholder="예: 정의로운 고양이" autocomplete="off">
+      <p class="nick-err" id="nickErr" style="color:#C0392B;font-size:15px;margin-top:6px;min-height:1em;"></p>
       <button class="btn btn-primary" id="startBtn" type="button">진단 시작하기</button>
     </div>
   </section>
@@ -502,6 +503,7 @@
     showScreen("quiz");
     renderQuestion();
   });
+  nickInput.addEventListener("input", function(){ document.getElementById("nickErr").textContent = ""; });
   nickInput.addEventListener("keydown", function(e){
     if(e.key === "Enter"){ document.getElementById("startBtn").click(); }
   });
