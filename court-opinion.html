@@ -309,7 +309,7 @@
     <div class="card">
       <div class="field">
         <label for="nameInput">재판관 이름</label>
-        <input id="nameInput" type="text" maxlength="10" autocomplete="off" placeholder="이름 또는 닉네임을 입력합니다">
+        <input id="nameInput" type="text" maxlength="10" autocomplete="off" placeholder="반번호와 이름을 씁니다 (예: 2101 김민지)">
         <p class="err" id="nameErr" role="alert"></p>
       </div>
       <div class="btn-row">
@@ -371,15 +371,15 @@
       <div class="thinkers" id="thinkerList"></div>
     </div>
     <div class="card">
-      <p class="sub-h">예상 반론</p>
-      <p class="step-desc">반대편에서 제기할 수 있는 논거 하나를 골라 예상 반론으로 넣습니다.</p>
+      <p class="sub-h">예상 반론 · 반대편의 논거</p>
+      <p class="step-desc" id="counterDesc">반대편에서 제기할 수 있는 논거 하나를 골라 예상 반론으로 넣습니다.</p>
       <div class="pick-list" id="counterList"></div>
     </div>
     <div class="card">
       <div class="field">
-        <label for="rebutInput">예상 반론에 대한 재반론 <span style="font-weight:400;color:var(--ink-faint)">(선택)</span></label>
-        <textarea id="rebutInput" maxlength="150" placeholder="반론에 대한 재판관의 생각을 한두 문장으로 씁니다. 비워 두면 결정문에서 생략됩니다."></textarea>
-        <p class="hint"><span id="rebutLen">0</span> / 150자</p>
+        <label for="rebutInput">예상 반론에 대한 재반론</label>
+        <textarea id="rebutInput" maxlength="150" placeholder="위에서 고른 반론에 재판관은 어떻게 답할지 한두 문장으로 씁니다."></textarea>
+        <p class="hint"><span id="rebutLen">0</span> / 150자 · 10자 이상 씁니다.</p>
       </div>
       <div class="btn-row">
         <button class="btn ghost" type="button" data-go="s-reasons">이전</button>
@@ -687,6 +687,10 @@
       box.appendChild(btn);
     });
 
+    var opp = other(state.side);
+    $('counterDesc').innerHTML = '재판관은 <b style="color:var(--' + state.side + ')">' + conf.label + '</b> 의견입니다. '
+      + '아래는 반대편인 <b style="color:var(--' + opp + ')">' + SIDE[opp].label + '</b> 쪽의 논거입니다. '
+      + '이 가운데 하나를 골라 예상 반론으로 넣습니다.';
     var cl = $('counterList');
     cl.innerHTML = '';
     ARGS[other(state.side)].forEach(function(a, i){
@@ -707,15 +711,23 @@
     });
     refreshWrite();
   }
+  var REBUT_MIN = 10;
+  function rebutOk(){ return rebutInput.value.trim().length >= REBUT_MIN; }
   function refreshWrite(){
-    var ok = !!state.thinker && state.counter !== null;
+    var picked = !!state.thinker && state.counter !== null;
+    var ok = picked && rebutOk();
     $('writeBtn').disabled = !ok;
-    $('thinkErr').textContent = ok ? '' : '사상가와 예상 반론을 모두 선택해야 결정문을 작성할 수 있습니다.';
+    $('thinkErr').textContent = ok ? '' :
+      !picked ? '사상가와 예상 반론을 모두 선택해야 결정문을 작성할 수 있습니다.' :
+      '예상 반론에 대한 재반론을 ' + REBUT_MIN + '자 이상 써야 결정문을 작성할 수 있습니다.';
   }
   var rebutInput = $('rebutInput');
-  rebutInput.addEventListener('input', function(){ $('rebutLen').textContent = rebutInput.value.length; });
+  rebutInput.addEventListener('input', function(){
+    $('rebutLen').textContent = rebutInput.value.length;
+    refreshWrite();
+  });
   $('writeBtn').addEventListener('click', function(){
-    if(!state.thinker || state.counter === null) return;
+    if(!state.thinker || state.counter === null || !rebutOk()) return;
     state.rebut = rebutInput.value.trim();
     buildDoc();
     showScreen('s-result');
@@ -770,7 +782,8 @@
     var d = new Date();
     $('dDate').textContent = d.getFullYear() + '년 ' + (d.getMonth()+1) + '월 ' + d.getDate() + '일';
     $('dSign').textContent = '재판관 ' + state.name;
-    $('dSeal').textContent = state.name.replace(/\s+/g,'').slice(0,4);
+    var sealName = state.name.replace(/[\s\d]+/g,'') || state.name.replace(/\s+/g,'');
+    $('dSeal').textContent = sealName.slice(0,4);
   }
 
   $('restartBtn').addEventListener('click', function(){
