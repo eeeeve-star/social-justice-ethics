@@ -214,8 +214,16 @@
     padding:12px; box-shadow:var(--shadow);
   }
   .doc-inner{ border:1px solid var(--p-line); padding:24px 18px 20px; }
-  .doc-head{ text-align:center; padding-bottom:16px; border-bottom:1.5px solid var(--p-navy); }
-  .doc-head .d-kicker{ font-size:13.5px; letter-spacing:.32em; color:var(--p-faint); margin:0 0 4px; }
+  .doc-head{ text-align:center; padding-bottom:16px; border-bottom:4px double var(--p-navy); }
+  .doc-head .d-emblem{ display:block; width:52px; height:52px; margin:0 auto 8px; }
+  .doc-head .d-kicker{
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    font-family:"Gowun Batang",serif; font-size:15px; font-weight:700; letter-spacing:.4em; color:#8A6A2E; margin:0 0 6px;
+  }
+  .doc-head .d-kicker::before, .doc-head .d-kicker::after{ content:""; width:34px; height:1px; background:#C9AE78; }
+  .doc-head .d-case{ font-size:13.5px; color:var(--p-faint); margin:6px 0 0; letter-spacing:.04em; }
+  .doc-meta .v.keep{ color:#94641C; }
+  .doc-meta .v.abol{ color:#2F6F66; }
   .doc-head .d-title{ font-family:"Gowun Batang",serif; font-size:26px; font-weight:700; color:var(--p-navy); margin:0; letter-spacing:.06em; }
   .doc-meta{ margin:16px 0 4px; font-size:15.5px; }
   .doc-meta div{ display:flex; gap:10px; padding:5px 0; border-bottom:1px dotted var(--p-line); }
@@ -234,6 +242,7 @@
   .d-list{ margin:0; padding:0; list-style:none; counter-reset:r; }
   .d-list li{ position:relative; padding-left:28px; margin-bottom:8px; font-size:16px; line-height:1.75; counter-increment:r; }
   .d-list li::before{ content:counter(r) "."; position:absolute; left:4px; top:0; font-weight:700; color:var(--p-navy); }
+  .d-apply{ margin:10px 0 0; }
   .d-law{ font-size:15px; line-height:1.75; color:var(--p-soft); padding:10px 12px; background:#F4F1E8; border-left:2px solid var(--p-navy); margin:0; }
   .d-thinker{ display:flex; gap:12px; align-items:flex-start; padding:12px; border:1px solid var(--p-line); border-left:4px solid var(--tc); background:#FFFFFF; }
   .d-thinker .face{ width:56px; height:56px; border-radius:50%; overflow:hidden; flex:0 0 auto; border:2px solid var(--tc); background:#EFEADB; }
@@ -309,7 +318,7 @@
     <div class="card">
       <div class="field">
         <label for="nameInput">재판관 이름</label>
-        <input id="nameInput" type="text" maxlength="10" autocomplete="off" placeholder="반번호와 이름을 씁니다 (예: 2101 김민지)">
+        <input id="nameInput" type="text" maxlength="10" autocomplete="off" placeholder="반번호와 이름을 씁니다">
         <p class="err" id="nameErr" role="alert"></p>
       </div>
       <div class="btn-row">
@@ -399,8 +408,10 @@
     <article class="doc" id="docSheet">
       <div class="doc-inner">
         <header class="doc-head">
+          <img class="d-emblem" alt="" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='104' height='104' viewBox='0 0 52 52'%3E%3Ccircle cx='26' cy='26' r='24.5' fill='%232C3E66'/%3E%3Ccircle cx='26' cy='26' r='21' fill='none' stroke='%23C9AE78' stroke-width='1'/%3E%3Cg fill='none' stroke='%23F3E6C4' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M26 13v24M19 38h14M15 18h22'/%3E%3Cpath d='M15 18l-5 10h10zM37 18l-5 10h10z'/%3E%3C/g%3E%3Ccircle cx='26' cy='13' r='1.8' fill='%23F3E6C4'/%3E%3C/svg%3E">
           <p class="d-kicker">憲法裁判所</p>
           <p class="d-title">헌법재판소 가상 결정문</p>
+          <p class="d-case">사형 제도 위헌 확인 · 모의 심리</p>
         </header>
         <div class="doc-meta">
           <div><span class="k">사건</span><span class="v">사형 제도 위헌 확인 사건(가상)</span></div>
@@ -418,6 +429,7 @@
 
           <p class="d-sub">1. 판단 기준</p>
           <p class="d-law">헌법 제37조 2항: 국민의 모든 자유와 권리는 국가 안전 보장·질서 유지 또는 공공복리를 위하여 필요한 경우에 한하여 법률로써 제한할 수 있으며, 제한하는 경우에도 자유와 권리의 본질적인 내용을 침해할 수 없다.</p>
+          <p class="d-p d-apply" id="dApply"></p>
 
           <p class="d-sub">2. 판단의 근거</p>
           <p class="d-p" id="dLead"></p>
@@ -509,6 +521,7 @@
       ruling:'사형 제도는 헌법에 위반되지 아니한다.',
       title:'사형 제도 유지(합헌)의 근거를 고릅니다.',
       lead:'이 재판관은 다음과 같은 이유로 사형 제도가 헌법에 위반되지 아니한다고 판단한다.',
+      apply:'사형은 생명권을 제한하지만, 무고한 국민의 생명을 보호하고 정의를 실현하기 위하여 필요한 경우에 한한 제한이므로 생명권의 본질적인 내용을 침해한다고 볼 수 없다.',
       note:'<b>일반 예방주의</b> — 사형을 통한 경고로 일반인이 죄를 짓지 않도록 예방할 수 있다고 본다.',
       prec:'<b>2010년 헌법재판소 다수 의견(재판관 5명)</b><br>“사형 제도로 달성되는 범죄 예방을 통한 무고한 국민의 생명 보호 등 중대한 공익 보호, 그리고 정의 실현 및 사회 방위라는 공익은 극악한 범죄를 저지른 자의 생명권이라는 사익보다 결코 작다고 볼 수 없다.”',
       thinkers:['kant','rous']
@@ -518,6 +531,7 @@
       ruling:'사형 제도는 헌법에 위반된다.',
       title:'사형 제도 폐지(위헌)의 근거를 고릅니다.',
       lead:'이 재판관은 다음과 같은 이유로 사형 제도가 헌법에 위반된다고 판단한다.',
+      apply:'생명권은 제한하면 아무것도 남지 않는 권리이므로, 생명을 빼앗는 사형은 생명권의 본질적인 내용을 침해한다.',
       note:'<b>특수 예방주의</b> — 범죄자의 반사회성을 교화하여 범죄를 예방할 기회가 없게 되므로 사형 제도에 반대한다.',
       prec:'<b>2010년 헌법재판소 소수 의견(재판관 4명)</b><br>“사형 제도를 통해 범죄 예방의 목적이 달성되는지 불확실하다. 무기 징역이나 종신형으로도 범죄자를 격리시켜 재범을 예방할 수 있다.”',
       thinkers:['becc']
@@ -739,8 +753,10 @@
     var t = THINKERS[state.thinker];
     $('dName').textContent = state.name;
     $('dSide').textContent = conf.label;
+    $('dSide').className = 'v ' + state.side;
     $('dRuling').textContent = conf.ruling;
     $('dLead').textContent = conf.lead;
+    $('dApply').textContent = '이 재판관은 위 조항에 비추어 볼 때, ' + conf.apply;
 
     var ol = $('dReasons');
     ol.innerHTML = '';
